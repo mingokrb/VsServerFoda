@@ -5,7 +5,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
 	<!-- _________________________ Application Settings _________________________ -->
 	
-	<app unless="PROFILE_BUILD" title="Friday Night Funkin': P-Slice Engine" file="PSliceEngine" packageName="com.mikolka9144.pslice" package="com.mikolka9144.pslice" main="Main" version="3.1"  company="mikolka9144" />
+	<app unless="PROFILE_BUILD" title="vs. Server Foda" file="vsServerFoda" packageName="com.sf.vsf" package="com.sf.vsf" main="Main" version="1.0"  company="Server Foda Team" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -43,7 +43,7 @@ xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/
 	<define name="DISCORD_ALLOWED" if="desktop" unless="hl"/>
 	
 	<!-- Adds a Base game content to your build. Feel free to disable if you're making a source mod. -->
-	<define name="BASE_GAME_FILES" />
+	<!-- define name="BASE_GAME_FILES" / -->
 
 	<!-- Adds support for touchscreen devices (like mobiles)-->
 	<define name="TOUCH_CONTROLS_ALLOWED" if="mobile || web || debug" />
@@ -62,7 +62,7 @@ xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/
 	<define name="TRANSLATIONS_ALLOWED" unless="web" />
 	<define name="SHOW_LOADING_SCREEN" />
 	<define name="MULTITHREADED_LOADING" if="cpp" /> <!-- UNCOMMENTING THIS LINE WILL ENABLE MULTITHREADED LOADING, WHICH IMPROVES LOADING TIMES, BUT WITH A LOW CHANCE FOR THE GAME FREEZE ON SONG LOAD -->
-	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE THE PSYCH LOGO FROM LOADING SCREEN -->
+	<!-- define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE THE PSYCH LOGO FROM LOADING SCREEN -->
 	<define name="TITLE_SCREEN_EASTER_EGG"/>
 	<!-- <define name="COPYSTATE_ALLOWED" if="MODS_ALLOWED mobile"/> -->
 
