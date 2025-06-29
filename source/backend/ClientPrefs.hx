@@ -12,11 +12,11 @@ import states.TitleState;
 	public var extraHints:String = "NONE"; // hitbox extra hint option
 	public var hitbox2:Bool = true; // hitbox extra button position option
 	public var dynamicColors:Bool = true; // yes cause its cool -Karim
-	public var controlsAlpha:Float = 0.6;
+	public var controlsAlpha:Float = 0.5;
 	public var screensaver:Bool = false;
 	public var wideScreen:Bool = false;
 	#if android
-	public var storageType:String = "EXTERNAL";
+	public var storageType:String = "EXTERNAL_DATA";
 	#end
 	public var hitboxType:String = "Gradient";
 	public var popUpRating:Bool = true;
@@ -29,7 +29,7 @@ import states.TitleState;
 	public var downScroll:Bool = false;
 	public var middleScroll:Bool = false;
 	public var opponentStrums:Bool = true;
-	public var showFPS:Bool = true;
+	public var showFPS:Bool = false;
 	public var flashing:Bool = true;
 	public var autoPause:Bool = true;
 	public var fpsRework:Bool = false;
@@ -37,9 +37,9 @@ import states.TitleState;
 	public var noteSkin:String = 'Default';
 	public var splashSkin:String = 'Psych';
 	public var holdSkin:String = 'Vanilla';
-	public var splashAlpha:Float = 0.6;
+	public var splashAlpha:Float = 0.5;
 	public var holdSplashAlpha:Float = 0.6;
-	public var lowQuality:Bool = false;
+	public var lowQuality:Bool = #if android true #else false #end;
 	public var shaders:Bool = true;
 	public var cacheOnGPU:Bool = #if !switch false #else true #end; //From Stilic
 	public var cacheOnCPU:Bool = #if android false #else true #end;
@@ -53,7 +53,7 @@ import states.TitleState;
 	public var vsliceSmoothBar:Bool = true;
 	public var loggingType:String = "None";
 	public var vsliceLegacyBar:Bool = false;
-	public var vsliceNaughtyness:Bool = #if mobile false #else true #end;
+	public var vsliceNaughtyness:Bool = #if mobile false #else true #end; // oxe por que
 	public var vsliceForceNewTag:Bool = false;
 
 	public var noteOffset:Int = 0;
@@ -72,7 +72,7 @@ import states.TitleState;
 	public var timeBarType:String = 'Time Left';
 	public var scoreZoom:Bool = true;
 	public var noReset:Bool = false;
-	public var healthBarAlpha:Float = 1;
+	public var healthBarAlpha:Float = 0.5;
 	public var hitsoundVolume:Float = 0;
 	public var pauseMusic:String = 'Tea Time';
 	public var checkForUpdates:Bool = true;
@@ -108,7 +108,7 @@ import states.TitleState;
 	public var guitarHeroSustains:Bool = true;
 	public var discordRPC:Bool = true;
 	public var loadingScreen:Bool = true;
-	public var language:String = 'en-US';
+	public var language:String = 'pt-BR';
 }
 
 class ClientPrefs {
@@ -118,10 +118,10 @@ class ClientPrefs {
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
 		//Key Bind, Name for ControlsSubState
-		'note_up'		=> [W, UP],
-		'note_left'		=> [A, LEFT],
-		'note_down'		=> [S, DOWN],
-		'note_right'	=> [D, RIGHT],
+		'note_up'		=> [J, UP],
+		'note_left'		=> [D, LEFT],
+		'note_down'		=> [F, DOWN],
+		'note_right'	=> [K, RIGHT],
 		
 		'ui_up'			=> [W, UP],
 		'ui_left'		=> [A, LEFT],
