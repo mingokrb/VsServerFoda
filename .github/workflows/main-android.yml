@@ -14,16 +14,8 @@ jobs:
             exportPath: android
             buildArgs: "android"
             cacheLibrariesPath: P-Slice.1.0.mobile-cache
-            artifactName: P-Slice.1.0.android
+            artifactName: vsServerFoda.1.0.android
             cachePath: P-Slice.1.0.build-android
-            artifactPath: "export/release/android/bin/app/build/outputs/apk/release/*.apk"
-          - name: Android-profiled
-            os: macos-15
-            exportPath: android
-            buildArgs: "android -DPROFILE_BUILD"
-            cacheLibrariesPath: P-Slice.1.0.mobile-cache
-            artifactName: P-Slice.1.0.android-audited
-            cachePath: P-Slice.1.0.build-android-profile
             artifactPath: "export/release/android/bin/app/build/outputs/apk/release/*.apk"
     uses: ./.github/workflows/build.yml
     with:
