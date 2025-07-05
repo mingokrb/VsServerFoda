@@ -85,20 +85,20 @@ class FunkinPreloader extends FlxBasePreloader
   private var parsingCharactersPercent:Float = -1;
   private var parsingCharactersStartTime:Float = -1;
   private var parsingCharactersComplete:Bool = false;
-
+  
   private var parsingSongsPercent:Float = -1;
   private var parsingSongsStartTime:Float = -1;
   private var parsingSongsComplete:Bool = false;
-
+  
   private var initializingScriptsPercent:Float = -1;
-
+  
   private var cachingCoreAssetsPercent:Float = -1;
-
+  
   /**
    * The timestamp when the other steps completed and the `Finishing up` step started.
    */
   private var completeTime:Float = -1;
-
+  
   // Graphics
   var logo:Bitmap;
   #if TOUCH_HERE_TO_PLAY
@@ -109,33 +109,33 @@ class FunkinPreloader extends FlxBasePreloader
   var progressBar:Bitmap;
   var progressLeftText:TextField;
   var progressRightText:TextField;
-
+  
   var dspText:TextField;
-  var fnfText:TextField;
+  var vsfText:TextField;
   var enhancedText:TextField;
   var stereoText:TextField;
-
+  
   var vfdShader:VFDOverlay;
   var vfdBitmap:Bitmap;
   var box:Sprite;
   var progressLines:Sprite;
-
+  
   public function new()
   {
-    super(0.0,["psych-slice.github.io",FlxBasePreloader.LOCAL]);
-
+    super(0.0,["mingokrb.github.io",FlxBasePreloader.LOCAL]);
+    
     // We can't even call trace() yet, until Flixel loads.
-    trace('Initializing custom preloader...');
-
-    this.siteLockTitleText = "You Loser!";
+    trace('Inicializando preloader personalizado...');
+		
+    //this.siteLockTitleText = "You Loser!";
     //this.siteLockBodyText = "This isn't Newgrounds!\nGo play Friday Night Funkin' on Newgrounds:";
   }
-
+  
   override function create():Void
   {
     // Nothing happens in the base preloader.
     super.create();
-
+    
     // Background color.
     Lib.current.stage.color = 0xFF000000;
     Lib.current.stage.frameRate = 30;
@@ -150,7 +150,7 @@ class FunkinPreloader extends FlxBasePreloader
 		Lib.current.stage.window.setIcon(icon);
 		#end
     #if TITLE_SCREEN_EASTER_EGG
-    if(Date.now().getMonth() == 0 && Date.now().getDate() == 14) Lib.current.stage.window.title = "Friday Night Funkin': Mikolka's Engine";
+    if(Date.now().getMonth() == 11 && Date.now().getDate() == 8) Lib.current.stage.window.title = "Friday Night Funkin': Vai Se Foder"; // vsf
     #end
     // Scale assets to the screen size.
     ratio = this._width / BASE_WIDTH / 2.0;
@@ -195,7 +195,7 @@ class FunkinPreloader extends FlxBasePreloader
     }
     progressLeftText = new TextField();
     dspText = new TextField();
-    fnfText = new TextField();
+    vsfText = new TextField();
     enhancedText = new TextField();
     stereoText = new TextField();
 
@@ -205,7 +205,7 @@ class FunkinPreloader extends FlxBasePreloader
 
     progressLeftText.selectable = false;
     progressLeftText.width = this._width - BAR_PADDING * 2;
-    progressLeftText.text = 'Downloading assets...';
+    progressLeftText.text = 'Baixando assets...';
     progressLeftText.x = BAR_PADDING;
     progressLeftText.y = this._height - BAR_PADDING - BAR_HEIGHT - 290;
     // progressLeftText.shader = new VFDOverlay();
@@ -246,20 +246,20 @@ class FunkinPreloader extends FlxBasePreloader
     dspText.y = -7;
     box.addChild(dspText);
 
-    fnfText.selectable = false;
-    fnfText.textColor = 0x000000;
-    fnfText.width = this._width;
-    fnfText.height = 30;
-    fnfText.x = 78;
-    fnfText.y = -7;
-    fnfText.text = 'FNF';
-    box.addChild(fnfText);
+    vsfText.selectable = false;
+    vsfText.textColor = 0x000000;
+    vsfText.width = this._width;
+    vsfText.height = 30;
+    vsfText.x = 78;
+    vsfText.y = -7;
+    vsfText.text = 'VSF';
+    box.addChild(vsfText);
 
     enhancedText.selectable = false;
     enhancedText.textColor = 0xFFA4FF11;
     enhancedText.width = this._width;
     enhancedText.height = 100;
-    enhancedText.text = 'ENHANCED';
+    enhancedText.text = 'MELHORADO';
     enhancedText.x = -100;
     enhancedText.y = 0;
     box.addChild(enhancedText);
@@ -268,7 +268,7 @@ class FunkinPreloader extends FlxBasePreloader
     stereoText.textColor = 0xFFA4FF11;
     stereoText.width = this._width;
     stereoText.height = 100;
-    stereoText.text = 'STEREO';
+    stereoText.text = 'ESTÉREO';
     stereoText.x = 0;
     stereoText.y = -40;
     box.addChild(stereoText);
@@ -916,45 +916,45 @@ class FunkinPreloader extends FlxBasePreloader
     {
       // case FunkinPreloaderState.NotStarted:
       default:
-        updateProgressLeftText('Loading \n0/$TOTAL_STEPS $ellipsis');
-        trace('Preloader state: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
+        updateProgressLeftText('Carregando \n0/$TOTAL_STEPS $ellipsis');
+        trace('Estado do preloader: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
       case FunkinPreloaderState.DownloadingAssets:
-        updateProgressLeftText('Downloading assets \n1/$TOTAL_STEPS $ellipsis');
-        trace('Preloader state: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
+        updateProgressLeftText('Baixando assets \n1/$TOTAL_STEPS $ellipsis');
+        trace('Estado do preloader: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
       case FunkinPreloaderState.PreloadingPlayAssets:
-        updateProgressLeftText('Preloading assets \n2/$TOTAL_STEPS $ellipsis');
-        trace('Preloader state: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
+        updateProgressLeftText('Pré-carregando assets \n2/$TOTAL_STEPS $ellipsis');
+        trace('Estado do preloader: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
       case FunkinPreloaderState.InitializingScripts:
-        updateProgressLeftText('Initializing scripts \n3/$TOTAL_STEPS $ellipsis');
-        trace('Preloader state: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
+        updateProgressLeftText('Inicializando scripts \n3/$TOTAL_STEPS $ellipsis');
+        trace('Estado do preloader: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
       case FunkinPreloaderState.CachingGraphics:
-        updateProgressLeftText('Caching graphics \n4/$TOTAL_STEPS $ellipsis');
-        trace('Preloader state: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
+        updateProgressLeftText('Cacheando gráficos \n4/$TOTAL_STEPS $ellipsis');
+        trace('Estado do preloader: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
       case FunkinPreloaderState.CachingAudio:
-        updateProgressLeftText('Caching audio \n5/$TOTAL_STEPS $ellipsis');
-        trace('Preloader state: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
+        updateProgressLeftText('Cacheando áudio \n5/$TOTAL_STEPS $ellipsis');
+        trace('Estado do preloader: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
       case FunkinPreloaderState.CachingData:
-        updateProgressLeftText('Caching data \n6/$TOTAL_STEPS $ellipsis');
-        trace('Preloader state: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
+        updateProgressLeftText('Cacheando dados \n6/$TOTAL_STEPS $ellipsis');
+        trace('Estado do preloader: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
       case FunkinPreloaderState.ParsingSpritesheets:
-        updateProgressLeftText('Parsing spritesheets \n7/$TOTAL_STEPS $ellipsis');
-        trace('Preloader state: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
+        updateProgressLeftText('Analisando spritesheets \n7/$TOTAL_STEPS $ellipsis');
+        trace('Estado do preloader: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
       case FunkinPreloaderState.ParsingStages:
-        updateProgressLeftText('Parsing stages \n8/$TOTAL_STEPS $ellipsis');
-        trace('Preloader state: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
+        updateProgressLeftText('Analisando cenários \n8/$TOTAL_STEPS $ellipsis');
+        trace('Estado do preloader: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
       case FunkinPreloaderState.ParsingCharacters:
-        updateProgressLeftText('Parsing characters \n9/$TOTAL_STEPS $ellipsis');
-        trace('Preloader state: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
+        updateProgressLeftText('Analisando personagens \n9/$TOTAL_STEPS $ellipsis');
+        trace('Estado do preloader: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
       case FunkinPreloaderState.ParsingSongs:
-        updateProgressLeftText('Parsing songs \n10/$TOTAL_STEPS $ellipsis');
-        trace('Preloader state: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
+        updateProgressLeftText('Analisando músicas \n10/$TOTAL_STEPS $ellipsis');
+        trace('Estado do preloader: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
       case FunkinPreloaderState.Complete:
-        updateProgressLeftText('Finishing up \n$TOTAL_STEPS/$TOTAL_STEPS $ellipsis');
-        // trace('Preloader state: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
+        updateProgressLeftText('Terminando \n$TOTAL_STEPS/$TOTAL_STEPS $ellipsis');
+        // trace('Estado do preloader: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
       #if TOUCH_HERE_TO_PLAY
       case FunkinPreloaderState.TouchHereToPlay:
         updateProgressLeftText(null);
-        // trace('Preloader state: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
+        // trace('Estado do preloader: ' + currentState + ' (' + percentage + '%, ' + elapsed + 's)');
       #end
     }
 
@@ -984,16 +984,16 @@ class FunkinPreloader extends FlxBasePreloader
         dspText.text = 'DSP'; // fukin dum....
         dspText.textColor = 0x000000;
 
-        fnfText.defaultTextFormat = new TextFormat("Quantico", 20, 0x000000, false);
-        fnfText.text = 'FNF';
-        fnfText.textColor = 0x000000;
+        vsfText.defaultTextFormat = new TextFormat("Quantico", 20, 0x000000, false);
+        vsfText.text = 'VSF';
+        vsfText.textColor = 0x000000;
 
         enhancedText.defaultTextFormat = new TextFormat("Inconsolata Black", 16, 0xFFA4FF11, false);
-        enhancedText.text = 'ENHANCED';
+        enhancedText.text = 'MELHORADO';
         enhancedText.textColor = 0xFFA4FF11;
 
         stereoText.defaultTextFormat = new TextFormat("Inconsolata Bold", 36, 0xFFA4FF11, false);
-        stereoText.text = 'NATURAL STEREO';
+        stereoText.text = 'ESTÉREO NATURAL';
       }
     }
   }
@@ -1025,7 +1025,7 @@ class FunkinPreloader extends FlxBasePreloader
     progressRightText.alpha = logo.alpha;
     box.alpha = logo.alpha;
     dspText.alpha = logo.alpha;
-    fnfText.alpha = logo.alpha;
+    vsfText.alpha = logo.alpha;
     enhancedText.alpha = logo.alpha;
     stereoText.alpha = logo.alpha;
     progressLines.alpha = logo.alpha;
