@@ -252,9 +252,9 @@ images/menudifficulties/easy: "images/pt-BR/menudifficulties/easy"
 images/menudifficulties/hard: "images/pt-BR/menudifficulties/hard"
 
 // Mobile
-mobile_notice: "Notável!"
+mobile_notice: "Aviso!"
 mobile_success: "Sucesso!"
-mobile_error: "Errou!"
+mobile_error: "Erro!"
 storage_type_change_message: "Tipo de armazenamento alterado. Reinicie o jogo!\nPressione OK para fechar o jogo."
 touchpad_dpadmode_throw: "O touchPad dpadMode \"{1}\" não existe."
 touchpad_actionmode_throw: "O touchPad actionMode \"{1}\" não existe."
