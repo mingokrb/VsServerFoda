@@ -141,10 +141,10 @@ class FreeplayState extends MusicBeatSubstate
 	var diffIdsCurrent:Array<String> = [];
 	// List of available difficulties for the total song list, without `-variation` at the end (no duplicates or nulls).
 	var diffIdsTotal:Array<String> = ['easy', "normal", "hard"]; // ? forcing this diff order
-
+	
 	var curSelected:Int = 0;
 	var currentDifficulty:String = Constants.DEFAULT_DIFFICULTY;
-
+	
 	var fp:FreeplayScore;
 	var txtCompletion:AtlasText;
 	var lerpCompletion:Float = 0;
@@ -306,7 +306,7 @@ class FreeplayState extends MusicBeatSubstate
 		txtCompletion = new AtlasText(1185, 87, '69', AtlasFont.FREEPLAY_CLEAR);
 
 		ostName = new FlxText(8, 8, FlxG.width - 8 - 8, 'OFFICIAL OST', 48);
-		charSelectHint = new FlxText(-40, 18, FlxG.width - 8 - 8, 'Press [ LOL ] to change characters', 32);
+		charSelectHint = new FlxText(-40, 18, FlxG.width - 8 - 8, 'Aperte [LOL] para mudar personagem', 32);
 
 		bgDad = new FlxSprite((backingCard?.pinkBack.width ?? 0) * 0.74, 0).loadGraphic(styleData == null ? 'freeplay/freeplayBGdad' : styleData.getBgAssetGraphic());
 
@@ -334,7 +334,7 @@ class FreeplayState extends MusicBeatSubstate
 
 		#if discord_rpc
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence('In the Menus', null);
+		DiscordClient.changePresence('Nos Menus', null);
 		#end
 
 		var isDebug:Bool = false;
@@ -526,7 +526,7 @@ class FreeplayState extends MusicBeatSubstate
 		charSelectHint.alignment = CENTER;
 		charSelectHint.font = "5by7";
 		charSelectHint.color = 0xFF5F5F5F;
-		charSelectHint.text = controls.mobileC ? 'Touch [ X ] to change characters' : 'Press [ ${FunkinControls.FREEPLAY_CHAR_name()} ] to change characters'; // ?! ${controls.getDialogueNameFromControl(FREEPLAY_CHAR_SELECT, true)}
+		charSelectHint.text = controls.mobileC ? 'Aperte [X] para mudar personagem' : 'Aperte [ ${FunkinControls.FREEPLAY_CHAR_name()} ] para mudar personagem'; // ?! ${controls.getDialogueNameFromControl(FREEPLAY_CHAR_SELECT, true)}
 		charSelectHint.y -= 100;
 		FlxTween.tween(charSelectHint, {y: charSelectHint.y + 100}, 0.8, {ease: FlxEase.quartOut});
 
@@ -801,7 +801,7 @@ class FreeplayState extends MusicBeatSubstate
 	public function generateSongList(filterStuff:Null<SongFilter>, force:Bool = false, onlyIfChanged:Bool = true):Void
 	{
 		#if freeplay_profile
-		trace('Generating song list');
+		trace('Gerando lista de músicas');
 		var timeStart = Sys.time();
 		#end
 		var tempSongs:Array<Null<FreeplaySongData>> = songs;
@@ -904,7 +904,7 @@ class FreeplayState extends MusicBeatSubstate
 		changeSelection();
 		changeDiff(0, true);
 		#if freeplay_profile
-		trace('Initing songs took ${Sys.time()-timeStart}');
+		trace('Iniciar as músicas levou ${Sys.time()-timeStart}');
 		//var timeStart = Sys.time();
 		#end
 	}
@@ -1303,16 +1303,16 @@ class FreeplayState extends MusicBeatSubstate
 	function tryOpenCharSelect():Void
 	{
 		// Check if we have ACCESS to character select!
-		trace('Is Pico unlocked? ${PlayerRegistry.instance.fetchEntry('pico')?.isUnlocked()}');
-		trace('Number of characters: ${PlayerRegistry.instance.countUnlockedCharacters()}');
+		trace('Pico está desbloqueado? ${PlayerRegistry.instance.fetchEntry('pico')?.isUnlocked()}');
+		trace('Número de personagens: ${PlayerRegistry.instance.countUnlockedCharacters()}');
 
 		if (PlayerRegistry.instance.countUnlockedCharacters() > 1)
 		{
-			trace('Opening character select!');
+			trace('Abrindo seletor de personagem!');
 		}
 		else
 		{
-			trace('Not enough characters unlocked to open character select!');
+			trace('Sem personagens suficientes desbloqueados para abrir o seletor de personagens!');
 			FunkinSound.playOnce(Paths.sound('cancelMenu'));
 			return;
 		}
@@ -1990,7 +1990,7 @@ class FreeplayState extends MusicBeatSubstate
 	function clearDaCache(actualSongTho:String):Void
 	{
 		// ? changed implementation of this
-		trace("Purging song previews!");
+		trace("Limpando prévias das músicas!");
 		var cacheObj = cast(openfl.Assets.cache, AssetCache);
 		@:privateAccess
 		var list = cacheObj.sound.keys();
@@ -2000,7 +2000,7 @@ class FreeplayState extends MusicBeatSubstate
 				continue;
 			if (!song.contains(actualSongTho) && song.contains(".partial")) // .partial
 			{
-				trace('trying to remove: ' + song);
+				trace('tentando remover: ' + song);
 				openfl.Assets.cache.clear(song);
 			}
 		}
@@ -2008,7 +2008,7 @@ class FreeplayState extends MusicBeatSubstate
 
 	function capsuleOnConfirmRandom(randomCapsule:SongMenuItem):Void
 	{
-		trace('RANDOM SELECTED');
+		trace('ALEATÓRIO SELECIONADO');
 
 		busy = true;
 		letterSort.inputEnabled = false;
@@ -2025,7 +2025,7 @@ class FreeplayState extends MusicBeatSubstate
 
 		if (availableSongCapsules.length == 0)
 		{
-			trace('No songs available!');
+			trace('Nenhuma música disponível!'); // nunca vai ser mostrado mas foda-se
 			busy = false;
 			letterSort.inputEnabled = true;
 			FunkinSound.playOnce(Paths.sound('cancelMenu'));
@@ -2058,7 +2058,7 @@ class FreeplayState extends MusicBeatSubstate
 		}
 		else
 		{
-			trace('NO ALTS');
+			trace('SEM ALTS');
 			capsuleOnConfirmDefault(cap);
 		}
 	}
@@ -2109,7 +2109,7 @@ class FreeplayState extends MusicBeatSubstate
 		var targetSong = cap.songData;
 		if (targetSong == null)
 		{
-			FlxG.log.warn('WARN: could not find song with id (${cap.songData.songId})');
+			FlxG.log.warn('WARN: não foi possível encontrar uma música com o id (${cap.songData.songId})');
 			return;
 		}
 
