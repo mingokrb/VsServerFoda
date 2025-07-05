@@ -28,8 +28,8 @@ class MainMenuState extends MusicBeatState
 	#else
 	public static var psychEngineVersion:String = '0.6.3'; // This is also used for Discord RPC
 	#end
+	public static var vsfVersion:String = '0.1'; // mudar com o tempo!!!!!!!!!!!!!!
 	public static var pSliceVersion:String = '3.1.1'; 
-	public static var funkinVersion:String = '0.6.3'; // Version of funkin' we are emulationg
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -37,10 +37,10 @@ class MainMenuState extends MusicBeatState
 	var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
-		#if MODS_ALLOWED 'mods', #end
+		#if MODS_ALLOWED 'mods', #end // remover na versão final
 		#if ACHIEVEMENTS_ALLOWED 'awards', #end
 		'credits',
-		#if !switch 'donate', #end
+		//#if !switch 'donate', #end
 		'options'
 	];
 
@@ -60,7 +60,7 @@ class MainMenuState extends MusicBeatState
 
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Menus", null);
+		DiscordClient.changePresence("Nos Menus", null);
 		#end
 
 
@@ -98,7 +98,8 @@ class MainMenuState extends MusicBeatState
 			menuItem.antialiasing = VsliceOptions.ANTIALIASING;
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
-			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
+			menuItem.animation.addByPrefix('selected', optionShit[i] + " chosen", 24);
+			menuItem.animation.addByPrefix('clicked', optionShit[i] + " click", 24);
 			menuItem.animation.play('idle');
 			menuItems.add(menuItem);
 			var scr:Float = (optionShit.length - 4) * 0.135;
@@ -108,18 +109,18 @@ class MainMenuState extends MusicBeatState
 			menuItem.updateHitbox();
 			menuItem.screenCenter(X);
 		}
-
-		var psychVer:FlxText = new FlxText(0, FlxG.height - 18, FlxG.width, "Psych Engine " + psychEngineVersion, 12);
-		var fnfVer:FlxText = new FlxText(0, FlxG.height - 18, FlxG.width, 'v${funkinVersion} (P-slice ${pSliceVersion})', 12);
-
+		
+		var psychVer:FlxText = new FlxText(0, FlxG.height - 18, FlxG.width, "P-Slice Engine v" + pSliceVersion, 12);
+		var vsfVer:FlxText = new FlxText(0, FlxG.height - 18, FlxG.width, "v" + vsfVersion, 12);
+		
 		psychVer.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		fnfVer.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		vsfVer.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		
 		psychVer.scrollFactor.set();
-		fnfVer.scrollFactor.set();
-		add(psychVer);
-		add(fnfVer);
-		//var fnfVer:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' ", 12);
+		vsfVer.scrollFactor.set();
+		//add(psychVer);
+		add(vsfVer);
+		//var vsfVer:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' ", 12);
 	
 		changeItem();
 
@@ -221,8 +222,6 @@ class MainMenuState extends MusicBeatState
 								MusicBeatState.switchState(new AchievementsMenuState());
 							#end
 
-							case 'credits':
-								MusicBeatState.switchState(new CreditsState());
 							case 'options':
 								MusicBeatState.switchState(new OptionsState());
 								#if !LEGACY_PSYCH OptionsState.onPlayState = false; #end
@@ -232,6 +231,8 @@ class MainMenuState extends MusicBeatState
 									PlayState.SONG.splashSkin = null;
 									#if !LEGACY_PSYCH PlayState.stageUI = 'normal'; #end
 								}
+							case 'credits':
+								MusicBeatState.switchState(new CreditsState());
 						}
 					});
 
