@@ -18,7 +18,7 @@ class OptionsState extends MusicBeatState
 		'Graphics',
 		'Visuals',
 		'Gameplay',
-		'V-Slice Options',
+		//'V-Slice Options',
 		#if (TOUCH_CONTROLS_ALLOWED || mobile)'Mobile Options' #end
 	];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
