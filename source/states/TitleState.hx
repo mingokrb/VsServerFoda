@@ -291,9 +291,9 @@ class TitleState extends MusicBeatState
 	
 	function loadJsonData()
 	{
-		if(Paths.fileExists('title.json', TEXT))
+		if(Paths.fileExists('data/title.json', TEXT))
 		{
-			var titleRaw:String = Paths.getTextFromFile('title.json');
+			var titleRaw:String = Paths.getTextFromFile('data/title.json');
 			if(titleRaw != null && titleRaw.length > 0)
 			{
 				try
