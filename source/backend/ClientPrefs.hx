@@ -9,16 +9,16 @@ import states.TitleState;
 // Add a variable here and it will get automatically saved
 @:structInit class SaveVariables {
 	// Mobile and Mobile Controls Releated
-	public var extraHints:String = "NONE"; // hitbox extra hint option
+	public var extraHints:String = "NENHUM"; // hitbox extra hint option
 	public var hitbox2:Bool = true; // hitbox extra button position option
 	public var dynamicColors:Bool = true; // yes cause its cool -Karim
 	public var controlsAlpha:Float = 0.5;
 	public var screensaver:Bool = false;
 	public var wideScreen:Bool = false;
 	#if android
-	public var storageType:String = "EXTERNAL";
+	public var storageType:String = "EXTERNAL"; ///////  remover na versão final
 	#end
-	public var hitboxType:String = "Gradient";
+	public var hitboxType:String = "Degradê";
 	public var popUpRating:Bool = true;
 	public var vsync:Bool = false;
 	public var vibrating:Bool = false;
@@ -27,16 +27,16 @@ import states.TitleState;
 	public var lastFreeplayMod:String = '||bf';
 
 	public var downScroll:Bool = false;
-	public var middleScroll:Bool = false;
+	public var middleScroll:Bool = #if android true #else false #end; // melhor né
 	public var opponentStrums:Bool = true;
 	public var showFPS:Bool = false;
 	public var flashing:Bool = true;
 	public var autoPause:Bool = true;
 	public var fpsRework:Bool = false;
 	public var antialiasing:Bool = true;
-	public var noteSkin:String = 'Default';
+	public var noteSkin:String = 'Padrão';
 	public var splashSkin:String = 'Psych';
-	public var holdSkin:String = 'Vanilla';
+	public var holdSkin:String = 'Original';
 	public var splashAlpha:Float = 0.5;
 	public var holdSplashAlpha:Float = 0.6;
 	public var lowQuality:Bool = #if android true #else false #end;
@@ -51,7 +51,7 @@ import states.TitleState;
 	public var vsliceResults:Bool = true;
 	public var vsliceSpecialCards:Bool = true;
 	public var vsliceSmoothBar:Bool = true;
-	public var loggingType:String = "None";
+	public var loggingType:String = "None"; ///////  remover na versão final
 	public var vsliceLegacyBar:Bool = false;
 	public var vsliceNaughtyness:Bool = #if mobile false #else true #end; // oxe por que
 	public var vsliceForceNewTag:Bool = false;
@@ -69,9 +69,9 @@ import states.TitleState;
 		[0xFFFF884E, 0xFFFFFAF5, 0xFF6C0000]];
 
 	public var ghostTapping:Bool = true;
-	public var timeBarType:String = 'Time Left';
+	public var timeBarType:String = 'Tempo Restante';
 	public var scoreZoom:Bool = true;
-	public var noReset:Bool = false;
+	public var noReset:Bool = true;
 	public var healthBarAlpha:Float = 0.5;
 	public var hitsoundVolume:Float = 0;
 	public var pauseMusic:String = 'Tea Time';
@@ -237,7 +237,7 @@ class ClientPrefs {
 		save.data.gamepad = gamepadBinds;
 		save.data.mobile = mobileBinds;
 		save.flush();
-		FlxG.log.add("Settings saved!");
+		FlxG.log.add("Configurações salvas!");
 	}
 
 	public static function loadPrefs() {
