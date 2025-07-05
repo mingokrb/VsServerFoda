@@ -57,7 +57,7 @@ class TitleState extends MusicBeatState
 	
 	#if TITLE_SCREEN_EASTER_EGG
 	final easterEggKeys:Array<String> = [
-		'CORE', 'BAAAAAAAAAAH!!!!!', 'RONALDO', '35488', 'TADB'
+		'CORE', 'BAAAAAAAAAAH!!!!!', 'RONALDO', '53488', 'TADB'
 	];
 	final allowedKeys:String = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!';
 	var easterEggKeysBuffer:String = '';
@@ -333,7 +333,7 @@ class TitleState extends MusicBeatState
 				wega = true;
 			case 'RONALDO':
 				playSfx(Random.fromArray(['ronaldo', 'tatuador']));
-			case '35488':
+			case '53488':
 				book = true;
 			case 'TADB':
 				playSfx(Random.fromArray(['ronaldo', 'tatuador']));
@@ -596,7 +596,7 @@ class TitleState extends MusicBeatState
 					#end
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
-					addMoreText('Server Foda Team', -40); // só um memo se foda
+					addMoreText('Server Foda Team', -40);
 				case 3:
 					addMoreText('mingokrb', -40);
 				case 4:
