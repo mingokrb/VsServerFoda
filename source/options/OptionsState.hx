@@ -19,7 +19,6 @@ class OptionsState extends MusicBeatState
 		'Visuals',
 		'Gameplay',
 		'V-Slice Options',
-		#if TRANSLATIONS_ALLOWED  'Language', #end
 		#if (TOUCH_CONTROLS_ALLOWED || mobile)'Mobile Options' #end
 	];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
@@ -46,8 +45,8 @@ class OptionsState extends MusicBeatState
 				if (controls.mobileC)
 				{
 					funnyCam.visible = persistentUpdate = true;
-					UserErrorSubstate.makeMessage("Unsupported controls", 
-					"You don't need to go there on mobile!\n\nIf you wish to go there anyway\nSet 'Mobile Controls Opacity' to 0%");
+					UserErrorSubstate.makeMessage("Controles não suportados", 
+					"Você não precisa ir aí no mobile!\n\nCaso queira ir mesmo assim,\ndefina a 'Opacidade dos Controles Mobile' para 0%.");
 				}
 				else
 					openSubState(new options.ControlsSubState());
@@ -64,10 +63,6 @@ class OptionsState extends MusicBeatState
 			#if (TOUCH_CONTROLS_ALLOWED || mobile)
 			case 'Mobile Options':
 				openSubState(new mobile.options.MobileOptionsSubState());
-			#end
-			#if TRANSLATIONS_ALLOWED
-			case 'Language':
-				openSubState(new options.LanguageSubState());
 			#end
 		}
 	}
@@ -86,7 +81,7 @@ class OptionsState extends MusicBeatState
 		FlxG.cameras.list[FlxG.cameras.list.indexOf(funnyCam)].follow(camFollowPos);
 
 		#if DISCORD_ALLOWED
-		DiscordClient.changePresence("Options Menu", null);
+		DiscordClient.changePresence("Menu de Opções", null);
 		#end
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
@@ -138,7 +133,7 @@ class OptionsState extends MusicBeatState
 		super.closeSubState();
 		ClientPrefs.saveSettings();
 		#if DISCORD_ALLOWED
-		DiscordClient.changePresence("Options Menu", null);
+		DiscordClient.changePresence("Menu de Opções", null);
 		#end
 		controls.isInSubstate = false;
 		persistentUpdate = funnyCam.visible = true;
