@@ -20,6 +20,8 @@ import mikolka.vslice.components.ScreenshotPlugin;
 import mikolka.vslice.AttractState;
 #end
 
+import Random;
+
 typedef TitleData =
 {
 	var titlex:Float;
@@ -327,21 +329,21 @@ class TitleState extends MusicBeatState
 		switch(easterEgg.toUpperCase())
 		{
 			case 'CORE':
-				playSfx(Random.fromArray(['fart', 'sadhorn', 'fail', 'stinky']));
+				playRandomSfx(['fart', 'sadhorn', 'fail', 'stinky']);
 			case 'BAAAAAAAAAAH!!!!!':
-				playSfx('wegascare');
+				FlxG.sound.play(Paths.sound('wegascare'));
 				wega = true;
 			case 'RONALDO':
-				playSfx(Random.fromArray(['ronaldo', 'tatuador']));
+				playRandomSfx(['ronaldo', 'tatuador']);
 			case '53488':
 				book = true;
 			case 'TADB':
-				playSfx(Random.fromArray(['ronaldo', 'tatuador']));
+				playRandomSfx(['huh', 'violin']);
 		}
 	}
 	
-	function playSfx(sound:String)
-		FlxG.sound.play(Paths.sound('secret/' + sound));
+	function playRandomSfx(sounds:Array<String>)
+		FlxG.sound.play(Paths.sound(Random.fromArray(sounds)));
 	
 	function getIntroTextShit():Array<Array<String>>
 	{
@@ -409,7 +411,7 @@ class TitleState extends MusicBeatState
 		
 		// EASTER EGG
 		
-		if (initialized && !transitioning && skippedIntro)
+		if (initialized && !transitioning && skippedIntro && !wega && !book)
 		{
 			if (newTitle && !pressedEnter)
 			{
@@ -484,11 +486,13 @@ class TitleState extends MusicBeatState
 							if wega
 							{
 								FlxG.sound.music.fadeOut(1, FlxG.sound.music.getActualVolume(), 0);
-								var wegaSpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.images('wegascare'));
+								var wegaSpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.images('wega'));
 								wegaSpr.scale.set(FlxG.width, FlxG.height);
 								wegaSpr.updateHitbox();
 								//wegaSpr.alpha = 0;
 								add(wegaSpr);
+								var wegaTimer = FlxTimer().start(2, function(tmr:FlxTimer)
+									MusicBeatState.switchState(new TitleState());
 							}
 							if book
 							{
@@ -511,20 +515,23 @@ class TitleState extends MusicBeatState
 			skipIntro();
 		}
 		
-		if (swagShader != null)
+		if (!wega && !book)
 		{
-			if (cheatActive && TouchUtil.pressed || controls.UI_LEFT)
-				swagShader.hue -= elapsed * 0.1;
-			if (controls.UI_RIGHT)
-				swagShader.hue += elapsed * 0.1;
+			if (swagShader != null)
+			{
+				if (cheatActive && TouchUtil.pressed || controls.UI_LEFT)
+					swagShader.hue -= elapsed * 0.1;
+				if (controls.UI_RIGHT)
+					swagShader.hue += elapsed * 0.1;
+			}
+			#if FLX_PITCH
+			if (controls.UI_UP) FlxG.sound.music.pitch += 0.5 * elapsed;
+			if (controls.UI_DOWN) FlxG.sound.music.pitch -= 0.5 * elapsed;
+			#end
+			#if desktop
+			if (controls.BACK) openfl.Lib.application.window.close();
+			#end
 		}
-		#if FLX_PITCH
-		if (controls.UI_UP) FlxG.sound.music.pitch += 0.5 * elapsed;
-		if (controls.UI_DOWN) FlxG.sound.music.pitch -= 0.5 * elapsed;
-		#end
-		#if desktop
-		if (controls.BACK) openfl.Lib.application.window.close();
-		#end
 		
 		super.update(elapsed);
 	}
