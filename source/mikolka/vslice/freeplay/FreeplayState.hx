@@ -151,10 +151,10 @@ class FreeplayState extends MusicBeatSubstate
 	var intendedCompletion:Float = 0;
 	var lerpScore:Float = 0;
 	var intendedScore:Int = 0;
-
+	
 	var grpDifficulties:FlxTypedSpriteGroup<DifficultySprite>;
 	var grpFallbackDifficulty:FlxText;
-
+	
 	var coolColors:Array<Int> = [
 		0xFF9271FD,
 		0xFF9271FD,
@@ -165,7 +165,7 @@ class FreeplayState extends MusicBeatSubstate
 		0xFFFF78BF,
 		0xFFF6B604
 	];
-
+	
 	var grpSongs:FlxTypedGroup<Alphabet>;
 	var grpCapsules:FlxTypedGroup<SongMenuItem>;
 	var curCapsule:SongMenuItem;
