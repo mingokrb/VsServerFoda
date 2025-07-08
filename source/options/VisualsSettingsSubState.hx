@@ -8,7 +8,9 @@ import options.Option;
 
 class VisualsSettingsSubState extends BaseOptionsMenu
 {
-	public static var pauseMusics:Array<String> = ['None', 'Tea Time', 'Breakfast', 'Breakfast (Pico)', 'Breakfast (Pixel)'];
+	
+	public static var pauseMusics:Array<String> = ['Nenhuma', 'Tea Time', 'Breakfast', 'Breakfast (Pico)', 'Breakfast (Pixel)'];
+	//                          ^ porra é essa mlk
 	var noteOptionID:Int = -1;
 	var notes:FlxTypedGroup<StrumNote>;
 	var splashes:FlxTypedGroup<NoteSplash>;
@@ -16,7 +18,7 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 	public function new()
 	{
 		title = Language.getPhrase('visuals_menu', 'Visuals Settings');
-		rpcTitle = 'Visuals Settings Menu'; //for Discord Rich Presence
+		rpcTitle = 'Menu de Configurações Visuais'; //for Discord Rich Presence
 
 		// for note skins and splash skins
 		notes = new FlxTypedGroup<StrumNote>();
@@ -236,7 +238,7 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 	var changedMusic:Bool = false;
 	function onChangePauseMusic()
 	{
-		if(ClientPrefs.data.pauseMusic == 'None')
+		if(ClientPrefs.data.pauseMusic == 'Nenhuma')
 			FlxG.sound.music.volume = 0;
 		else
 			FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic)));
