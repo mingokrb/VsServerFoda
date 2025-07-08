@@ -21,8 +21,6 @@ import mikolka.vslice.components.ScreenshotPlugin;
 import mikolka.vslice.AttractState;
 #end
 
-import Random;
-
 typedef TitleData =
 {
 	var titlex:Float;
@@ -335,22 +333,35 @@ class TitleState extends MusicBeatState
 		switch(easterEgg.toUpperCase())
 		{
 			case 'CORE':
-				playRandomSfx(['fart', 'sadhorn', 'fail', 'stinky']);
+				if (FlxG.random.bool(20)) {
+					FlxG.sound.play(Paths.sound('fart'));
+				} else if (FlxG.random.bool(20)) {
+					FlxG.sound.play(Paths.sound('sadhorn'));
+				} else if (FlxG.random.bool(20)) {
+					FlxG.sound.play(Paths.sound('fail'));
+				} else {
+					FlxG.sound.play(Paths.sound('stinky'));
+				}
 			case 'BAAAAAAAAAAH!!!!!':
 				FlxG.sound.play(Paths.sound('wegascare'));
 				wega = true;
 			case 'RONALDO':
-				playRandomSfx(['ronaldo', 'tatuador', 'cuica']);
+				if (FlxG.random.bool(33)) {
+					FlxG.sound.play(Paths.sound('ronaldo'));
+				} else if (FlxG.random.bool(33)) {
+					FlxG.sound.play(Paths.sound('tatuador'));
+				} else {
+					FlxG.sound.play(Paths.sound('cuica'));
+				}
 			case '53488':
 				book = true;
 			case 'TADB':
-				playRandomSfx(['huh', 'violin']);
+				if (FlxG.random.bool(50)) {
+					FlxG.sound.play(Paths.sound('huh'));
+				} else {
+					FlxG.sound.play(Paths.sound('violin'));
+				}
 		}
-	}
-	
-	function playRandomSfx(sounds:Array<String>)
-	{
-		FlxG.sound.play(Paths.sound(Random.fromArray(sounds)));
 	}
 	
 	function getIntroTextShit():Array<Array<String>>
@@ -493,13 +504,13 @@ class TitleState extends MusicBeatState
 							FlxG.save.flush();
 							if (wega)
 							{
-								FlxG.sound.music.fadeOut(1, FlxG.sound.music.getActualVolume(), 0);
-								var wegaSpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.images('wega'));
+								FlxG.sound.music.fadeOut(1, 0);
+								var wegaSpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('wega'));
 								wegaSpr.scale.set(FlxG.width, FlxG.height);
 								wegaSpr.updateHitbox();
 								//wegaSpr.alpha = 0;
 								add(wegaSpr);
-								var wegaTimer = FlxTimer().start(2, function(tmr:FlxTimer)
+								var wegaTimer = new FlxTimer().start(1, function(tmr:FlxTimer)
 								{
 									// de FunkinLua.hx
 									var wegasong = Highscore.formatSong('wega', 3);
@@ -512,7 +523,7 @@ class TitleState extends MusicBeatState
 							if (book)
 							{
 								FlxG.sound.music.stop();
-								var uncannySpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.images('uncanny'));
+								var uncannySpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('uncanny'));
 								uncannySpr.scale.set(FlxG.width, FlxG.height);
 								uncannySpr.updateHitbox();
 								add(uncannySpr);
@@ -638,15 +649,15 @@ class TitleState extends MusicBeatState
 					deleteCoolText();
 					ngSpr.visible = false;
 				case 10:
-					if (curWacky[1] != "" || " ")
+					if (curWacky[1] != " ")
 						addMoreText(curWacky[0]);
 					else
 						addMoreText(curWacky[0], 40);
 				case 11:
-					if (curWacky[1] != "" || " ")
+					if (curWacky[1] != " ")
 						addMoreText(curWacky[1]);
 				case 12:
-					if (curWacky[1] != "" || " ")
+					if (curWacky[1] != " ")
 						addMoreText(curWacky[2]);
 					else
 						addMoreText(curWacky[2], 40);
