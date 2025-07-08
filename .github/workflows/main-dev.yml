@@ -1,0 +1,61 @@
+name: Build dev (Android, Windows)
+
+on: workflow_dispatch
+
+jobs:
+  BuildWindows:
+    name: ${{ matrix.name }}
+    permissions: write-all
+    strategy:
+      matrix:
+        include:
+          - name: Windows
+            os: windows-2022
+            buildArgs: windows
+            exportPath: windows
+            artifactName: VsServerFoda.0.1.windows
+            cacheLibrariesPath: P-Slice.1.0.desktop-cache
+            cachePath: P-Slice.1.0.build-windows
+            artifactPath: export\release\windows\bin\*
+    uses: ./.github/workflows/build.yml
+    with:
+      name: ${{ matrix.name }}
+      os: ${{ matrix.os }}
+      buildArgs: ${{ matrix.buildArgs }}
+      cacheLibrariesPath: ${{ matrix.cacheLibrariesPath }}
+      exportPath: ${{ matrix.exportPath }}
+      artifactName: ${{ matrix.artifactName }}
+      artifactPath: ${{ matrix.artifactPath }}
+      cachePath: ${{matrix.cachePath}}
+  BuildAndroid:
+    permissions: write-all
+    name: ${{ matrix.name }}
+    strategy:
+      matrix:
+        include:
+          - name: Android
+            os: macos-15
+            exportPath: android
+            buildArgs: "android"
+            cacheLibrariesPath: P-Slice.1.0.mobile-cache
+            artifactName: VsServerFoda.0.1.android
+            cachePath: P-Slice.1.0.build-android
+            artifactPath: "export/release/android/bin/app/build/outputs/apk/release/*.apk"
+          - name: Android-profiled
+            os: macos-15
+            exportPath: android
+            buildArgs: "android -DPROFILE_BUILD"
+            cacheLibrariesPath: P-Slice.1.0.mobile-cache
+            artifactName: VsServerFoda.0.1.android-audited
+            cachePath: P-Slice.1.0.build-android-profile
+            artifactPath: "export/release/android/bin/app/build/outputs/apk/release/*.apk"
+    uses: ./.github/workflows/build.yml
+    with:
+      name: ${{ matrix.name }}
+      os: ${{ matrix.os }}
+      buildArgs: ${{ matrix.buildArgs }}
+      exportPath: ${{ matrix.exportPath }}
+      artifactName: ${{ matrix.artifactName }}
+      cacheLibrariesPath: ${{ matrix.cacheLibrariesPath }}
+      artifactPath: ${{ matrix.artifactPath }}
+      cachePath: ${{matrix.cachePath}}
