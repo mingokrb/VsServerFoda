@@ -497,7 +497,11 @@ class TitleState extends MusicBeatState
 								//wegaSpr.alpha = 0;
 								add(wegaSpr);
 								var wegaTimer = FlxTimer().start(2, function(tmr:FlxTimer)
-									MusicBeatState.switchState(new TitleState());
+								{
+									FlxTransitionableState.skipNextTransIn = true;
+									FlxTransitionableState.skipNextTransOut = true;
+									MusicBeatState.switchState(new TitleState()); // como inicia uma música porraaaaaaaaaaaaaa
+								}
 							}
 							if book
 							{
