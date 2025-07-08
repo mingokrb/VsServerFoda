@@ -51,9 +51,9 @@ import states.TitleState;
 	public var vsliceResults:Bool = true;
 	public var vsliceSpecialCards:Bool = true;
 	public var vsliceSmoothBar:Bool = true;
-	public var loggingType:String = "None"; ///////  remover na versão final
+	public var loggingType:String = "File";
 	public var vsliceLegacyBar:Bool = false;
-	public var vsliceNaughtyness:Bool = #if mobile false #else true #end; // oxe por que
+	public var vsliceNaughtyness:Bool = true;
 	public var vsliceForceNewTag:Bool = false;
 
 	public var noteOffset:Int = 0;
