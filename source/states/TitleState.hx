@@ -328,40 +328,12 @@ class TitleState extends MusicBeatState
 	
 	function easterEggData()
 	{
-		if (FlxG.save.data.psychDevsEasterEgg == null) FlxG.save.data.psychDevsEasterEgg = ''; //Crash prevention
-		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
-		switch(easterEgg.toUpperCase())
-		{
-			case 'CORE':
-				if (FlxG.random.bool(20)) {
-					FlxG.sound.play(Paths.sound('fart'));
-				} else if (FlxG.random.bool(20)) {
-					FlxG.sound.play(Paths.sound('sadhorn'));
-				} else if (FlxG.random.bool(20)) {
-					FlxG.sound.play(Paths.sound('fail'));
-				} else {
-					FlxG.sound.play(Paths.sound('stinky'));
-				}
-			case 'BAAAAAAAAAAH!!!!!':
-				FlxG.sound.play(Paths.sound('wegascare'));
-				wega = true;
-			case 'RONALDO':
-				if (FlxG.random.bool(33)) {
-					FlxG.sound.play(Paths.sound('ronaldo'));
-				} else if (FlxG.random.bool(33)) {
-					FlxG.sound.play(Paths.sound('tatuador'));
-				} else {
-					FlxG.sound.play(Paths.sound('cuica'));
-				}
-			case '53488':
-				book = true;
-			case 'TADB':
-				if (FlxG.random.bool(50)) {
-					FlxG.sound.play(Paths.sound('huh'));
-				} else {
-					FlxG.sound.play(Paths.sound('violin'));
-				}
-		}
+		// if (FlxG.save.data.psychDevsEasterEgg == null) FlxG.save.data.psychDevsEasterEgg = ''; //Crash prevention
+		// var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
+		// switch(easterEgg.toUpperCase())
+		// {
+
+		// }
 	}
 	
 	function getIntroTextShit():Array<Array<String>>
@@ -497,38 +469,63 @@ class TitleState extends MusicBeatState
 						if (easterEggKeysBuffer.contains(word))
 						{
 							// trace('YOOO! ' + word);
-							if (FlxG.save.data.psychDevsEasterEgg == word)
-								FlxG.save.data.psychDevsEasterEgg = '';
-							else
-								FlxG.save.data.psychDevsEasterEgg = word;
-							FlxG.save.flush();
-							if (wega)
-							{
-								FlxG.sound.music.fadeOut(1, 0);
-								var wegaSpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('wega'));
-								wegaSpr.scale.set(FlxG.width, FlxG.height);
-								wegaSpr.updateHitbox();
-								//wegaSpr.alpha = 0;
-								add(wegaSpr);
-								var wegaTimer = new FlxTimer().start(1, function(tmr:FlxTimer)
-								{
-									// de FunkinLua.hx
-									var wegasong = Highscore.formatSong('wega', 3);
-									Song.loadFromJson(wegasong, 'wega');
-									PlayState.storyDifficulty = 3;
-									FlxG.state.persistentUpdate = false;
-									LoadingState.loadAndSwitchState(new PlayState());
-								});
+							// if (FlxG.save.data.psychDevsEasterEgg == word)
+							// 	FlxG.save.data.psychDevsEasterEgg = '';
+							// else
+							// 	FlxG.save.data.psychDevsEasterEgg = word;
+							// FlxG.save.flush();
+							switch (word) {
+								case 'CORE':
+									if (FlxG.random.bool(25)) {
+										FlxG.sound.play(Paths.sound('fart'));
+									} else if (FlxG.random.bool(25)) {
+										FlxG.sound.play(Paths.sound('sadhorn'));
+									} else if (FlxG.random.bool(25)) {
+										FlxG.sound.play(Paths.sound('fail'));
+									} else {
+										FlxG.sound.play(Paths.sound('stinky'));
+									}
+								case 'BAAAAAAAAAAH!!!!!':
+									FlxG.sound.play(Paths.sound('wegascare'));
+									FlxG.sound.music.fadeOut(1, 0);
+									var wegaSpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('wega'));
+									wegaSpr.scale.set(FlxG.width, FlxG.height);
+									wegaSpr.updateHitbox();
+									//wegaSpr.alpha = 0;
+									add(wegaSpr);
+									var wegaTimer = new FlxTimer().start(1, function(tmr:FlxTimer)
+									{
+										// de FunkinLua.hx
+										var wegasong = Highscore.formatSong('wega', 3);
+										Song.loadFromJson(wegasong, 'wega');
+										PlayState.storyDifficulty = 3;
+										FlxG.state.persistentUpdate = false;
+										LoadingState.loadAndSwitchState(new PlayState());
+									});									
+									wega = true;
+								case 'RONALDO':
+									if (FlxG.random.bool(33)) {
+										FlxG.sound.play(Paths.sound('ronaldo'));
+									} else if (FlxG.random.bool(33)) {
+										FlxG.sound.play(Paths.sound('tatuador'));
+									} else {
+										FlxG.sound.play(Paths.sound('cuica'));
+									}
+								case '53488':
+									FlxG.sound.music.stop();
+									var uncannySpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('uncanny'));
+									uncannySpr.scale.set(FlxG.width, FlxG.height);
+									uncannySpr.updateHitbox();
+									add(uncannySpr);
+									book = true;
+								case 'TADB':
+									if (FlxG.random.bool(50)) {
+										FlxG.sound.play(Paths.sound('huh'));
+									} else {
+										FlxG.sound.play(Paths.sound('violin'));
+									}
 							}
-							if (book)
-							{
-								FlxG.sound.music.stop();
-								var uncannySpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('uncanny'));
-								uncannySpr.scale.set(FlxG.width, FlxG.height);
-								uncannySpr.updateHitbox();
-								add(uncannySpr);
-							}
-							break;
+							easterEggKeysBuffer = '';
 						}
 					}
 				}
