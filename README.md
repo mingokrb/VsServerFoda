@@ -1,3 +1,14 @@
+# vs. Server Foda
+![vsf-logo-rework1](https://cdn.discordapp.com/attachments/881410764894769206/1377731639182102660/vsf-logo-rework1.png?ex=686d7293&is=686c2113&hm=e08b931c790c3858d67539db28d920a45dd3c36dad4aa66e1eda63333954b1a1&)
+**vs. Server Foda** é um mod wip aí bla bla bla
+
+## Instalação
+* Acesse a página do [último lançamento](https://github.com/mingokrb/VsServerFoda/releases/latest) e faça o download da versão compatível com sua plataforma.
+* Extraia/instale o jogo e abra-o.
+  * No Windows, execute o arquivo `VsServerFoda.exe`. Caso não funcionar, execute o arquivo `VsServerFoda.bat` no lugar.
+  * No Android, instale o arquivo `.apk` e aguarde o processo terminar. Se a instalação for interrompida, procure por `Permitir fontes desconhecidas` em suas configurações e ative seu gerenciador de arquivos. Se necessário, você também precisará desativar o Play Protect.
+
+# P-Slice
 <!-- Thanks soushimiya for this README template! -->
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a id="readme-top"></a>
