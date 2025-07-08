@@ -44,7 +44,7 @@ class TitleState extends MusicBeatState
 	
 	var credGroup:FlxGroup = new FlxGroup();
 	var textGroup:FlxGroup = new FlxGroup();
-	var bgSpr:FlxSprite;
+	var blackground:FlxSprite; // gostou do trocadilho kkkkkkkkkk valeu!
 	var credTextShit:Alphabet;
 	var ngSpr:FlxSprite;
 	var sfSpr:FlxSprite;
@@ -224,17 +224,17 @@ class TitleState extends MusicBeatState
 		logo.antialiasing = ClientPrefs.data.antialiasing;
 		logo.screenCenter();
 		
-		bgSpr = new FlxSprite().loadGraphic(Paths.image('titleBG'));
-		bgSpr.scale.set(FlxG.width, FlxG.height);
-		bgSpr.updateHitbox();
-		credGroup.add(bgSpr);
+		blackground = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
+		blackground.scale.set(FlxG.width, FlxG.height);
+		blackground.updateHitbox();
+		credGroup.add(blackground);
 		
 		credTextShit = new Alphabet(0, 0, "", true);
 		credTextShit.screenCenter();
 		credTextShit.visible = false;
 		
 		ngSpr = new FlxSprite(0, FlxG.height * 0.52);
-		sfSpr = new FlxSprite(0, FlxG.height * 0.5);
+		sfSpr = new FlxSprite(0, FlxG.height * 0.52);
 		
 		#if desktop
 		if (FlxG.random.bool(1))
@@ -264,7 +264,13 @@ class TitleState extends MusicBeatState
 		ngSpr.antialiasing = ClientPrefs.data.antialiasing;
 		ngSpr.visible = false;
 		
-		sfSpr.loadGraphic(Paths.image('serverfodateam_logo'));
+		if (FlxG.random.bool(1)) {
+			sfSpr.loadGraphic(Paths.image('serverfodatadb_logo'));
+		} else if (FlxG.random.bool(20)) {
+			sfSpr.loadGraphic(Paths.image('serverfodatuah_logo'));
+		} else {
+			sfSpr.loadGraphic(Paths.image('serverfodateam_logo'));
+		}
 		//sfSpr.setGraphicSize(Std.int(sfSpr.width * 0.8));
 		sfSpr.updateHitbox();
 		sfSpr.screenCenter(X);
@@ -305,12 +311,9 @@ class TitleState extends MusicBeatState
 					enterPosition.set(titleJSON.startx, titleJSON.starty);
 					musicBPM = titleJSON.bpm;
 					
-					if (titleJSON.backgroundSprite != null && titleJSON.backgroundSprite.trim().length > 0)
-					{
-						var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image(titleJSON.backgroundSprite));
-						bg.antialiasing = ClientPrefs.data.antialiasing;
-						add(bg);
-					}
+					var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('titleBG'));
+					bg.antialiasing = ClientPrefs.data.antialiasing;
+					add(bg);
 				}
 				catch(e:haxe.Exception)
 				{
@@ -334,7 +337,7 @@ class TitleState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('wegascare'));
 				wega = true;
 			case 'RONALDO':
-				playRandomSfx(['ronaldo', 'tatuador']);
+				playRandomSfx(['ronaldo', 'tatuador', 'cuica']);
 			case '53488':
 				book = true;
 			case 'TADB':
@@ -343,7 +346,9 @@ class TitleState extends MusicBeatState
 	}
 	
 	function playRandomSfx(sounds:Array<String>)
+	{
 		FlxG.sound.play(Paths.sound(Random.fromArray(sounds)));
+	}
 	
 	function getIntroTextShit():Array<Array<String>>
 	{
