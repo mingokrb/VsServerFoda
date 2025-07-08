@@ -2,6 +2,7 @@ package states;
 
 import states.editors.ChartingState;
 import backend.WeekData;
+import backend.Song;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
@@ -498,9 +499,12 @@ class TitleState extends MusicBeatState
 								add(wegaSpr);
 								var wegaTimer = FlxTimer().start(2, function(tmr:FlxTimer)
 								{
-									FlxTransitionableState.skipNextTransIn = true;
-									FlxTransitionableState.skipNextTransOut = true;
-									MusicBeatState.switchState(new TitleState()); // como inicia uma música porraaaaaaaaaaaaaa
+									// de FunkinLua.hx
+									var wegasong = Highscore.formatSong('wega', 3);
+									Song.loadFromJson(wegasong, 'wega');
+									PlayState.storyDifficulty = difficultyNum;
+									FlxG.state.persistentUpdate = false;
+									LoadingState.loadAndSwitchState(new PlayState());
 								}
 							}
 							if book
