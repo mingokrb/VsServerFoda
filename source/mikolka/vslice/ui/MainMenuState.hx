@@ -23,11 +23,7 @@ import options.OptionsState;
 
 class MainMenuState extends MusicBeatState
 {
-	#if !LEGACY_PSYCH
 	public static var psychEngineVersion:String = '1.0.4'; // This is also used for Discord RPC
-	#else
-	public static var psychEngineVersion:String = '0.6.3'; // This is also used for Discord RPC
-	#end
 	public static var vsfVersion:String = '0.1'; // mudar com o tempo!!!!!!!!!!!!!!
 	public static var pSliceVersion:String = '3.1.1'; 
 	public static var curSelected:Int = 0;
@@ -37,10 +33,9 @@ class MainMenuState extends MusicBeatState
 	var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
-		#if MODS_ALLOWED 'mods', #end // remover na versão final
+		'commands', // favela dos bots
 		#if ACHIEVEMENTS_ALLOWED 'awards', #end
 		'credits',
-		//#if !switch 'donate', #end
 		'options'
 	];
 
@@ -209,19 +204,13 @@ class MainMenuState extends MusicBeatState
 									}
 									changeItem(0);
 								});
-								
 							}
-
-							#if MODS_ALLOWED
-							case 'mods':
-								MusicBeatState.switchState(new ModsMenuState());
-							#end
-
+							case 'commands':
+								MusicBeatState.switchState(new CommandsState());
 							#if ACHIEVEMENTS_ALLOWED
 							case 'awards':
 								MusicBeatState.switchState(new AchievementsMenuState());
 							#end
-
 							case 'options':
 								MusicBeatState.switchState(new OptionsState());
 								#if !LEGACY_PSYCH OptionsState.onPlayState = false; #end
