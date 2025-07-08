@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TextureAtlas imagePath="holdCover-vanilla.png" width="599" height="591">
+<TextureAtlas imagePath="holdCover-original.png" width="599" height="591">
   <SubTexture name="holdCoverStart0001" x="413" y="96" width="93" height="93" frameX="-111" frameY="-107" frameWidth="300" frameHeight="400" />
   <SubTexture name="holdCover0001" x="407" y="243" width="108" height="139" rotated="true" frameX="-93" frameY="-94" frameWidth="300" frameHeight="400" />
   <SubTexture name="holdCover0002" x="413" y="0" width="120" height="96" frameX="-100" frameY="-104" frameWidth="300" frameHeight="400" />
