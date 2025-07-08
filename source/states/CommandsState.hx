@@ -27,7 +27,7 @@ class CommandsState extends MusicBeatState
 		//bg.screenCenter();
 		add(bg);
 		
-		var commandsList:Array<String> = [
+		var commandsList:Array<Array<String>> = [
 			['work'],
 			['slut'],
 			['crime'],
