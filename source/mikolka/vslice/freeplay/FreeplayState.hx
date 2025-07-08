@@ -904,7 +904,7 @@ class FreeplayState extends MusicBeatSubstate
 		changeSelection();
 		changeDiff(0, true);
 		#if freeplay_profile
-		trace('Iniciar as músicas levou ${Sys.time()-timeStart}');
+		trace('Inicializar músicas levou ${Sys.time()-timeStart}');
 		//var timeStart = Sys.time();
 		#end
 	}
