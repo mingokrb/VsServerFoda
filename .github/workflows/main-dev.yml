@@ -1,11 +1,6 @@
 name: Build dev (Android, Windows)
 
-on:
-  push:
-    branches: [dev]
-  pull_request:
-    branches: [dev]
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   BuildWindows:
