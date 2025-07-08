@@ -49,7 +49,9 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var ngSpr:FlxSprite;
 	var sfSpr:FlxSprite;
+	
 	var wega:Bool = false;
+	var book:Bool = false;
 	
 	var titleTextColors:Array<FlxColor> = [0xFF33FFFF, 0xFF3333CC];
 	var titleTextAlphas:Array<Float> = [1, .64];
@@ -489,7 +491,7 @@ class TitleState extends MusicBeatState
 							else
 								FlxG.save.data.psychDevsEasterEgg = word;
 							FlxG.save.flush();
-							if wega
+							if (wega)
 							{
 								FlxG.sound.music.fadeOut(1, FlxG.sound.music.getActualVolume(), 0);
 								var wegaSpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.images('wega'));
