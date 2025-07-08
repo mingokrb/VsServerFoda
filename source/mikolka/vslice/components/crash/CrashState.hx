@@ -55,23 +55,23 @@ class CrashState extends FlxState
             var star = #if CHECK_FOR_UPDATES "" #else "*" #end;
             dateNow = dateNow.replace(' ', '_');
             dateNow = dateNow.replace(':', "'");
-            errMsg += 'P-Slice ${MainMenuState.pSliceVersion}$star\n';
-            errMsg += '\nUncaught Error: ' + error.message + "\n";
+            errMsg += 'vs. Server Foda ${MainMenuState.vsfVersion}$star\n';
+            errMsg += '\nErro: ' + error.message + "\n";
             for (x in error.extendedTrace)
             {
                 errMsg += x + "\n";
             }
             errMsg += '----------\n';
-            errMsg += 'Active mod: ${error.activeMod}\n';
-            errMsg += 'Platform: ${error.systemName}\n';
+            //errMsg += 'Active mod: ${error.activeMod}\n';
+            errMsg += 'Plataforma: ${error.systemName}\n';
             errMsg += '\n';
-            errMsg += '\nPlease report this error to the GitHub page: https://github.com/Psych-Slice/P-Slice\n\n> Crash Handler written by: sqirra-rng';
+            errMsg += '\nPor favor, reporte este erro na página do github: https://github.com/mingokrb/VsServerFoda\n\n> Crash Handler escrito por: sqirra-rng (P-Slice)';
     
             #if !LEGACY_PSYCH
             @:privateAccess // lazy
             backend.CrashHandler.saveErrorMessage(errMsg + '\n');
             #else
-            var path = './crash/' + 'PSlice_' + dateNow + '.txt';
+            var path = './crash/' + 'VsServerFoda_' + dateNow + '.txt';
             File.saveContent(path, errMsg + '\n');
             #end
             Sys.println(errMsg);
