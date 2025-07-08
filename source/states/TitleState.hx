@@ -515,7 +515,7 @@ class TitleState extends MusicBeatState
 									// de FunkinLua.hx
 									var wegasong = Highscore.formatSong('wega', 3);
 									Song.loadFromJson(wegasong, 'wega');
-									PlayState.storyDifficulty = difficultyNum;
+									PlayState.storyDifficulty = 3;
 									FlxG.state.persistentUpdate = false;
 									LoadingState.loadAndSwitchState(new PlayState());
 								});
