@@ -20,6 +20,9 @@ import mikolka.vslice.components.ScreenshotPlugin;
 #if VIDEOS_ALLOWED
 import mikolka.vslice.AttractState;
 #end
+#if android
+import mobile.backend.PsychJNI
+#end
 
 typedef TitleData =
 {
@@ -180,6 +183,7 @@ class TitleState extends MusicBeatState
 		
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 		logoBl.animation.play('bump');
+		logoBl.screenCenter();
 		logoBl.updateHitbox();
 		
 		// reutilizei mesmo... vai fazer o quê... hein...
@@ -225,8 +229,9 @@ class TitleState extends MusicBeatState
 		logo.antialiasing = ClientPrefs.data.antialiasing;
 		logo.screenCenter();
 		
-		blackground = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
-		blackground.scale.set(FlxG.width, FlxG.height);
+		blackground = new FlxSprite().makeGraphic(0, 0, FlxColor.BLACK);
+		blackground.scale.set(FlxG.width + 4, FlxG.height + 4); // garantir que vai cobrir tudo (não cobria antes)
+		blackground.screenCenter();
 		blackground.updateHitbox();
 		credGroup.add(blackground);
 		
@@ -387,7 +392,7 @@ class TitleState extends MusicBeatState
 			#end
 		}
 		
-		if(enterTimer != null && pressedEnter){
+		if(enterTimer != null && pressedEnter && !wega && !book){
 			enterTimer.cancel();
 			enterTimer.onComplete(enterTimer);
 			enterTimer = null;
@@ -416,7 +421,7 @@ class TitleState extends MusicBeatState
 				titleText.alpha = FlxMath.lerp(titleTextAlphas[0], titleTextAlphas[1], timer);
 			}
 			
-			if (pressedEnter)
+			if (pressedEnter && !wega && !book)
 			{
 				titleText.color = FlxColor.WHITE;
 				titleText.alpha = 1;
@@ -540,7 +545,7 @@ class TitleState extends MusicBeatState
 		
 		if (!wega && !book)
 		{
-			if (swagShader != null)
+			/*if (swagShader != null)
 			{
 				if (cheatActive && TouchUtil.pressed || controls.UI_LEFT)
 					swagShader.hue -= elapsed * 0.1;
@@ -550,7 +555,7 @@ class TitleState extends MusicBeatState
 			#if FLX_PITCH
 			if (controls.UI_UP) FlxG.sound.music.pitch += 0.5 * elapsed;
 			if (controls.UI_DOWN) FlxG.sound.music.pitch -= 0.5 * elapsed;
-			#end
+			#end*/
 			#if desktop
 			if (controls.BACK) openfl.Lib.application.window.close();
 			#end
@@ -729,54 +734,11 @@ class TitleState extends MusicBeatState
 		}
 	}
 	
-	// Cheat code shit
-	var cheatArray:Array<Int> = [0x0001, 0x0010, 0x0001, 0x0010, 0x0100, 0x1000, 0x0100, 0x1000];
-	var curCheatPos:Int = 0;
-	var cheatActive:Bool = false;
-	
-	function cheatCodeShit():Void
-	{
-		if (SwipeUtil.swipeAny || FlxG.keys.justPressed.ANY)
-		{
-			if (controls.NOTE_DOWN_P || controls.UI_DOWN_P || SwipeUtil.swipeUp)
-				codePress(FlxDirectionFlags.DOWN);
-			if (controls.NOTE_UP_P || controls.UI_UP_P || SwipeUtil.swipeDown)
-				codePress(FlxDirectionFlags.UP);
-			if (controls.NOTE_LEFT_P || controls.UI_LEFT_P || SwipeUtil.swipeRight)
-				codePress(FlxDirectionFlags.LEFT);
-			if (controls.NOTE_RIGHT_P || controls.UI_RIGHT_P || SwipeUtil.swipeLeft)
-				codePress(FlxDirectionFlags.RIGHT);
-		}
-	}
-	
-	function codePress(input:Int)
-	{
-		if (input == cheatArray[curCheatPos])
-		{
-			curCheatPos += 1;
-			if (curCheatPos >= cheatArray.length)
-				startCheat();
-		}
-		else
-			curCheatPos = 0;
-		
-		trace(input);
-	}
-	
-	function startCheat():Void
-	{
-		cheatActive = true;
-		
-		// var spec:SpectogramSprite = new SpectogramSprite(FlxG.sound.music);
-		
-		FlxG.sound.playMusic(Paths.music('girlfriendsRingtone'), 0);
-		Conductor.bpm = 160; // GF's ringnote has different BPM
-		
-		FlxG.sound.music.fadeIn(4.0, 0.0, 1.0);
-		
-		FlxG.camera.flash(FlxColor.WHITE, 1);
-		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
-	}
+	// abrir teclado virtual ao deslizar pra cima
+	#if android
+	if (SwipeUtil.swipeAny && SwipeUtil.swipeUp)
+		PsychJNI.isScreenKeyboardShown();
+	#end
 	
 	/**
 	 * After sitting on the title screen for a while, transition to the attract screen.
