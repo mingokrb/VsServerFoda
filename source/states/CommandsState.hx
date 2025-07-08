@@ -50,12 +50,14 @@ class CommandsState extends MusicBeatState
 		//blockPressWhileTypingOn.push(commandInputText);
 
 		FlxG.sound.music.stop();
-		FlxG.sound.playMusic(Paths.music('freakyCommands'), 1.2, true); // playMusic('musicPath', volume, loop:Bool, 'group');
+		FlxG.sound.playMusic(Paths.music('menuCommands'), 1.2, true); // playMusic('musicPath', volume, loop:Bool, 'group');
 		/*sound.onComplete = function() {
 			FlxG.sound.playMusic(Paths.music('freakyCommands'), 1);
 		};*/
 
+		#if TOUCH_CONTROLS_ALLOWED
 		addTouchPad('NONE', 'B');
+		#end
 
 		super.create();
 	}
