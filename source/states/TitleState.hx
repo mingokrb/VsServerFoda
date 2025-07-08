@@ -507,9 +507,9 @@ class TitleState extends MusicBeatState
 									PlayState.storyDifficulty = difficultyNum;
 									FlxG.state.persistentUpdate = false;
 									LoadingState.loadAndSwitchState(new PlayState());
-								}
+								});
 							}
-							if book
+							if (book)
 							{
 								FlxG.sound.music.stop();
 								var uncannySpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.images('uncanny'));
