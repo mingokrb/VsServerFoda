@@ -74,7 +74,7 @@ class UserErrorSubstate extends MusicBeatSubstate
 						case Module(m):
 							line.push("MD:" + m);
 						case CFunction:
-							line.push("Native function");
+							line.push("Função nativa");
 						case Method(classname, method):
 							var regex = ~/(([A-Z]+[A-z]*)\.?)+/g;
 							regex.match(classname);
@@ -82,9 +82,9 @@ class UserErrorSubstate extends MusicBeatSubstate
 						default:
 							#if sys Sys.println #else trace #end (stackItem);
 					}
-					line.push("Line:" + pos_line);
+					line.push("Linha:" + pos_line);
 					errMsg.push(line);
-					errExtended.push('In file ${file}: ${line.join("  ")}');
+					errExtended.push('No arquivo ${file}: ${line.join("  ")}');
 				default:
 					#if sys Sys.println #else trace #end (stackItem);
 			}
@@ -133,16 +133,16 @@ class UserErrorSubstate extends MusicBeatSubstate
 		#elseif html5
 			FlxG.html5.platform.getName() + '(${FlxG.html5.browser.getName()})'
 		#else
-			'Unknown'
+			'Desconhecido'
 		#end;
 	}
     public inline static function getLogger():String
         {
             return switch(VsliceOptions.LOGGING){
-                case "File": "Logs available in the 'latest.log' file";
-                case "Console": "Check the console for logs";
-                case "None": "Logs disabled!";
-                default: "Is the logger orrupted???";
+                case "File": "Logs salvos no arquivo 'latest.log'";
+                case "Console": "Abra o console para ver os logs";
+                case "None": "Logs desativados!";
+                default: "O logger foi interrompido???";
             }
         }
 
@@ -191,7 +191,7 @@ class UserErrorSubstate extends MusicBeatSubstate
 	{
 		//43
 		var star = #if (CHECK_FOR_UPDATES || debug) "" #else "*" #end;
-		printToTrace('P-SLICE ${MainMenuState.pSliceVersion}$star  (${error.message})');
+		printToTrace('VS SERVER FODA ${MainMenuState.vsfVersion}$star  (${error.message})');
 		textNextY += 35;
 		FlxTimer.wait(1 / 24, () ->
 		{
@@ -230,29 +230,29 @@ class UserErrorSubstate extends MusicBeatSubstate
 			}
 			// printToTrace('S8:00000000H   RA:80286034H   MM:86A20290H');
 			printSpaceToTrace();
-			printToTrace('RUNTIME INFORMATION');
+			printToTrace('INFORMAÇÕES DA RUNTIME');
 			var date_split = error.date.split(" ");
-			printToTrace('TIME:${date_split[1].rpad(" ", 9)} DATE:${date_split[0]}');
-			printToTrace('MOD:${error.activeMod.rpad(" ", 10)} PE:${MainMenuState.psychEngineVersion.rpad(" ", 5)} SYS:${error.systemName}');
+			printToTrace('HORA:${date_split[1].rpad(" ", 9)} DATA:${date_split[0]}');
+			printToTrace('PE:${MainMenuState.psychEngineVersion.rpad(" ", 5)} SIS:${error.systemName}');
 			printSpaceToTrace();
             printToTrace(getLogger());
 			if (isCritical)
-				printToTrace('REPORT TO GITHUB.COM/MIKOLKA9144/P-SLICE');
+				printToTrace('REPORTE EM GITHUB.COM/MINGOKRB/VSSERVERFODA');
 			else
 				printToTrace('');
 			if (isCritical)
 			{
 				if (controls.mobileC)
-					printToTrace('TAP ANYWHERE TO RESTART');
+					printToTrace('TOQUE PARA REINICIAR');
 				else
-					printToTrace('PRESS \'ACCEPT\' TO RESTART | \'BACK\' TO QUIT');
+					printToTrace('APERTE \'ACEITAR\' PARA REINICIAR | \'VOLTAR\' PARA SAIR');
 			}
 			else
 			{
 				if (controls.mobileC)
-					printToTrace('TAP ANYWHERE TO CONTINUE');
+					printToTrace('TOQUE PARA CONTINUAR');
 				else
-					printToTrace('PRESS \'ACCEPT\' TO CONTINUE');
+					printToTrace('APERTE \'ACEITAR\' PARA CONTINUAR');
 			}
 			allowClosing = true;
 		});
