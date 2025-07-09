@@ -729,8 +729,11 @@ class TitleState extends MusicBeatState
 	
 	// abrir teclado virtual ao deslizar pra cima
 	#if android
-	if (SwipeUtil.swipeAny && SwipeUtil.swipeUp)
-		PsychJNI.isScreenKeyboardShown();
+	if (SwipeUtil.swipeAny)
+	{
+		if (SwipeUtil.swipeUp)
+			PsychJNI.isScreenKeyboardShown();
+	}
 	#end
 	
 	/**
