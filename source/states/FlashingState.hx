@@ -3,33 +3,48 @@ package states;
 import flixel.FlxSubState;
 
 import flixel.effects.FlxFlicker;
+import flixel.addons.display.FlxBackdrop;
 import lime.app.Application;
+import objects.TypedAlphabet;
 
 class FlashingState extends MusicBeatState
 {
 	public static var leftState:Bool = false;
 
 	var warnText:FlxText;
+	
 	override function create()
 	{
 		controls.isInSubstate = false; // qhar I hate it
 		super.create();
 
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLUE);
+		bg.alpha(0.1);
 		add(bg);
+		
+		var backdrop:FlxBackdrop = new FlxBackdrop(Paths.image('backdrop_sanes'));
+		backdrop.setGraphicSize(Std.int(backdrop.width * 0.6));
+		backdrop.alpha = 0.22; // vai brasil
+		backdrop.antialiasing = ClientPrefs.data.antialiasing;
+		backdrop.screenCenter(X);
+		backdrop.updateHitbox();
+		add(backdrop);
+		
+		var bigText:Alphabet = new Alphabet(0, 180, 'Cuidado!', true);
+		bigText.screenCenter(X);
+		add(bigText);
 
 		final enter:String = controls.mobileC ? 'A' : 'ENTER';
-		final escape:String = controls.mobileC ? 'B' : 'ESCAPE';
+		final escape:String = controls.mobileC ? 'B' : 'ESC';
 
-		warnText = new FlxText(0, 0, FlxG.width,
-			"Hey, watch out!\n
-			This Mod contains some flashing lights!\n
-			Press " + enter + " to disable them now or go to Options Menu.\n
-			Press " + escape + " to ignore this message.\n
-			You've been warned!",
+		warnText = new FlxText(0, (FlxG.height / 2) + 100, FlxG.width,
+			"Este mod contém algumas luzes piscantes!\n
+			Aperte " + enter + " para desativá-las agora ou abra o menu de opções.\n
+			Aperte " + escape + " para ignorar esta mensagem.\n
+			Você foi avisado(a)!",
 			32);
-		warnText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
-		warnText.screenCenter(Y);
+		warnText.setFormat(Paths.font("comic_sans.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		warnText.screenCenter(X);
 		add(warnText);
 		#if TOUCH_CONTROLS_ALLOWED
 		addTouchPad('NONE', 'A_B');
@@ -39,6 +54,12 @@ class FlashingState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		if(!leftState) {
+			// https://gamebanana.com/tuts/15426
+			backdrop.x += 0.3 * (elapsed / (1 / 120));
+			backdrop.y -= 0.2 / (ClientPrefs.data.framerate / 60);
+			
+			FlxTween.tween(backdrop, {alpha: 0}, 1.2);
+			//FlxTween.tween(controls.mobileC, {alpha: 0}, 1); // não sei se funciona vou deixar comentado
 			var back:Bool = controls.BACK;
 			if (controls.ACCEPT || back) {
 				leftState = true;
@@ -48,13 +69,18 @@ class FlashingState extends MusicBeatState
 					ClientPrefs.data.flashing = false;
 					ClientPrefs.saveSettings();
 					FlxG.sound.play(Paths.sound('confirmMenu'));
+					FlxG.camera.flash(0x4CFFFFFF, 1);
+					FlxFlicker.flicker(bigText, 1, 0.1, false, true);
 					FlxFlicker.flicker(warnText, 1, 0.1, false, true, function(flk:FlxFlicker) {
 						new FlxTimer().start(0.5, function (tmr:FlxTimer) {
 							MusicBeatState.switchState(new TitleState());
 						});
 					});
 				} else {
+					ClientPrefs.data.flashing = true;
+					ClientPrefs.saveSettings();
 					FlxG.sound.play(Paths.sound('cancelMenu'));
+					FlxTween.tween(bigText, {alpha: 0}, 1);
 					FlxTween.tween(warnText, {alpha: 0}, 1, {
 						onComplete: function (twn:FlxTween) {
 							MusicBeatState.switchState(new TitleState());
