@@ -231,7 +231,7 @@ class TitleState extends MusicBeatState
 		
 		blackground = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
 		blackground.scale.set(FlxG.width + 4, FlxG.height + 4); // garantir que vai cobrir tudo (não cobria antes)
-		blackground.screenCenter();
+		//blackground.screenCenter();
 		blackground.updateHitbox();
 		credGroup.add(blackground);
 		
