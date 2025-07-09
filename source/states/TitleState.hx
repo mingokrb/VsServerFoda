@@ -34,7 +34,7 @@ typedef TitleData =
 	var bpm:Float;
 }
 
-class TitleState extends MusicBeatState
+class TitleState extends MusicBeatState #if android implements PsychUIEventHandler.PsychUIEvent #end
 {
 	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
 	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
@@ -240,7 +240,7 @@ class TitleState extends MusicBeatState
 		credTextShit.visible = false;
 		
 		ngSpr = new FlxSprite(0, FlxG.height * 0.52);
-		sfSpr = new FlxSprite(0, FlxG.height * 0.52);
+		sfSpr = new FlxSprite(0, FlxG.height * 0.53);
 		
 		#if desktop
 		if (FlxG.random.bool(1))
@@ -277,7 +277,7 @@ class TitleState extends MusicBeatState
 		} else {
 			sfSpr.loadGraphic(Paths.image('serverfodateam_logo'));
 		}
-		//sfSpr.setGraphicSize(Std.int(sfSpr.width * 0.8));
+		sfSpr.setGraphicSize(Std.int(sfSpr.width * 1.1));
 		sfSpr.updateHitbox();
 		sfSpr.screenCenter(X);
 		sfSpr.antialiasing = false;
@@ -712,17 +712,20 @@ class TitleState extends MusicBeatState
 			}
 			else
 			#end // Default! Edit this one!!	*/
-			{
-				remove(ngSpr);
-				remove(sfSpr);
-				remove(credGroup);
-				FlxG.camera.flash(FlxColor.WHITE, 4);
-				
-				var easteregg:String = FlxG.save.data.psychDevsEasterEgg;
-				if (easteregg == null)
-					easteregg = '';
-				easteregg = easteregg.toUpperCase();
-			}
+			remove(ngSpr);
+			remove(sfSpr);
+			remove(credGroup);
+			FlxG.camera.flash(FlxColor.WHITE, 4);
+			
+			// inputbox pro mobile (todo: descobrir como mudar a opacidade)
+			#if android
+			var secretinput:PsychUIBox = new PsychUIBox(FlxG.width - 200, 0, 200, 50);
+			#end
+			
+			var easteregg:String = ''; //FlxG.save.data.psychDevsEasterEgg;
+			if (easteregg == null)
+				easteregg = '';
+			easteregg = easteregg.toUpperCase();
 			skippedIntro = true;
 		}
 	}
