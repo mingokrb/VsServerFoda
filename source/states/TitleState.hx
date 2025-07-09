@@ -20,9 +20,6 @@ import mikolka.vslice.components.ScreenshotPlugin;
 #if VIDEOS_ALLOWED
 import mikolka.vslice.AttractState;
 #end
-#if android
-import mobile.backend.PsychJNI;
-#end
 
 typedef TitleData =
 {
@@ -767,7 +764,7 @@ class TitleState extends MusicBeatState #if android implements PsychUIEventHandl
 			
 			// inputbox pro mobile (todo: descobrir como mudar a opacidade)
 			#if android
-			var secretinput:PsychUIBox = new PsychUIBox(FlxG.width - 200, 0, 200, 50);
+			var secretinput:PsychUIInputText = new PsychUIInputText(FlxG.width - 100, 0, 100);
 			#end
 			
 			var easteregg:String = ''; //FlxG.save.data.psychDevsEasterEgg;
@@ -775,6 +772,14 @@ class TitleState extends MusicBeatState #if android implements PsychUIEventHandl
 				easteregg = '';
 			easteregg = easteregg.toUpperCase();
 			skippedIntro = true;
+		}
+	}
+	
+	public function UIEvent(id:String, sender:Dynamic) {
+		if(id == PsychUIInputText.CHANGE_EVENT && (sender is PsychUIInputText)) {
+			if(sender == secretinput) {
+				easterEggKeysBuffer = secretinput.text;
+			}
 		}
 	}
 	
