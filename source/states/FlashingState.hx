@@ -24,7 +24,7 @@ class FlashingState extends MusicBeatState
 		bg.alpha = 0.1;
 		add(bg);
 		
-		backdrop:FlxBackdrop = new FlxBackdrop(Paths.image('backdrop_sanes'));
+		backdrop = new FlxBackdrop(Paths.image('backdrop_sanes'));
 		backdrop.setGraphicSize(Std.int(backdrop.width * 0.6));
 		backdrop.alpha = 0.22; // vai brasil
 		backdrop.antialiasing = ClientPrefs.data.antialiasing;
