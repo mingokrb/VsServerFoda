@@ -11,6 +11,7 @@ class FlashingState extends MusicBeatState
 {
 	public static var leftState:Bool = false;
 
+	var bg:FlxSprite;
 	var backdrop:FlxBackdrop;
 	var bigText:Alphabet;
 	var warnText:FlxText;
@@ -20,8 +21,9 @@ class FlashingState extends MusicBeatState
 		controls.isInSubstate = false; // qhar I hate it
 		super.create();
 
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLUE);
-		bg.alpha = 0.1;
+		var black:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLUE);
+		bg.alpha = 0.08;
 		add(bg);
 		
 		backdrop = new FlxBackdrop(Paths.image('backdrop_sanes'));
@@ -32,14 +34,14 @@ class FlashingState extends MusicBeatState
 		backdrop.updateHitbox();
 		add(backdrop);
 		
-		bigText = new Alphabet(0, 180, 'Cuidado!', true);
+		bigText = new Alphabet(0, 120, 'Cuidado!', true);
 		bigText.screenCenter(X);
 		add(bigText);
 
 		final enter:String = controls.mobileC ? 'A' : 'ENTER';
 		final escape:String = controls.mobileC ? 'B' : 'ESC';
 
-		warnText = new FlxText(0, (FlxG.height / 2) + 100, FlxG.width,
+		warnText = new FlxText(0, FlxG.height / 2, FlxG.width,
 			"Este mod contém algumas luzes piscantes!\n
 			Aperte " + enter + " para desativá-las agora ou abra o menu de opções.\n
 			Aperte " + escape + " para ignorar esta mensagem.\n
@@ -60,13 +62,15 @@ class FlashingState extends MusicBeatState
 			backdrop.x += 0.3 * (elapsed / (1 / 120));
 			backdrop.y -= 0.2 / (ClientPrefs.data.framerate / 60);
 			
-			FlxTween.tween(backdrop, {alpha: 0}, 1.2);
-			//FlxTween.tween(controls.mobileC, {alpha: 0}, 1); // não sei se funciona vou deixar comentado
 			var back:Bool = controls.BACK;
 			if (controls.ACCEPT || back) {
 				leftState = true;
 				FlxTransitionableState.skipNextTransIn = true;
 				FlxTransitionableState.skipNextTransOut = true;
+				
+				FlxTween.tween(bg, {alpha: 0}, 1.2);
+				FlxTween.tween(backdrop, {alpha: 0}, 1.2);
+				//FlxTween.tween(controls.mobileC, {alpha: 0}, 1); // não sei se funciona vou deixar comentado
 				if(!back) {
 					ClientPrefs.data.flashing = false;
 					ClientPrefs.saveSettings();
