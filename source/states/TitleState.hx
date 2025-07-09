@@ -21,7 +21,7 @@ import mikolka.vslice.components.ScreenshotPlugin;
 import mikolka.vslice.AttractState;
 #end
 #if android
-import mobile.backend.PsychJNI
+import mobile.backend.PsychJNI;
 #end
 
 typedef TitleData =
