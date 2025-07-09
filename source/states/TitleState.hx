@@ -370,9 +370,7 @@ class TitleState extends MusicBeatState
 		if (controls.FAVORITE)
 			moveToAttract();
 		#end
-		if (!cheatActive && skippedIntro)
-			cheatCodeShit();
-		
+		if (skippedIntro)
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
@@ -443,11 +441,6 @@ class TitleState extends MusicBeatState
 					}
 					else
 					{
-						if (cheatActive)
-						{
-							FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-							FlxG.sound.music.fadeIn(4, 0, 0.7);
-						}
 						FlxTransitionableState.skipNextTransIn = true;
 						MusicBeatState.switchState(new MainMenuState());
 					}
@@ -615,8 +608,8 @@ class TitleState extends MusicBeatState
 		if (logoBl != null)
 			logoBl.animation.play('bump', true);
 		
-		if (cheatActive && this.curBeat % 2 == 0 && swagShader != null)
-			swagShader.hue += 0.125;
+		//if (cheatActive && this.curBeat % 2 == 0 && swagShader != null)
+		//	swagShader.hue += 0.125;
 		
 		if (!closedState)
 		{
