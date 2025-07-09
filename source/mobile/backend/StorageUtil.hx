@@ -67,13 +67,13 @@ class StorageUtil
 
 			File.saveContent('saves/$fileName', fileData);
 			if (alert)
-				CoolUtil.showPopUp('$fileName has been saved.', "Success!");
+				CoolUtil.showPopUp('$fileName foi salvo.', "Sucesso!");
 		}
 		catch (e:Exception)
 			if (alert)
-				CoolUtil.showPopUp('$fileName couldn\'t be saved.\n(${e.message})', "Error!")
+				CoolUtil.showPopUp('$fileName não pôde ser salvo.\n(${e.message})', "Erro!")
 			else
-				trace('$fileName couldn\'t be saved. (${e.message})');
+				trace('$fileName não pôde ser salvo. (${e.message})');
 	}
 
 	#if android
@@ -81,9 +81,9 @@ class StorageUtil
 	{
 		var requiresUserPermissions = AndroidVersion.SDK_INT >= AndroidVersionCode.M;
 		if(requiresUserPermissions) checkUserStoragePermissions();
-		else trace("We are on Lolipop?? No need to beg for permissions then");
+		else trace("Estamos no Lollipop?? Sem necessidade de pedir permissões então.");
 
-		trace("Checking game directory...");
+		trace("Verificando diretório do jogo...");
 		try
 		{
 			if (!FileSystem.exists(StorageUtil.getStorageDirectory()))
@@ -92,17 +92,17 @@ class StorageUtil
 		catch (e:Exception)
 		{
 			trace(e);
-			CoolUtil.showPopUp(e.message+'\nPlease create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
+			CoolUtil.showPopUp(e.message+'\nPor favor, crie o diretório:\n\'' + StorageUtil.getStorageDirectory(true) + '\'\nAperte OK para fechar o jogo.', 'Error!');
 			//LimeSystem.exit(1);
 		}
 	}
 
 	public static function checkUserStoragePermissions() {
 		var isAPI33 = AndroidVersion.SDK_INT >= AndroidVersionCode.TIRAMISU;
-		trace("Check perms...");
+		trace("Verificando permissões...");
 
 		if (!isAPI33){
-			trace("Requesting EXTERNAL_STORAGE");
+			trace("Solicitando EXTERNAL_STORAGE...");
 			AndroidPermissions.requestPermissions(['READ_EXTERNAL_STORAGE', 'WRITE_EXTERNAL_STORAGE']);
 		}
 
@@ -117,8 +117,8 @@ class StorageUtil
 		//var has_READ_MEDIA_IMAGES = AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_MEDIA_IMAGES');
 		if ((isAPI33 && !has_MANAGE_EXTERNAL_STORAGE)
 			|| (!isAPI33 && !has_READ_EXTERNAL_STORAGE))
-			CoolUtil.showPopUp('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress OK to see what happens',
-				'Notice!');
+			CoolUtil.showPopUp('Se você concedeu as permissões, tudo pronto!' + '\nCaso contrário, aguarde um crash.' + '\nAperte OK para ver o que acontece.',
+				'Atenção!');
 	}
 
 	public static function checkExternalPaths(?splitStorage = false):Array<String>
@@ -149,6 +149,7 @@ class StorageUtil
 enum abstract StorageType(String) from String to String
 {
 	final forcedPath = '/storage/emulated/0/';
+	// esses aqui são do cartão SD mas como a versão final só vai usar a pasta Android/data/ não precisa esquentar muito com isso
 	final packageNameLocal = 'com.mikolka9144.pslice';
 	final fileLocal = 'PSliceEngine';
 
@@ -170,7 +171,7 @@ enum abstract StorageType(String) from String to String
 			}
 		}
 		catch(x:Exception){
-			trace("Failed to read storage. Forcing paths!");
+			trace("Falha ao ler armazenamento. Forçando caminhos!");
 			trace(x);
 			return fromStrForce(str);
 		}
