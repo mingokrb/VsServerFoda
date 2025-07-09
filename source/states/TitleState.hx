@@ -31,7 +31,7 @@ typedef TitleData =
 	var bpm:Float;
 }
 
-class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements PsychUIEventHandler.PsychUIEvent #end
+class TitleState extends MusicBeatState
 {
 	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
 	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
@@ -393,7 +393,7 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 			#end
 		}
 		
-		if(enterTimer != null && pressedEnter && !wega && !book && !FlxG.stage.window.textInputEnabled){
+		if(enterTimer != null && pressedEnter && !wega && !book && !FlxG.stage.window.textInputEnabled) {
 			enterTimer.cancel();
 			enterTimer.onComplete(enterTimer);
 			enterTimer = null;
@@ -574,9 +574,7 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 		}
 		
 		if (initialized && pressedEnter && !skippedIntro)
-		{
 			skipIntro();
-		}
 		
 		if (!wega && !book)
 		{
@@ -771,10 +769,12 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 	}
 	
 	// abrir teclado virtual ao deslizar pra cima
-	#if android
-	if (SwipeUtil.swipeAny && SwipeUtil.swipeUp && !FlxG.stage.window.textInputEnabled)
-		FlxG.stage.window.textInputEnabled = true;
-	if (TouchUtil.justReleased && FlxG.stage.window.textInputEnabled)
+	#if TOUCH_CONTROLS_ALLOWED
+	if (SwipeUtil.swipeAny) {
+		if (SwipeUtil.swipeUp && !FlxG.stage.window.textInputEnabled)
+			FlxG.stage.window.textInputEnabled = true;
+	}
+	else if (controls.BACK && FlxG.stage.window.textInputEnabled)
 		FlxG.stage.window.textInputEnabled = false;
 	#end
 	
