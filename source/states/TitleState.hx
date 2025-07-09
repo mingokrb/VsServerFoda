@@ -769,6 +769,7 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 			// inputbox pro mobile (todo: descobrir como mudar a opacidade)
 			#if TOUCH_CONTROLS_ALLOWED
 			secretinput = new PsychUIInputText(0, 0, 100, 8);
+			add(secretinput);
 			#end
 			
 			var easteregg:String = ''; //FlxG.save.data.psychDevsEasterEgg;
