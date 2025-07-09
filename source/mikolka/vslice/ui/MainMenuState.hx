@@ -25,7 +25,7 @@ class MainMenuState extends MusicBeatState
 	public static var vsfVersion:String = '0.1'; // mudar com o tempo!!!!!!!!!!!!!!
 	public static var pSliceVersion:String = '3.1.1'; 
 	public static var curSelected:Int = 0;
-	var allowMouse:Bool = true; //Turn this off to block mouse movement in menus
+	var allowMouse:Bool = false; //Turn this off to block mouse movement in menus
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	var bottom:FlxTypedGroup<FlxSprite>;
