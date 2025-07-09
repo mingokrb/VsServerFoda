@@ -53,6 +53,7 @@ class TitleState extends MusicBeatState
 	
 	var wega:Bool = false;
 	var book:Bool = false;
+	var ronaldoMode:Bool = false;
 	
 	var titleTextColors:Array<FlxColor> = [0xFF33FFFF, 0xFF3333CC];
 	var titleTextAlphas:Array<Float> = [1, .64];
@@ -170,8 +171,11 @@ class TitleState extends MusicBeatState
 	function startIntro()
 	{
 		persistentUpdate = true;
-		if (!initialized && FlxG.sound.music == null)
+		if (!initialized && FlxG.sound.music == null && ronaldoMode) {
+			FlxG.sound.playMusic(Paths.music('freakyMenuSecret'), 0);
+		} else if (!initialized && FlxG.sound.music == null) {
 			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+		}
 		
 		loadJsonData();
 		#if TITLE_SCREEN_EASTER_EGG easterEggData(); #end
@@ -333,12 +337,14 @@ class TitleState extends MusicBeatState
 	
 	function easterEggData()
 	{
-		// if (FlxG.save.data.psychDevsEasterEgg == null) FlxG.save.data.psychDevsEasterEgg = ''; //Crash prevention
-		// var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
-		// switch(easterEgg.toUpperCase())
-		// {
-
-		// }
+		if (FlxG.save.data.psychDevsEasterEgg == null) FlxG.save.data.psychDevsEasterEgg = ''; //Crash prevention
+		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
+		switch(easterEgg.toUpperCase())
+		{
+			case 'RONALDO':
+				ronaldoMode = true;
+				initialized = false;
+		}
 	}
 	
 	function getIntroTextShit():Array<Array<String>>
@@ -427,7 +433,7 @@ class TitleState extends MusicBeatState
 				if (titleText != null)
 					titleText.animation.play('press');
 				
-				FlxG.camera.flash(ClientPrefs.data.flashing ? FlxColor.WHITE : 0x4CFFFFFF, 1);
+				FlxG.camera.flash(ClientPrefs.data.flashing ? 0x4CFFFFFF : FlxColor.WHITE, 1);
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 				
 				transitioning = true;
@@ -502,13 +508,51 @@ class TitleState extends MusicBeatState
 									});									
 									wega = true;
 								case 'RONALDO':
-									if (FlxG.random.bool(33)) {
-										FlxG.sound.play(Paths.sound('ronaldo'));
-									} else if (FlxG.random.bool(33)) {
-										FlxG.sound.play(Paths.sound('tatuador'));
+									if (FlxG.save.data.psychDevsEasterEgg == word) {
+										FlxG.save.data.psychDevsEasterEgg = '';
 									} else {
-										FlxG.sound.play(Paths.sound('cuica'));
+										FlxG.save.data.psychDevsEasterEgg = word;
 									}
+									FlxG.save.flush();
+
+									FlxG.sound.music.fadeOut();
+									FlxG.sound.play(Paths.sound('secretR'));
+
+									var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(1, 1, FlxColor.BLACK);
+									black.scale.set(FlxG.width, FlxG.height);
+									black.updateHitbox();
+									black.alpha = 0;
+									add(black);
+
+									var white:FlxSprite = new FlxSprite(0, 0).makeGraphic(1, 1, ClientPrefs.data.flashing ? 0x4CFFFFFF : FlxColor.WHITE);
+									white.scale.set(FlxG.width, FlxG.height);
+									white.updateHitbox();
+									white.alpha = 0;
+									add(white);
+									new FlxTimer().start(1.2, function(tmr:FlxTimer) { // Flashbang
+										FlxTween.tween(white, {alpha: 1}, 0.1, {
+										onComplete: function(twn:FlxTween) {
+											black.alpha = 1;
+											new FlxTimer().start(3.0, function(tmr:FlxTimer) {
+												FlxTween.tween(white, {alpha: 0}, 2.0, {
+													onComplete: function(twn:FlxTween) {
+														FlxTransitionableState.skipNextTransIn = true;
+														FlxTransitionableState.skipNextTransOut = true;
+														MusicBeatState.switchState(new TitleState());
+													}
+												});
+											});
+										}
+										});
+									});
+
+									// if (FlxG.random.bool(33)) {
+									// 	FlxG.sound.play(Paths.sound('ronaldo'));
+									// } else if (FlxG.random.bool(33)) {
+									// 	FlxG.sound.play(Paths.sound('tatuador'));
+									// } else {
+									// 	FlxG.sound.play(Paths.sound('cuica'));
+									// }
 								case '53488':
 									FlxG.sound.music.stop();
 									var uncannySpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('uncanny'));
@@ -524,6 +568,7 @@ class TitleState extends MusicBeatState
 									}
 							}
 							easterEggKeysBuffer = '';
+							break;
 						}
 					}
 				}
@@ -618,10 +663,13 @@ class TitleState extends MusicBeatState
 			{
 				case 1:
 					// FlxG.sound.music.stop();
-					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-					#if VIDEOS_ALLOWED
-						FlxG.sound.music.onComplete = moveToAttract;
-					#end
+					if (ronaldoMode)
+						FlxG.sound.playMusic(Paths.music('freakyMenuSecret'), 0);
+					else
+						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+					// #if VIDEOS_ALLOWED
+					// 	FlxG.sound.music.onComplete = moveToAttract;
+					// #end
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
 					addMoreText('Server Foda Team', -40);
@@ -638,7 +686,7 @@ class TitleState extends MusicBeatState
 				case 7:
 					addMoreText('com', -40);
 				case 8:
-					addMoreText('newgrounds', -40);
+					addMoreText('NewGrounds', -40);
 					ngSpr.visible = true;
 				case 9:
 					deleteCoolText();
@@ -659,11 +707,11 @@ class TitleState extends MusicBeatState
 				case 13:
 					deleteCoolText();
 				case 14:
-					addMoreText('vs', 20);
+					addMoreText('Vs', 20);
 				case 15:
 					addMoreText('Server', 52);
 				case 16:
-					addMoreText('Foda', 84); // credTextShit.text += '\nFoda';
+					addMoreText(ronaldoMode ? 'AAAAAAAAAAAAAAAAAAAAAAAAAAIIIIIIII' : 'Foda', 84); // credTextShit.text += '\nFoda';
 				
 				case 17:
 					skipIntro();
@@ -678,9 +726,9 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
-			#if VIDEOS_ALLOWED
-				FlxG.sound.music.onComplete = moveToAttract;
-			#end
+			// #if VIDEOS_ALLOWED
+			// 	FlxG.sound.music.onComplete = moveToAttract;
+			// #end
 			/*	#if TITLE_SCREEN_EASTER_EGG
 			if (wega) // Ignore deez
 			{
@@ -712,7 +760,7 @@ class TitleState extends MusicBeatState
 			}
 			else
 			#end // Default! Edit this one!!	*/
-			{
+			//{
 				remove(ngSpr);
 				remove(sfSpr);
 				remove(credGroup);
@@ -722,7 +770,7 @@ class TitleState extends MusicBeatState
 				if (easteregg == null)
 					easteregg = '';
 				easteregg = easteregg.toUpperCase();
-			}
+			//}
 			skippedIntro = true;
 		}
 	}
@@ -737,12 +785,12 @@ class TitleState extends MusicBeatState
 	#end /*
 	
 	/**
-	 * After sitting on the title screen for a while, transition to the attract screen.
+	 * After sitting on the title screen for a while, transition to the attract screen. ----- Dá pra fazer algo com isso com certeza
 	 */
-	function moveToAttract():Void
-	{	#if VIDEOS_ALLOWED
-		if(!Std.isOfType(FlxG.state,TitleState)) return;
-		FlxG.switchState(() -> new AttractState());
-		#end
-	}
+	// function moveToAttract():Void
+	// {	#if VIDEOS_ALLOWED
+	// 	if(!Std.isOfType(FlxG.state,TitleState)) return;
+	// 	FlxG.switchState(() -> new AttractState());
+	// 	#end
+	// }
 }
