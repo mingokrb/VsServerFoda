@@ -257,7 +257,7 @@ class MainMenuState extends MusicBeatState
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 		item.animation.play('idle');
 		FlxTween.tween(item, {x: 130}, 0.14, {ease: FlxEase.quadOut, onComplete:
-			item.updateHitbox()
+			item.updateHitbox
 		});
 		//menuItems.members[curSelected].screenCenter(X);
 
