@@ -186,7 +186,7 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 		logoBl.antialiasing = ClientPrefs.data.antialiasing;
 		
-		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
+		logoBl.animation.addByPrefix('bump', 'logo bumpin', 48, false);
 		logoBl.animation.play('bump');
 		logoBl.screenCenter();
 		logoBl.updateHitbox();
@@ -766,9 +766,10 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 			remove(credGroup);
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			
-			// inputbox pro mobile (todo: descobrir como mudar a opacidade)
+			// inputbox pro mobile
 			#if TOUCH_CONTROLS_ALLOWED
 			secretinput = new PsychUIInputText(0, 0, 100, 8);
+			secretinput.alpha(0.5); // por enquanto
 			add(secretinput);
 			#end
 			
