@@ -370,7 +370,7 @@ class TitleState extends MusicBeatState
 		if (controls.FAVORITE)
 			moveToAttract();
 		#end
-		if (skippedIntro)
+		//if (skippedIntro)
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
