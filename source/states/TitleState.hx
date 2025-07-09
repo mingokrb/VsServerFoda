@@ -774,7 +774,6 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 	#if android
 	if (SwipeUtil.swipeAny && SwipeUtil.swipeUp && !FlxG.stage.window.textInputEnabled)
 		FlxG.stage.window.textInputEnabled = true;
-	}
 	if (TouchUtil.justReleased && FlxG.stage.window.textInputEnabled)
 		FlxG.stage.window.textInputEnabled = false;
 	#end
