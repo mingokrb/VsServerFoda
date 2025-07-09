@@ -769,7 +769,7 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 			// inputbox pro mobile
 			#if TOUCH_CONTROLS_ALLOWED
 			secretinput = new PsychUIInputText(0, 0, 100, 8);
-			secretinput.alpha(0.5); // por enquanto
+			secretinput.alpha = 0.5; // por enquanto
 			add(secretinput);
 			#end
 			
