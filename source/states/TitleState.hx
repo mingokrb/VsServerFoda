@@ -728,13 +728,13 @@ class TitleState extends MusicBeatState
 	}
 	
 	// abrir teclado virtual ao deslizar pra cima
-	#if android
+	/* #if android
 	if (SwipeUtil.swipeAny)
 	{
 		if (SwipeUtil.swipeUp)
-			PsychJNI.isScreenKeyboardShown();
+			//PsychJNI.isScreenKeyboardShown();
 	}
-	#end
+	#end /*
 	
 	/**
 	 * After sitting on the title screen for a while, transition to the attract screen.
