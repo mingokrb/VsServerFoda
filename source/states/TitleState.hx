@@ -31,7 +31,7 @@ typedef TitleData =
 	var bpm:Float;
 }
 
-class TitleState extends MusicBeatState #if android implements PsychUIEventHandler.PsychUIEvent #end
+class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements PsychUIEventHandler.PsychUIEvent #end
 {
 	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
 	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
@@ -59,7 +59,7 @@ class TitleState extends MusicBeatState #if android implements PsychUIEventHandl
 	
 	var wackyImage:FlxSprite;
 	
-	#if android
+	#if TOUCH_CONTROLS_ALLOWED
 	var secretinput:PsychUIInputText;
 	#end
 	
@@ -767,7 +767,7 @@ class TitleState extends MusicBeatState #if android implements PsychUIEventHandl
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			
 			// inputbox pro mobile (todo: descobrir como mudar a opacidade)
-			#if android
+			#if TOUCH_CONTROLS_ALLOWED
 			secretinput = new PsychUIInputText(FlxG.width - 100, 0, 100);
 			#end
 			
@@ -779,6 +779,7 @@ class TitleState extends MusicBeatState #if android implements PsychUIEventHandl
 		}
 	}
 	
+	#if TOUCH_CONTROLS_ALLOWED
 	public function UIEvent(id:String, sender:Dynamic) {
 		if(id == PsychUIInputText.CHANGE_EVENT && (sender is PsychUIInputText)) {
 			if(sender == secretinput) {
@@ -786,6 +787,7 @@ class TitleState extends MusicBeatState #if android implements PsychUIEventHandl
 			}
 		}
 	}
+	#end
 	
 	// abrir teclado virtual ao deslizar pra cima
 	/* #if android
