@@ -33,8 +33,8 @@ class MainMenuState extends MusicBeatState
 	var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
-		'commands', // favela dos bots
-		#if ACHIEVEMENTS_ALLOWED 'awards', #end
+		'commands', // favela-dos-bots
+		'awards',
 		'credits',
 		'options' // separado do resto
 	];
@@ -61,7 +61,7 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('mainmenu/menuBG'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('mainmenu/menuBG'));
 		bg.antialiasing = false;
 		bg.scrollFactor.set();
 		//bg.setGraphicSize(Std.int(bg.width * 1.175));
@@ -77,7 +77,7 @@ class MainMenuState extends MusicBeatState
 
 		for (i in 0...4)
 		{
-			var menuItem:FlxSprite = new FlxSprite(130, (i * 50) + 200);
+			var menuItem:FlxSprite = new FlxSprite(132, (i * 59) + 200);
 			menuItem.antialiasing = false; //VsliceOptions.ANTIALIASING
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/buttons/menu_' + optionShit[i]);
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 0);
@@ -92,17 +92,17 @@ class MainMenuState extends MusicBeatState
 		bottom = new FlxTypedGroup<FlxSprite>();
 		add(bottom);
 		
-		var profileBottomBG:FlxSprite = new FlxSprite(100, FlxG.height - 200).loadGraphic(Paths.image('mainmenu/profileBottomBG'));
+		var profileBottomBG:FlxSprite = new FlxSprite(10, FlxG.height - 110).loadGraphic(Paths.image('mainmenu/profileBottomBG'));
 		profileBottomBG.antialiasing = false;
 		bottom.add(profileBottomBG);
 		profileBottomBG.scrollFactor.set();
 		profileBottomBG.updateHitbox();
 		
-		var optionsButton:FlxSprite = new FlxSprite(280, profileBottomBG.y);
+		var optionsButton:FlxSprite = new FlxSprite(240, profileBottomBG.y);
 		optionsButton.antialiasing = false;
-		optionsButton.frames = Paths.getSparrowAtlas('mainmenu/buttons/menu_options');
-		optionsButton.animation.addByPrefix('idle', "options basic", 0);
-		optionsButton.animation.addByPrefix('clicked', "options click", 0);
+		optionsButton.frames = Paths.getSparrowAtlas('mainmenu/buttons/menu_' + optionShit[5]);
+		optionsButton.animation.addByPrefix('idle', optionShit[5] + " basic", 0);
+		optionsButton.animation.addByPrefix('clicked', optionShit[5] + " click", 0);
 		optionsButton.animation.play('idle');
 		menuItems.add(optionsButton);
 		optionsButton.scrollFactor.set();
@@ -112,7 +112,7 @@ class MainMenuState extends MusicBeatState
 		var vsfVer:FlxText = new FlxText(0, 16, FlxG.width, "Vs. Server Foda v" + vsfVersion, 16);
 		
 		psychVer.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		vsfVer.setFormat(Paths.font("ggsans/normal.ttf"), 20, 0xFFDFE0E2, CENTER); //, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		vsfVer.setFormat(Paths.font("ggsans/medium.ttf"), 20, 0xFFDFE0E2, CENTER); //, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		
 		vsfVer.scrollFactor.set();
 		vsfVer.screenCenter(X);
@@ -128,8 +128,7 @@ class MainMenuState extends MusicBeatState
 		// Unlocks "Freaky on a Friday Night" achievement if it's a Friday and between 18:00 PM and 23:59 PM
 		var leDate = Date.now();
 		if (leDate.getDay() == 5 && leDate.getHours() >= 18) MainMenuHooks.unlockFriday();
-			
-
+		
 		#if MODS_ALLOWED
 		MainMenuHooks.reloadAchievements();
 		#end
@@ -165,7 +164,7 @@ class MainMenuState extends MusicBeatState
 				changeItem(1);
 
 			var allowMouse:Bool = allowMouse;
-			if (allowMouse && ((FlxG.mouse.deltaScreenX != 0 && FlxG.mouse.deltaScreenY != 0) || FlxG.mouse.justPressed)) //FlxG.mouse.deltaScreenX/Y checks is more accurate than FlxG.mouse.justMoved
+			if (allowMouse && ((FlxG.mouse.deltaViewX != 0 && FlxG.mouse.deltaViewY != 0) || FlxG.mouse.justPressed)) //FlxG.mouse.deltaViewX/Y checks is more accurate than FlxG.mouse.justMoved
 			{
 				allowMouse = false;
 				FlxG.mouse.visible = true;
@@ -181,7 +180,7 @@ class MainMenuState extends MusicBeatState
 					var memb:FlxSprite = menuItems.members[i];
 					if(FlxG.mouse.overlaps(memb))
 					{
-						var distance:Float = Math.sqrt(Math.pow(memb.getGraphicMidpoint().x - FlxG.mouse.screenX, 2) + Math.pow(memb.getGraphicMidpoint().y - FlxG.mouse.screenY, 2));
+						var distance:Float = Math.sqrt(Math.pow(memb.getGraphicMidpoint().x - FlxG.mouse.viewX, 2) + Math.pow(memb.getGraphicMidpoint().y - FlxG.mouse.viewY, 2));
 						if (dist < 0 || distance < dist)
 						{
 							dist = distance;
@@ -210,7 +209,7 @@ class MainMenuState extends MusicBeatState
 				MusicBeatState.switchState(new TitleState());
 			}
 
-			if (controls.ACCEPT || (FlxG.mouse.overlaps(menuItems, FlxG.camera) && FlxG.mouse.justPressed && allowMouse))
+			if (controls.ACCEPT || (FlxG.mouse.overlaps(menuItems) && FlxG.mouse.justPressed && allowMouse))
 			{
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 				FlxTransitionableState.skipNextTransIn = false;
@@ -297,7 +296,7 @@ class MainMenuState extends MusicBeatState
 		item.animation.play('idle');
 		item.updateHitbox();
 		if (item != menuItems.members[5]) {
-			FlxTween.tween(item, {x: 130}, 0.14, {
+			FlxTween.tween(item, {x: 132}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
 					{
@@ -318,7 +317,7 @@ class MainMenuState extends MusicBeatState
 		curItem.animation.play('selected');
 		curItem.updateHitbox();
 		if (curItem != menuItems.members[5]) {
-			FlxTween.tween(curItem, {x: curItem.x + 150}, 0.14, {
+			FlxTween.tween(curItem, {x: 150}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
 					{
