@@ -91,11 +91,11 @@ class MainMenuState extends MusicBeatState
 		bottom = new FlxTypedGroup<FlxSprite>();
 		add(bottom);
 		
-		var profileBottomBG:FlxSprite = new FlxSprite(100, Flx.height - 24).loadGraphic(Paths.image('mainmenu/profileBottomBG'));
+		var profileBottomBG:FlxSprite = new FlxSprite(100, FlxG.height - 24).loadGraphic(Paths.image('mainmenu/profileBottomBG'));
 		profileBottomBG.antialiasing = false;
 		bottom.add(profileBottomBG);
 		
-		var optionsButton:FlxSprite = new FlxSprite(280, Flx.height - 24);
+		var optionsButton:FlxSprite = new FlxSprite(280, FlxG.height - 24);
 		optionsButton.antialiasing = false;
 		optionsButton.frames = Paths.getSparrowAtlas('mainmenu/buttons/menu_options');
 		optionsButton.animation.addByPrefix('idle', "options basic", 0);
@@ -256,8 +256,7 @@ class MainMenuState extends MusicBeatState
 		var curItem = menuItems.members[curSelected];
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 		curItem.animation.play('idle');
-		FlxTween.tween(curItem, {x: 130}, 0.14, {ease: FlxEase.quadOut}, function(tween:FlxTween)
-		{
+		FlxTween.tween(curItem, {x: 130}, 0.14, {ease: FlxEase.quadOut, onComplete:
 			curItem.updateHitbox();
 		});
 		//menuItems.members[curSelected].screenCenter(X);
