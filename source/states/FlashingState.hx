@@ -11,6 +11,8 @@ class FlashingState extends MusicBeatState
 {
 	public static var leftState:Bool = false;
 
+	var backdrop:FlxBackdrop;
+	var bigText:Alphabet;
 	var warnText:FlxText;
 	
 	override function create()
@@ -19,10 +21,10 @@ class FlashingState extends MusicBeatState
 		super.create();
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLUE);
-		bg.alpha(0.1);
+		bg.alpha = 0.1;
 		add(bg);
 		
-		var backdrop:FlxBackdrop = new FlxBackdrop(Paths.image('backdrop_sanes'));
+		backdrop:FlxBackdrop = new FlxBackdrop(Paths.image('backdrop_sanes'));
 		backdrop.setGraphicSize(Std.int(backdrop.width * 0.6));
 		backdrop.alpha = 0.22; // vai brasil
 		backdrop.antialiasing = ClientPrefs.data.antialiasing;
@@ -30,7 +32,7 @@ class FlashingState extends MusicBeatState
 		backdrop.updateHitbox();
 		add(backdrop);
 		
-		var bigText:Alphabet = new Alphabet(0, 180, 'Cuidado!', true);
+		bigText = new Alphabet(0, 180, 'Cuidado!', true);
 		bigText.screenCenter(X);
 		add(bigText);
 
