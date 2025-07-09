@@ -59,10 +59,6 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 	
 	var wackyImage:FlxSprite;
 	
-	#if TOUCH_CONTROLS_ALLOWED
-	var secretinput:PsychUIInputText;
-	#end
-	
 	#if TITLE_SCREEN_EASTER_EGG
 	final easterEggKeys:Array<String> = [
 		'CORE', 'BAAAAAAAAAAH!!!!!', 'RONALDO', '53488', 'TADB'
@@ -386,7 +382,7 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 		
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 		
-		if (gamepad != null && !wega && !book)
+		if (gamepad != null && !wega && !book && !FlxG.stage.window.textInputEnabled)
 		{
 			if (gamepad.justPressed.START)
 				pressedEnter = true;
@@ -397,7 +393,7 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 			#end
 		}
 		
-		if(enterTimer != null && pressedEnter && !wega && !book){
+		if(enterTimer != null && pressedEnter && !wega && !book && !FlxG.stage.window.textInputEnabled){
 			enterTimer.cancel();
 			enterTimer.onComplete(enterTimer);
 			enterTimer = null;
@@ -412,7 +408,7 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 		
 		// EASTER EGG
 		
-		if (initialized && !transitioning && skippedIntro && !wega && !book)
+		if (initialized && !transitioning && skippedIntro && !wega && !book && !FlxG.stage.window.textInputEnabled)
 		{
 			if (newTitle && !pressedEnter)
 			{
@@ -426,7 +422,7 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 				titleText.alpha = FlxMath.lerp(titleTextAlphas[0], titleTextAlphas[1], timer);
 			}
 			
-			if (pressedEnter && !wega && !book)
+			if (pressedEnter && !wega && !book && !FlxG.stage.window.textInputEnabled)
 			{
 				titleText.color = FlxColor.WHITE;
 				titleText.alpha = 1;
@@ -766,13 +762,6 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 			remove(credGroup);
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			
-			// inputbox pro mobile
-			#if TOUCH_CONTROLS_ALLOWED
-			secretinput = new PsychUIInputText(0, 0, 100, 8);
-			secretinput.alpha = 0.5; // por enquanto
-			add(secretinput);
-			#end
-			
 			var easteregg:String = ''; //FlxG.save.data.psychDevsEasterEgg;
 			if (easteregg == null)
 				easteregg = '';
@@ -781,24 +770,14 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 		}
 	}
 	
-	#if TOUCH_CONTROLS_ALLOWED
-	public function UIEvent(id:String, sender:Dynamic) {
-		if(id == PsychUIInputText.CHANGE_EVENT && (sender is PsychUIInputText)) {
-			if(sender == secretinput) {
-				easterEggKeysBuffer = secretinput.text;
-			}
-		}
-	}
-	#end
-	
 	// abrir teclado virtual ao deslizar pra cima
-	/* #if android
-	if (SwipeUtil.swipeAny)
-	{
-		if (SwipeUtil.swipeUp)
-			//PsychJNI.isScreenKeyboardShown();
+	#if android
+	if (SwipeUtil.swipeAny && SwipeUtil.swipeUp && !FlxG.stage.window.textInputEnabled)
+		FlxG.stage.window.textInputEnabled = true;
 	}
-	#end /*
+	if (TouchUtil.justReleased && FlxG.stage.window.textInputEnabled)
+		FlxG.stage.window.textInputEnabled = false;
+	#end
 	
 	/**
 	 * After sitting on the title screen for a while, transition to the attract screen. ----- Dá pra fazer algo com isso com certeza
