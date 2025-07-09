@@ -245,7 +245,7 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 		credTextShit.visible = false;
 		
 		ngSpr = new FlxSprite(0, FlxG.height * 0.52);
-		sfSpr = new FlxSprite(0, FlxG.height * 0.53);
+		sfSpr = new FlxSprite(0, FlxG.height * 0.52);
 		
 		#if desktop
 		if (FlxG.random.bool(1))
@@ -282,7 +282,7 @@ class TitleState extends MusicBeatState #if TOUCH_CONTROLS_ALLOWED implements Ps
 		} else {
 			sfSpr.loadGraphic(Paths.image('serverfodateam_logo'));
 		}
-		sfSpr.setGraphicSize(Std.int(sfSpr.width * 1.1));
+		sfSpr.setGraphicSize(Std.int(sfSpr.width * 1.2));
 		sfSpr.updateHitbox();
 		sfSpr.screenCenter(X);
 		sfSpr.antialiasing = false;
