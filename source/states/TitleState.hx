@@ -59,6 +59,10 @@ class TitleState extends MusicBeatState #if android implements PsychUIEventHandl
 	
 	var wackyImage:FlxSprite;
 	
+	#if android
+	var secretinput:PsychUIInputText;
+	#end
+	
 	#if TITLE_SCREEN_EASTER_EGG
 	final easterEggKeys:Array<String> = [
 		'CORE', 'BAAAAAAAAAAH!!!!!', 'RONALDO', '53488', 'TADB'
@@ -764,7 +768,7 @@ class TitleState extends MusicBeatState #if android implements PsychUIEventHandl
 			
 			// inputbox pro mobile (todo: descobrir como mudar a opacidade)
 			#if android
-			var secretinput:PsychUIInputText = new PsychUIInputText(FlxG.width - 100, 0, 100);
+			secretinput = new PsychUIInputText(FlxG.width - 100, 0, 100);
 			#end
 			
 			var easteregg:String = ''; //FlxG.save.data.psychDevsEasterEgg;
