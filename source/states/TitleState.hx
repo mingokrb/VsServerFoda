@@ -462,8 +462,8 @@ class TitleState extends MusicBeatState
 			#if TITLE_SCREEN_EASTER_EGG
 			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE #if TOUCH_CONTROLS_ALLOWED || isSoftKeyPressed #end)
 			{
-				#if TOUCH_CONTROLS_ALLOWED isSoftKeyPressed = false; #end
 				var keyPressed:FlxKey = #if TOUCH_CONTROLS_ALLOWED isSoftKeyPressed ? softKeyPressed : #end FlxG.keys.firstJustPressed();
+				#if TOUCH_CONTROLS_ALLOWED isSoftKeyPressed = false; #end
 				var keyName:String = Std.string(keyPressed);
 				// Culpe o HaxeFlixel por isso
 				switch (keyName) {
