@@ -751,6 +751,7 @@ class TitleState extends MusicBeatState
 		}
 	}
 	
+	}
 	// abrir teclado virtual ao deslizar pra cima
 	#if TOUCH_CONTROLS_ALLOWED
 	if (skippedIntro)
