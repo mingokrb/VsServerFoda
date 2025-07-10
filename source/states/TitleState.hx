@@ -497,7 +497,10 @@ class TitleState extends MusicBeatState
 					easterEggKeysBuffer += keyName;
 					if (easterEggKeysBuffer.length >= 32)
 						easterEggKeysBuffer = easterEggKeysBuffer.substring(1);
-					// trace('Test! Allowed Key pressed!!! Buffer: ' + easterEggKeysBuffer);
+					// debug //
+					trace('Test! Allowed Key pressed!!! Buffer: ' + easterEggKeysBuffer);
+					trace('Acabou de apertar ' + keyName);
+					///////////
 					
 					for (wordRaw in easterEggKeys)
 					{
