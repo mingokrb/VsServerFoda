@@ -369,6 +369,11 @@ class TitleState extends MusicBeatState
 	var newTitle:Bool = false;
 	var titleTimer:Float = 0;
 	
+	#if TOUCH_CONTROLS_ALLOWED
+	var isSoftKeyPressed:Bool = false;
+	var keyCode:Int = 0;
+	#end
+	
 	override function update(elapsed:Float)
 	{
 		//trace(FlxG.sound.music);
@@ -411,9 +416,6 @@ class TitleState extends MusicBeatState
 		
 		// EASTER EGG
 		#if TOUCH_CONTROLS_ALLOWED
-		var isSoftKeyPressed:Bool = false;
-		var keyCode:Int = 0;
-		
 		function onKeyDown(e:KeyboardEvent) {
 			keyCode = e.keyCode;
 			isSoftKeyPressed = true;
@@ -449,6 +451,10 @@ class TitleState extends MusicBeatState
 				transitioning = true;
 				// FlxG.sound.music.stop();
 				
+				#if TOUCH_CONTROLS_ALLOWED
+				FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+				#end
+				
 				enterTimer = new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
 					if (mustUpdate)
@@ -469,7 +475,9 @@ class TitleState extends MusicBeatState
 			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE #if TOUCH_CONTROLS_ALLOWED || isSoftKeyPressed #end)
 			{
 				#if TOUCH_CONTROLS_ALLOWED
-				var keyPressed:FlxKey = isSoftKeyPressed ? cast keyCode : FlxG.keys.firstJustPressed();
+				var flxKey:FlxKey = cast keyCode;
+				trace('flxKey: ' + flxKey); // só pra saber
+				var keyPressed:FlxKey = isSoftKeyPressed ? flxKey : FlxG.keys.firstJustPressed();
 				isSoftKeyPressed = false;
 				#else
 				var keyPressed:FlxKey = FlxG.keys.firstJustPressed();
@@ -642,13 +650,10 @@ class TitleState extends MusicBeatState
 		if (skippedIntro && !transitioning) {
 			if (SwipeUtil.swipeAny && !FlxG.stage.window.textInputEnabled) {
 				if (SwipeUtil.swipeDown) {
+					FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 					FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 					FlxG.stage.window.textInputEnabled = true;
 				}
-			}
-			if (controls.BACK && FlxG.stage.window.textInputEnabled) {
-				FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-				FlxG.stage.window.textInputEnabled = false;
 			}
 		}
 		#end

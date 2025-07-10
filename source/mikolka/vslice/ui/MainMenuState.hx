@@ -100,21 +100,21 @@ class MainMenuState extends MusicBeatState
 			menuItem.updateHitbox();
 		}
 		
-		var optionsButton:FlxSprite = new FlxSprite(456, profileBottomBG.getGraphicMidpoint().y);
+		var optionsButton:FlxSprite = new FlxSprite(456, profileBottomBG.y + 22);
 		optionsButton.antialiasing = false;
 		optionsButton.frames = Paths.getSparrowAtlas('mainmenu/buttons/menu_' + optionShit[5]);
 		optionsButton.animation.addByPrefix('idle', optionShit[5] + " basic", 0);
-		optionsButton.animation.addByPrefix('clicked', optionShit[5] + " click", 0);
+		optionsButton.animation.addByPrefix('selected', optionShit[5] + " chosen", 0);
 		optionsButton.animation.play('idle');
 		menuItems.add(optionsButton);
 		optionsButton.scrollFactor.set();
 		optionsButton.updateHitbox();
 		
 		var psychVer:FlxText = new FlxText(0, FlxG.height - 18, FlxG.width, "P-Slice Engine v" + pSliceVersion, 12);
-		var vsfVer:FlxText = new FlxText(0, 14, FlxG.width, "Vs. Server Foda v" + vsfVersion, 20);
+		var vsfVer:FlxText = new FlxText(0, 14, FlxG.width, "Vs. Server Foda v" + vsfVersion, 24);
 		
 		psychVer.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		vsfVer.setFormat(Paths.font("ggsans/medium.ttf"), 20, 0xFFDFE0E2, CENTER); //, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		vsfVer.setFormat(Paths.font("ggsans/medium.ttf"), 24, 0xFFDFE0E2, CENTER); //, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		
 		vsfVer.scrollFactor.set();
 		vsfVer.screenCenter(X);
@@ -218,7 +218,8 @@ class MainMenuState extends MusicBeatState
 				FlxTransitionableState.skipNextTransOut = false;
 
 				selectedSomethin = true;
-				menuItems.members[curSelected].animation.play('clicked');
+				if (curSelected != menuItems.length - 1)
+					menuItems.members[curSelected].animation.play('clicked');
 				FlxFlicker.flicker(menuItems.members[curSelected], 1, 0.06, false, false, function(flick:FlxFlicker)
 				{
 					switch (optionShit[curSelected])
@@ -306,7 +307,7 @@ class MainMenuState extends MusicBeatState
 					}
 			});
 		} else {
-			FlxTween.tween(item, {y: profileBottomBG.getGraphicMidpoint().y}, 0.14, {
+			FlxTween.tween(item, {y: profileBottomBG.y + 22}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
 					{
@@ -341,7 +342,7 @@ class MainMenuState extends MusicBeatState
 					}
 			});
 		} else {
-			FlxTween.tween(curItem, {y: profileBottomBG.getGraphicMidpoint().y - 18}, 0.14, {
+			FlxTween.tween(curItem, {y: profileBottomBG.y + 14}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
 					{
@@ -349,7 +350,6 @@ class MainMenuState extends MusicBeatState
 					}
 			});
 		}
-		trace('isOptionsSelected: ' + isOptionsSelected);
 		//menuItems.members[curSelected].centerOffsets();
 		//menuItems.members[curSelected].screenCenter(X);
 
