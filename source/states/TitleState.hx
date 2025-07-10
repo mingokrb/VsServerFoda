@@ -415,7 +415,7 @@ class TitleState extends MusicBeatState
 		
 		// EASTER EGG
 		#if TOUCH_CONTROLS_ALLOWED
-		function onKeyUp(e:KeyboardEvent) {
+		function onKeyDown(e:KeyboardEvent) {
 			keyCode = e.keyCode;
 			isSoftKeyPressed = true;
 			trace('keyCode: ' + keyCode);
