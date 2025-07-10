@@ -336,7 +336,6 @@ class TitleState extends MusicBeatState
 		{
 			case 'RONALDO':
 				ronaldoMode = true;
-				persistentUpdate = false;
 		}
 	}
 	
@@ -508,6 +507,7 @@ class TitleState extends MusicBeatState
 									}
 									FlxG.save.flush();
 
+									transitioning = true;
 									FlxG.sound.music.fadeOut();
 									FlxG.sound.play(Paths.sound('secretR'));
 
