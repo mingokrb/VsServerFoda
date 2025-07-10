@@ -437,7 +437,7 @@ class TitleState extends MusicBeatState
 				if (titleText != null)
 					titleText.animation.play('press');
 				
-				FlxG.camera.flash(ClientPrefs.data.flashing ? 0x4CFFFFFF : FlxColor.WHITE, 1);
+				FlxG.camera.flash(ClientPrefs.data.flashing ? FlxColor.WHITE : 0x4CFFFFFF, 1);
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 				
 				transitioning = true;
@@ -564,7 +564,7 @@ class TitleState extends MusicBeatState
 									black.alpha = 0;
 									add(black);
 
-									var white:FlxSprite = new FlxSprite(0, 0).makeGraphic(1, 1, ClientPrefs.data.flashing ? 0x4CFFFFFF : FlxColor.WHITE);
+									var white:FlxSprite = new FlxSprite(0, 0).makeGraphic(1, 1, ClientPrefs.data.flashing ? FlxColor.WHITE : 0x4CFFFFFF);
 									white.scale.set(FlxG.width, FlxG.height);
 									white.updateHitbox();
 									white.alpha = 0;
