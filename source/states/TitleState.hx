@@ -406,12 +406,10 @@ class TitleState extends MusicBeatState
 		
 		// EASTER EGG
 		#if TOUCH_CONTROLS_ALLOWED
-		var isSoftKeyPressed:Bool = false;
-		var softKeyPressed:FlxKey = FlxKey.NONE;
-		
 		function onKeyDown(e:KeyboardEvent) {
-			isSoftKeyPressed = true;
-			softKeyPressed = cast e.keyCode;
+			var softKeyPress:FlxKey = cast e.keyCode;
+			trace('softKeyPress: ' + softKeyPress);
+			return softKeyPress;
 		}
 		#end
 		
@@ -460,10 +458,9 @@ class TitleState extends MusicBeatState
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			}
 			#if TITLE_SCREEN_EASTER_EGG
-			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE #if TOUCH_CONTROLS_ALLOWED || isSoftKeyPressed #end)
+			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE #if TOUCH_CONTROLS_ALLOWED || onKeyDown() != FlxKey.NONE #end)
 			{
-				var keyPressed:FlxKey = #if TOUCH_CONTROLS_ALLOWED isSoftKeyPressed ? softKeyPressed : #end FlxG.keys.firstJustPressed();
-				#if TOUCH_CONTROLS_ALLOWED isSoftKeyPressed = false; #end
+				var keyPressed:FlxKey =  FlxG.keys.firstJustPressed() #if TOUCH_CONTROLS_ALLOWED || onKeyDown() #end ;
 				var keyName:String = Std.string(keyPressed);
 				// Culpe o HaxeFlixel por isso
 				switch (keyName) {
