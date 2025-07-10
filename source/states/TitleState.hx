@@ -406,7 +406,7 @@ class TitleState extends MusicBeatState
 		
 		// EASTER EGG
 		var isSoftKeyPressed:Bool = false;
-		var softKeyPressed:FlxKey;
+		var softKeyPressed:FlxKey = FlxKey.NONE;
 		
 		if (initialized && !transitioning && skippedIntro && !wega && !book)
 		{
