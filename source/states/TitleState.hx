@@ -21,8 +21,7 @@ import mikolka.vslice.components.ScreenshotPlugin;
 import mikolka.vslice.AttractState;
 #end
 
-typedef TitleData =
-{
+typedef TitleData = {
 	var titlex:Float;
 	var titley:Float;
 	var startx:Float;
@@ -127,9 +126,7 @@ class TitleState extends MusicBeatState
 		}
 		
 		if (FlxG.save.data.weekCompleted != null)
-		{
 			StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
-		}
 		
 		FlxG.mouse.visible = false;
 		#if FREEPLAY
@@ -146,10 +143,9 @@ class TitleState extends MusicBeatState
 		}
 		else
 		{
-			if (initialized)
+			if (initialized) {
 				startIntro();
-			else
-			{
+			} else {
 				//* FIRST INIT! iNITIALISE IMPORTED PLUGINS
 				ScreenshotPlugin.initialize();
 				new FlxTimer().start(1, function(tmr:FlxTimer)
@@ -576,23 +572,10 @@ class TitleState extends MusicBeatState
 		if (initialized && pressedEnter && !skippedIntro)
 			skipIntro();
 		
+		#if desktop
 		if (!wega && !book)
-		{
-			/*if (swagShader != null)
-			{
-				if (cheatActive && TouchUtil.pressed || controls.UI_LEFT)
-					swagShader.hue -= elapsed * 0.1;
-				if (controls.UI_RIGHT)
-					swagShader.hue += elapsed * 0.1;
-			}
-			#if FLX_PITCH
-			if (controls.UI_UP) FlxG.sound.music.pitch += 0.5 * elapsed;
-			if (controls.UI_DOWN) FlxG.sound.music.pitch -= 0.5 * elapsed;
-			#end*/
-			#if desktop
 			if (controls.BACK) openfl.Lib.application.window.close();
-			#end
-		}
+		#end
 		
 		super.update(elapsed);
 	}
@@ -770,12 +753,16 @@ class TitleState extends MusicBeatState
 	
 	// abrir teclado virtual ao deslizar pra cima
 	#if TOUCH_CONTROLS_ALLOWED
-	if (SwipeUtil.swipeAny) {
-		if (SwipeUtil.swipeUp && !FlxG.stage.window.textInputEnabled)
-			FlxG.stage.window.textInputEnabled = true;
+	if (skippedIntro)
+	{
+		if (SwipeUtil.swipeAny && !FlxG.stage.window.textInputEnabled)
+		{
+			if (SwipeUtil.swipeUp)
+				FlxG.stage.window.textInputEnabled = true;
+		}
+		if (controls.BACK && FlxG.stage.window.textInputEnabled)
+			FlxG.stage.window.textInputEnabled = false;
 	}
-	else if (controls.BACK && FlxG.stage.window.textInputEnabled)
-		FlxG.stage.window.textInputEnabled = false;
 	#end
 	
 	/**
