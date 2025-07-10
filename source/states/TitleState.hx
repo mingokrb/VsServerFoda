@@ -20,6 +20,9 @@ import mikolka.vslice.components.ScreenshotPlugin;
 #if VIDEOS_ALLOWED
 import mikolka.vslice.AttractState;
 #end
+#if TOUCH_CONTROLS_ALLOWED
+import flash.events.KeyboardEvent;
+#end
 
 typedef TitleData = {
 	var titlex:Float;
@@ -403,7 +406,7 @@ class TitleState extends MusicBeatState
 		
 		// EASTER EGG
 		
-		if (initialized && !transitioning && skippedIntro && !wega && !book && !FlxG.stage.window.textInputEnabled)
+		if (initialized && !transitioning && skippedIntro && !wega && !book)
 		{
 			if (newTitle && !pressedEnter)
 			{
@@ -448,9 +451,16 @@ class TitleState extends MusicBeatState
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			}
 			#if TITLE_SCREEN_EASTER_EGG
-			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE)
+			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE || FlxG.stage.window.textInputEnabled)
 			{
-				var keyPressed:FlxKey = FlxG.keys.firstJustPressed();
+				var keyPressed:FlxKey;
+				if (!FlxG.stage.window.textInputEnabled)
+					keyPressed = FlxG.keys.firstJustPressed();
+				else { // salve pro PsychUIInputText.hx
+					function onKeyDown(e:KeyboardEvent) {
+						keyPressed = cast e.keyCode;
+					}
+				}
 				var keyName:String = Std.string(keyPressed);
 				if (allowedKeys.contains(keyName))
 				{
@@ -464,6 +474,10 @@ class TitleState extends MusicBeatState
 						var word:String = wordRaw.toUpperCase(); // just for being sure you're doing it right
 						if (easterEggKeysBuffer.contains(word))
 						{
+							#if TOUCH_CONTROLS_ALLOWED
+							FlxG.stage.window.textInputEnabled = false; // fechar teclado virtual ao digitar segredo
+							FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+							#end
 							// trace('YOOO! ' + word);
 							// if (FlxG.save.data.psychDevsEasterEgg == word)
 							// 	FlxG.save.data.psychDevsEasterEgg = '';
@@ -579,15 +593,16 @@ class TitleState extends MusicBeatState
 
 		// abrir teclado virtual ao deslizar pra cima
 		#if TOUCH_CONTROLS_ALLOWED
-		if (skippedIntro) {
+		if (skippedIntro && !transitioning) {
 			if (SwipeUtil.swipeAny && !FlxG.stage.window.textInputEnabled) {
-				if (SwipeUtil.swipeUp) {
+				if (SwipeUtil.swipeDown) {
 					FlxG.stage.window.textInputEnabled = true;
+					FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 				}
 			}
-
 			if (controls.BACK && FlxG.stage.window.textInputEnabled) {
 				FlxG.stage.window.textInputEnabled = false;
+				FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			}
 		}
 		#end
