@@ -405,8 +405,15 @@ class TitleState extends MusicBeatState
 		}
 		
 		// EASTER EGG
+		#if TOUCH_CONTROLS_ALLOWED
 		var isSoftKeyPressed:Bool = false;
 		var softKeyPressed:FlxKey = FlxKey.NONE;
+		
+		function onKeyDown(e:KeyboardEvent) {
+			isSoftKeyPressed = true;
+			softKeyPressed = cast e.keyCode;
+		}
+		#end
 		
 		if (initialized && !transitioning && skippedIntro && !wega && !book)
 		{
@@ -453,10 +460,10 @@ class TitleState extends MusicBeatState
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			}
 			#if TITLE_SCREEN_EASTER_EGG
-			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE || isSoftKeyPressed)
+			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE #if TOUCH_CONTROLS_ALLOWED || isSoftKeyPressed #end)
 			{
 				isSoftKeyPressed = false;
-				var keyPressed:FlxKey = isSoftKeyPressed ? softKeyPressed : FlxG.keys.firstJustPressed();
+				var keyPressed:FlxKey = #if TOUCH_CONTROLS_ALLOWED isSoftKeyPressed ? softKeyPressed : #end FlxG.keys.firstJustPressed();
 				var keyName:String = Std.string(keyPressed);
 				if (allowedKeys.contains(keyName))
 				{
@@ -470,8 +477,8 @@ class TitleState extends MusicBeatState
 						var word:String = wordRaw.toUpperCase(); // just for being sure you're doing it right
 						if (easterEggKeysBuffer.contains(word))
 						{
-							#if TOUCH_CONTROLS_ALLOWED
-							FlxG.stage.window.textInputEnabled = false; // fechar teclado virtual ao digitar segredo
+							#if TOUCH_CONTROLS_ALLOWED // fechar teclado virtual ao digitar segredo
+							FlxG.stage.window.textInputEnabled = false;
 							FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 							#end
 							// trace('YOOO! ' + word);
@@ -600,11 +607,6 @@ class TitleState extends MusicBeatState
 				FlxG.stage.window.textInputEnabled = false;
 				FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			}
-		}
-		
-		function onKeyDown(e:KeyboardEvent) {
-			isSoftKeyPressed = true;
-			softKeyPressed = cast e.keyCode;
 		}
 		#end
 		
