@@ -51,7 +51,7 @@ import states.TitleState;
 	public var vsliceResults:Bool = true;
 	public var vsliceSpecialCards:Bool = true;
 	public var vsliceSmoothBar:Bool = true;
-	public var loggingType:String = #if desktop "Console" #else "File";
+	public var loggingType:String = #if desktop "Console" #else "File" #end;
 	public var vsliceLegacyBar:Bool = false;
 	public var vsliceNaughtyness:Bool = true;
 	public var vsliceForceNewTag:Bool = false;
