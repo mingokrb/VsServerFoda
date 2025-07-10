@@ -90,10 +90,10 @@ class MobileOptionsSubState extends BaseOptionsMenu
 			BOOL);
 		addOption(option);
 
-		#if android
-		option = new Option('Storage Type', 'Which folder Psych Engine should use?\n(CHANGING THIS MAKES DELETE YOUR OLD FOLDER!!)', 'storageType', STRING,storageTypes);
-		addOption(option);
-		#end
+		//#if android
+		//option = new Option('Storage Type', 'Which folder Psych Engine should use?\n(CHANGING THIS MAKES DELETE YOUR OLD FOLDER!!)', 'storageType', STRING,storageTypes);
+		//addOption(option);
+		//#end
 
 		super();
 	}
