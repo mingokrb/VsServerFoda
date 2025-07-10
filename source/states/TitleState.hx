@@ -405,6 +405,8 @@ class TitleState extends MusicBeatState
 		}
 		
 		// EASTER EGG
+		var isSoftKeyPressed:Bool = false;
+		var softKeyPressed:FlxKey;
 		
 		if (initialized && !transitioning && skippedIntro && !wega && !book)
 		{
@@ -451,16 +453,10 @@ class TitleState extends MusicBeatState
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			}
 			#if TITLE_SCREEN_EASTER_EGG
-			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE || FlxG.stage.window.textInputEnabled)
+			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE || isSoftKeyPressed)
 			{
-				var keyPressed:FlxKey;
-				if (!FlxG.stage.window.textInputEnabled)
-					keyPressed = FlxG.keys.firstJustPressed();
-				else { // salve pro PsychUIInputText.hx
-					function onKeyDown(e:KeyboardEvent) {
-						keyPressed = cast e.keyCode;
-					}
-				}
+				isSoftKeyPressed = false;
+				var keyPressed:FlxKey = isSoftKeyPressed ? softKeyPressed : FlxG.keys.firstJustPressed();
 				var keyName:String = Std.string(keyPressed);
 				if (allowedKeys.contains(keyName))
 				{
@@ -591,7 +587,7 @@ class TitleState extends MusicBeatState
 			if (controls.BACK) openfl.Lib.application.window.close();
 		#end
 
-		// abrir teclado virtual ao deslizar pra cima
+		// abrir teclado virtual ao deslizar pra cima (salve pro PsychUIInputText.hx)
 		#if TOUCH_CONTROLS_ALLOWED
 		if (skippedIntro && !transitioning) {
 			if (SwipeUtil.swipeAny && !FlxG.stage.window.textInputEnabled) {
@@ -604,6 +600,11 @@ class TitleState extends MusicBeatState
 				FlxG.stage.window.textInputEnabled = false;
 				FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			}
+		}
+		
+		function onKeyDown(e:KeyboardEvent) {
+			isSoftKeyPressed = true;
+			softKeyPressed = cast e.keyCode;
 		}
 		#end
 		
