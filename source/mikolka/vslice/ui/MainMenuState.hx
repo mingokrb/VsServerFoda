@@ -27,8 +27,10 @@ class MainMenuState extends MusicBeatState
 	public static var curSelected:Int = 0;
 	var allowMouse:Bool = false; //Turn this off to block mouse movement in menus
 
-	var menuItems:FlxTypedGroup<FlxSprite>;
 	var bottom:FlxTypedGroup<FlxSprite>;
+	var profileBottomBG:FlxSprite;
+	
+	var menuItems:FlxTypedGroup<FlxSprite>;
 
 	var optionShit:Array<String> = [
 		'story_mode',
@@ -75,7 +77,7 @@ class MainMenuState extends MusicBeatState
 		bottom = new FlxTypedGroup<FlxSprite>();
 		add(bottom);
 		
-		var profileBottomBG:FlxSprite = new FlxSprite(10, FlxG.height - 110).loadGraphic(Paths.image('mainmenu/profileBottomBG'));
+		profileBottomBG = new FlxSprite(10, FlxG.height - 110).loadGraphic(Paths.image('mainmenu/profileBottomBG'));
 		profileBottomBG.antialiasing = false;
 		bottom.add(profileBottomBG);
 		profileBottomBG.scrollFactor.set();
