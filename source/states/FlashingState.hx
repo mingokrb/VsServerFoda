@@ -70,7 +70,7 @@ class FlashingState extends MusicBeatState
 				
 				FlxTween.tween(bg, {alpha: 0}, 1.2);
 				FlxTween.tween(backdrop, {alpha: 0}, 1.2);
-				FlxTween.tween(touchPad, {alpha: 0}, 1);
+				#if TOUCH_CONTROLS_ALLOWED FlxTween.tween(touchPad, {alpha: 0}, 1); #end
 				if(!back) {
 					ClientPrefs.data.flashing = false;
 					ClientPrefs.saveSettings();
