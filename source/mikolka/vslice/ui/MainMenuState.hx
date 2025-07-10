@@ -347,7 +347,7 @@ class MainMenuState extends MusicBeatState
 					}
 			});
 		}
-		trace('isOptionsSelected: ' + isOptionsSelected)
+		trace('isOptionsSelected: ' + isOptionsSelected);
 		trace('item: ' + item);
 		trace('curItem: ' + curItem);
 		//menuItems.members[curSelected].centerOffsets();
