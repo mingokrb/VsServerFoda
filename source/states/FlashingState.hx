@@ -34,18 +34,18 @@ class FlashingState extends MusicBeatState
 		backdrop.updateHitbox();
 		add(backdrop);
 		
-		bigText = new Alphabet(0, 120, 'Cuidado!', true);
+		bigText = new Alphabet(0, 120, 'Se liga otário!', true);
 		bigText.screenCenter(X);
 		add(bigText);
 
 		final enter:String = controls.mobileC ? 'A' : 'ENTER';
 		final escape:String = controls.mobileC ? 'B' : 'ESC';
 
-		warnText = new FlxText(0, (FlxG.height / 2) - 40, FlxG.width,
-			"Este mod contém algumas luzes piscantes!\n
-			Aperte " + enter + " para desativá-las agora ou abra o menu de opções.\n
-			Aperte " + escape + " para ignorar esta mensagem.\n
-			Você foi avisado(a)!",
+		warnText = new FlxText(0, (FlxG.height / 2) - 80, FlxG.width,
+			"Este mod contém algumas luzes piscantes!\r
+			Aperte [" + enter + "] para desativá-las agora ou abra o menu de opções.\t
+			Aperte [" + escape + "] para ignorar esta mensagem.\r
+			Fica esperto...",
 			32);
 		warnText.setFormat(Paths.font("comic_sans.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		warnText.screenCenter(X);
