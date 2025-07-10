@@ -9,7 +9,7 @@ import states.TitleState;
 // Add a variable here and it will get automatically saved
 @:structInit class SaveVariables {
 	// Mobile and Mobile Controls Releated
-	public var extraHints:String = "NENHUM"; // hitbox extra hint option
+	public var extraHints:String = "NONE"; // hitbox extra hint option
 	public var hitbox2:Bool = true; // hitbox extra button position option
 	public var dynamicColors:Bool = true; // yes cause its cool -Karim
 	public var controlsAlpha:Float = 0.5;
@@ -18,7 +18,7 @@ import states.TitleState;
 	#if android
 	public var storageType:String = "EXTERNAL"; ///////  remover na versão final
 	#end
-	public var hitboxType:String = "Degradê";
+	public var hitboxType:String = "Gradient";
 	public var popUpRating:Bool = true;
 	public var vsync:Bool = false;
 	public var vibrating:Bool = false;
@@ -69,7 +69,7 @@ import states.TitleState;
 		[0xFFFF884E, 0xFFFFFAF5, 0xFF6C0000]];
 
 	public var ghostTapping:Bool = true;
-	public var timeBarType:String = 'Tempo Restante';
+	public var timeBarType:String = 'Time Left';
 	public var scoreZoom:Bool = true;
 	public var noReset:Bool = true;
 	public var healthBarAlpha:Float = 0.5;
