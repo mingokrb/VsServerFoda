@@ -98,7 +98,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.updateHitbox();
 		}
 		
-		var optionsButton:FlxSprite = new FlxSprite(240, profileBottomBG.y);
+		var optionsButton:FlxSprite = new FlxSprite(460, profileBottomBG.y + 40);
 		optionsButton.antialiasing = false;
 		optionsButton.frames = Paths.getSparrowAtlas('mainmenu/buttons/menu_' + optionShit[5]);
 		optionsButton.animation.addByPrefix('idle', optionShit[5] + " basic", 0);
@@ -109,7 +109,7 @@ class MainMenuState extends MusicBeatState
 		optionsButton.updateHitbox();
 		
 		var psychVer:FlxText = new FlxText(0, FlxG.height - 18, FlxG.width, "P-Slice Engine v" + pSliceVersion, 12);
-		var vsfVer:FlxText = new FlxText(0, 16, FlxG.width, "Vs. Server Foda v" + vsfVersion, 16);
+		var vsfVer:FlxText = new FlxText(0, 14, FlxG.width, "Vs. Server Foda v" + vsfVersion, 18);
 		
 		psychVer.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		vsfVer.setFormat(Paths.font("ggsans/medium.ttf"), 20, 0xFFDFE0E2, CENTER); //, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -135,12 +135,12 @@ class MainMenuState extends MusicBeatState
 		#end
 
 		#if TOUCH_CONTROLS_ALLOWED
-		addTouchPad('UP_DOWN', 'B_E'); // tirar o '_E' na versão final!!!!!!!!!!
+		addTouchPad('UP_DOWN', 'A_B_E'); // tirar o '_E' na versão final!!!!!!!!!!
 		#end
 
 		super.create();
 
-		FlxG.camera.follow(camFollow, null, 0.06);
+		//FlxG.camera.follow(camFollow, null, 0.06);
 	}
 
 	var selectedSomethin:Bool = false;
@@ -295,7 +295,7 @@ class MainMenuState extends MusicBeatState
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 		item.animation.play('idle');
 		item.updateHitbox();
-		if (item != menuItems.members[5]) {
+		if (curSelected != 5) {
 			FlxTween.tween(item, {x: 132}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
@@ -316,7 +316,7 @@ class MainMenuState extends MusicBeatState
 		curItem = menuItems.members[curSelected];
 		curItem.animation.play('selected');
 		curItem.updateHitbox();
-		if (curItem != menuItems.members[5]) {
+		if (curSelected != 5) {
 			FlxTween.tween(curItem, {x: 150}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
