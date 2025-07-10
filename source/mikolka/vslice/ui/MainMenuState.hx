@@ -84,7 +84,7 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		for (i in 0...4)
+		for (i in 0...5)
 		{
 			var menuItem:FlxSprite = new FlxSprite(132, (i * 59) + 200);
 			menuItem.antialiasing = false; //VsliceOptions.ANTIALIASING
@@ -98,7 +98,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.updateHitbox();
 		}
 		
-		var optionsButton:FlxSprite = new FlxSprite(460, profileBottomBG.y + 40);
+		var optionsButton:FlxSprite = new FlxSprite(456, profileBottomBG.y + 20);
 		optionsButton.antialiasing = false;
 		optionsButton.frames = Paths.getSparrowAtlas('mainmenu/buttons/menu_' + optionShit[5]);
 		optionsButton.animation.addByPrefix('idle', optionShit[5] + " basic", 0);
@@ -109,7 +109,7 @@ class MainMenuState extends MusicBeatState
 		optionsButton.updateHitbox();
 		
 		var psychVer:FlxText = new FlxText(0, FlxG.height - 18, FlxG.width, "P-Slice Engine v" + pSliceVersion, 12);
-		var vsfVer:FlxText = new FlxText(0, 14, FlxG.width, "Vs. Server Foda v" + vsfVersion, 18);
+		var vsfVer:FlxText = new FlxText(0, 14, FlxG.width, "Vs. Server Foda v" + vsfVersion, 20);
 		
 		psychVer.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		vsfVer.setFormat(Paths.font("ggsans/medium.ttf"), 20, 0xFFDFE0E2, CENTER); //, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -295,7 +295,7 @@ class MainMenuState extends MusicBeatState
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 		item.animation.play('idle');
 		item.updateHitbox();
-		if (curSelected != 5) {
+		if (curSelected != 6) {
 			FlxTween.tween(item, {x: 132}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
@@ -316,7 +316,7 @@ class MainMenuState extends MusicBeatState
 		curItem = menuItems.members[curSelected];
 		curItem.animation.play('selected');
 		curItem.updateHitbox();
-		if (curSelected != 5) {
+		if (curSelected != 6) {
 			FlxTween.tween(curItem, {x: 150}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
