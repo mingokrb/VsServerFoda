@@ -297,7 +297,7 @@ class MainMenuState extends MusicBeatState
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 		item.animation.play('idle');
 		item.updateHitbox();
-		if (curSelected != menuItems.length) {
+		if (curSelected != menuItems.length - 1) {
 			FlxTween.tween(item, {x: 132}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
@@ -324,7 +324,7 @@ class MainMenuState extends MusicBeatState
 			curSelected = menuItems.length - 1;
 
 		var isOptionsSelected:Bool = false; // mais fácil
-		if (curSelected == menuItems.length)
+		if (curSelected == menuItems.length - 1)
 			isOptionsSelected = true;
 		else
 			isOptionsSelected = false;
@@ -350,8 +350,6 @@ class MainMenuState extends MusicBeatState
 			});
 		}
 		trace('isOptionsSelected: ' + isOptionsSelected);
-		trace('item: ' + item);
-		trace('curItem: ' + curItem);
 		//menuItems.members[curSelected].centerOffsets();
 		//menuItems.members[curSelected].screenCenter(X);
 
