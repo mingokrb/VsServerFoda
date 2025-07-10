@@ -72,6 +72,15 @@ class MainMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		//add(camFollow);
 
+		bottom = new FlxTypedGroup<FlxSprite>();
+		add(bottom);
+		
+		var profileBottomBG:FlxSprite = new FlxSprite(10, FlxG.height - 110).loadGraphic(Paths.image('mainmenu/profileBottomBG'));
+		profileBottomBG.antialiasing = false;
+		bottom.add(profileBottomBG);
+		profileBottomBG.scrollFactor.set();
+		profileBottomBG.updateHitbox();
+		
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
@@ -88,15 +97,6 @@ class MainMenuState extends MusicBeatState
 			menuItem.scrollFactor.set();
 			menuItem.updateHitbox();
 		}
-		
-		bottom = new FlxTypedGroup<FlxSprite>();
-		add(bottom);
-		
-		var profileBottomBG:FlxSprite = new FlxSprite(10, FlxG.height - 110).loadGraphic(Paths.image('mainmenu/profileBottomBG'));
-		profileBottomBG.antialiasing = false;
-		bottom.add(profileBottomBG);
-		profileBottomBG.scrollFactor.set();
-		profileBottomBG.updateHitbox();
 		
 		var optionsButton:FlxSprite = new FlxSprite(240, profileBottomBG.y);
 		optionsButton.antialiasing = false;
@@ -135,7 +135,7 @@ class MainMenuState extends MusicBeatState
 		#end
 
 		#if TOUCH_CONTROLS_ALLOWED
-		addTouchPad('UP_DOWN', 'B_E'); // trocar pra 'NONE', 'B' na versão final!!!!!!!!!!
+		addTouchPad('UP_DOWN', 'B_E'); // tirar o '_E' na versão final!!!!!!!!!!
 		#end
 
 		super.create();
