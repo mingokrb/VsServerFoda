@@ -181,12 +181,13 @@ class TitleState extends MusicBeatState
 		Conductor.bpm = musicBPM;
 		
 		logoBl = new FlxSprite(logoPosition.x, logoPosition.y);
-		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+		logoBl.frames = ronaldoMode ? Paths.getSparrowAtlas('logoBumpinR') : Paths.getSparrowAtlas('logoBumpin');
 		logoBl.antialiasing = ClientPrefs.data.antialiasing;
 		
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 48, false);
 		logoBl.animation.play('bump');
 		logoBl.screenCenter();
+		if (ronaldoMode) logoBl.y -= 50;
 		logoBl.updateHitbox();
 		
 		// reutilizei mesmo... vai fazer o quê... hein...
