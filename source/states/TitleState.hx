@@ -370,6 +370,7 @@ class TitleState extends MusicBeatState
 	
 	override function update(elapsed:Float)
 	{
+		//trace(FlxG.sound.music);
 		#if debug
 		if (controls.FAVORITE)
 			moveToAttract();
@@ -773,9 +774,7 @@ class TitleState extends MusicBeatState
 			// #if VIDEOS_ALLOWED
 			// 	FlxG.sound.music.onComplete = moveToAttract;
 			// #end
-			/*	#if TITLE_SCREEN_EASTER_EGG
-			if (wega) // Ignore deez
-			{
+			#if TITLE_SCREEN_EASTER_EGG
 				var easteregg:String = FlxG.save.data.psychDevsEasterEgg;
 				if (easteregg == null)
 					easteregg = '';
@@ -784,35 +783,23 @@ class TitleState extends MusicBeatState
 				//var sound:FlxSound = null;
 				switch (easteregg)
 				{
-					case 'BAAAAAAAAAAH!!!!!':
-						new FlxTimer().start(2, function(tmr:FlxTimer)
-						{
-							MusicBeatState.switchState(new TitleState());
-						});
+					case 'RONALDO':
+						if (FlxG.sound.music.volume == 0) {
+							FlxG.sound.playMusic(Paths.music('freakyMenuSecret'), 0);
+							FlxG.sound.music.fadeIn(4, 0, 0.7);
+						}
 					
-					default: // Go back to normal ugly ass boring GF
-						remove(ngSpr);
-						remove(sfSpr);
-						remove(credGroup);
-						FlxG.camera.flash(FlxColor.WHITE, 2);
-						skippedIntro = true;
-						
-						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-						FlxG.sound.music.fadeIn(4, 0, 0.7);
-						return;
+					default: // Go back to normal ugly ass boring GF -- Não tem GF aqui não doidão kkkkkkk
+						if (FlxG.sound.music.volume == 0) {
+							FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+							FlxG.sound.music.fadeIn(4, 0, 0.7);
+						}
 				}
-			}
-			else
 			#end // Default! Edit this one!!	*/
 			remove(ngSpr);
 			remove(sfSpr);
 			remove(credGroup);
 			FlxG.camera.flash(FlxColor.WHITE, 4);
-			
-			var easteregg:String = ''; //FlxG.save.data.psychDevsEasterEgg;
-			if (easteregg == null)
-				easteregg = '';
-			easteregg = easteregg.toUpperCase();
 			skippedIntro = true;
 		}
 	}
