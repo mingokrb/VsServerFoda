@@ -23,12 +23,12 @@ class FlashingState extends MusicBeatState
 
 		var black:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLUE);
-		bg.alpha = 0.08;
+		bg.alpha = 0.05;
 		add(bg);
 		
 		backdrop = new FlxBackdrop(Paths.image('backdrop_sanes'));
 		backdrop.setGraphicSize(Std.int(backdrop.width * 0.6));
-		backdrop.alpha = 0.22; // vai brasil
+		backdrop.alpha = 0.20;
 		backdrop.antialiasing = ClientPrefs.data.antialiasing;
 		backdrop.screenCenter(X);
 		backdrop.updateHitbox();
@@ -41,7 +41,7 @@ class FlashingState extends MusicBeatState
 		final enter:String = controls.mobileC ? 'A' : 'ENTER';
 		final escape:String = controls.mobileC ? 'B' : 'ESC';
 
-		warnText = new FlxText(0, FlxG.height / 2, FlxG.width,
+		warnText = new FlxText(0, (FlxG.height / 2) - 40, FlxG.width,
 			"Este mod contém algumas luzes piscantes!\n
 			Aperte " + enter + " para desativá-las agora ou abra o menu de opções.\n
 			Aperte " + escape + " para ignorar esta mensagem.\n
@@ -59,8 +59,8 @@ class FlashingState extends MusicBeatState
 	{
 		if(!leftState) {
 			// https://gamebanana.com/tuts/15426
-			backdrop.x += 0.3 * (elapsed / (1 / 120));
-			backdrop.y -= 0.2 / (ClientPrefs.data.framerate / 60);
+			backdrop.x -= 0.3 * (elapsed / (1 / 120));
+			backdrop.y += 0.2 / (ClientPrefs.data.framerate / 60);
 			
 			var back:Bool = controls.BACK;
 			if (controls.ACCEPT || back) {
@@ -70,7 +70,7 @@ class FlashingState extends MusicBeatState
 				
 				FlxTween.tween(bg, {alpha: 0}, 1.2);
 				FlxTween.tween(backdrop, {alpha: 0}, 1.2);
-				//FlxTween.tween(controls.mobileC, {alpha: 0}, 1); // não sei se funciona vou deixar comentado
+				FlxTween.tween(touchPad, {alpha: 0}, 1);
 				if(!back) {
 					ClientPrefs.data.flashing = false;
 					ClientPrefs.saveSettings();
