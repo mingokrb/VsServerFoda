@@ -462,9 +462,36 @@ class TitleState extends MusicBeatState
 			#if TITLE_SCREEN_EASTER_EGG
 			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE #if TOUCH_CONTROLS_ALLOWED || isSoftKeyPressed #end)
 			{
-				isSoftKeyPressed = false;
+				//isSoftKeyPressed = false;
 				var keyPressed:FlxKey = #if TOUCH_CONTROLS_ALLOWED isSoftKeyPressed ? softKeyPressed : #end FlxG.keys.firstJustPressed();
 				var keyName:String = Std.string(keyPressed);
+				// Culpe o HaxeFlixel por isso
+				switch (keyName) {
+					case 'ONE':
+						if (FlxG.keys.pressed.SHIFT)
+							keyName = '!';
+						else 
+							keyName = '1';
+					case 'TWO':
+						keyName = '2';
+					case 'THREE':
+						keyName = '3';
+					case 'FOUR':
+						keyName = '4';
+					case 'FIVE':
+						keyName = '5';
+					case 'SIX':
+						keyName = '6';
+					case 'SEVEN':
+						keyName = '7';
+					case 'EIGHT':
+						keyName = '8';
+					case 'NINE':
+						keyName = '9';
+					case 'ZERO':
+						keyName = '0';
+				}
+
 				if (allowedKeys.contains(keyName))
 				{
 					easterEggKeysBuffer += keyName;
