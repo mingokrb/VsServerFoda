@@ -410,10 +410,13 @@ class TitleState extends MusicBeatState
 		
 		// EASTER EGG
 		#if TOUCH_CONTROLS_ALLOWED
+		var isSoftKeyPressed:Bool = false;
+		var keyCode:Int = 0;
+		
 		function onKeyDown(e:KeyboardEvent) {
-			var softKeyPress:FlxKey = cast e.keyCode;
-			trace('softKeyPress: ' + softKeyPress);
-			return softKeyPress;
+			keyCode = e.keyCode;
+			isSoftKeyPressed = true;
+			trace('keyCode: ' + keyCode);
 		}
 		#end
 		
@@ -462,9 +465,14 @@ class TitleState extends MusicBeatState
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			}
 			#if TITLE_SCREEN_EASTER_EGG
-			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE #if TOUCH_CONTROLS_ALLOWED || onKeyDown() != FlxKey.NONE #end)
+			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE #if TOUCH_CONTROLS_ALLOWED || isSoftKeyPressed #end)
 			{
-				var keyPressed:FlxKey =  FlxG.keys.firstJustPressed() #if TOUCH_CONTROLS_ALLOWED || onKeyDown() #end ;
+				#if TOUCH_CONTROLS_ALLOWED
+				var keyPressed:FlxKey = isSoftKeyPressed ? cast keyCode : FlxG.keys.firstJustPressed();
+				isSoftKeyPressed = false;
+				#else
+				var keyPressed:FlxKey = FlxG.keys.firstJustPressed();
+				#end
 				var keyName:String = Std.string(keyPressed);
 				// Culpe o HaxeFlixel por isso
 				switch (keyName) {
@@ -509,8 +517,8 @@ class TitleState extends MusicBeatState
 						if (easterEggKeysBuffer.contains(word))
 						{
 							#if TOUCH_CONTROLS_ALLOWED // fechar teclado virtual ao digitar segredo
-							FlxG.stage.window.textInputEnabled = false;
 							FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+							FlxG.stage.window.textInputEnabled = false;
 							#end
 							// trace('YOOO! ' + word);
 							// if (FlxG.save.data.psychDevsEasterEgg == word)
@@ -633,13 +641,13 @@ class TitleState extends MusicBeatState
 		if (skippedIntro && !transitioning) {
 			if (SwipeUtil.swipeAny && !FlxG.stage.window.textInputEnabled) {
 				if (SwipeUtil.swipeDown) {
-					FlxG.stage.window.textInputEnabled = true;
 					FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+					FlxG.stage.window.textInputEnabled = true;
 				}
 			}
 			if (controls.BACK && FlxG.stage.window.textInputEnabled) {
-				FlxG.stage.window.textInputEnabled = false;
 				FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+				FlxG.stage.window.textInputEnabled = false;
 			}
 		}
 		#end
