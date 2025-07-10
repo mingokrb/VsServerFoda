@@ -167,14 +167,17 @@ class TitleState extends MusicBeatState
 	function startIntro()
 	{
 		persistentUpdate = true;
-		if (!initialized && FlxG.sound.music == null && ronaldoMode) {
-			FlxG.sound.playMusic(Paths.music('freakyMenuSecret'), 0);
-		} else if (!initialized && FlxG.sound.music == null) {
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+		#if TITLE_SCREEN_EASTER_EGG easterEggData(); #end
+
+		if (!initialized && FlxG.sound.music == null) {
+			if (ronaldoMode) {
+				FlxG.sound.playMusic(Paths.music('freakyMenuSecret'), 0);
+			} else {
+				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+			}
 		}
 		
 		loadJsonData();
-		#if TITLE_SCREEN_EASTER_EGG easterEggData(); #end
 		Conductor.bpm = musicBPM;
 		
 		logoBl = new FlxSprite(logoPosition.x, logoPosition.y);
@@ -576,6 +579,9 @@ class TitleState extends MusicBeatState
 														FlxTransitionableState.skipNextTransIn = true;
 														FlxTransitionableState.skipNextTransOut = true;
 														MusicBeatState.switchState(new TitleState());
+														if (FlxG.save.data.psychDevsEasterEgg == word) {
+															initialized = false;
+														}
 													}
 												});
 											});
@@ -693,7 +699,7 @@ class TitleState extends MusicBeatState
 		
 		//if (cheatActive && this.curBeat % 2 == 0 && swagShader != null)
 		//	swagShader.hue += 0.125;
-		
+		#if TITLE_SCREEN_EASTER_EGG easterEggData(); #end
 		if (!closedState)
 		{
 			sickBeats++;
