@@ -98,7 +98,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.updateHitbox();
 		}
 		
-		var optionsButton:FlxSprite = new FlxSprite(456, profileBottomBG.y + 20);
+		var optionsButton:FlxSprite = new FlxSprite(456, profileBottomBG.y + 22);
 		optionsButton.antialiasing = false;
 		optionsButton.frames = Paths.getSparrowAtlas('mainmenu/buttons/menu_' + optionShit[5]);
 		optionsButton.animation.addByPrefix('idle', optionShit[5] + " basic", 0);
@@ -295,8 +295,16 @@ class MainMenuState extends MusicBeatState
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 		item.animation.play('idle');
 		item.updateHitbox();
-		if (curSelected != 6) {
+		if (curSelected != menuItems.length) {
 			FlxTween.tween(item, {x: 132}, 0.14, {
+				ease: FlxEase.quadOut,
+				onComplete: function(twn:FlxTween)
+					{
+						item.updateHitbox();
+					}
+			});
+		} else {
+			FlxTween.tween(item, {y: profileBottomBG.y + 22}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
 					{
@@ -313,10 +321,16 @@ class MainMenuState extends MusicBeatState
 		if (curSelected < 0)
 			curSelected = menuItems.length - 1;
 
+		var isOptionsSelected:Bool = false; // mais fácil
+		if (curSelected == menuItems.length)
+			isOptionsSelected = true;
+		else
+			isOptionsSelected = false;
+
 		curItem = menuItems.members[curSelected];
 		curItem.animation.play('selected');
 		curItem.updateHitbox();
-		if (curSelected != 6) {
+		if (!isOptionsSelected) {
 			FlxTween.tween(curItem, {x: 150}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
@@ -324,7 +338,18 @@ class MainMenuState extends MusicBeatState
 						curItem.updateHitbox();
 					}
 			});
+		} else {
+			FlxTween.tween(curItem, {y: profileBottomBG.y + 4}, 0.14, {
+				ease: FlxEase.quadOut,
+				onComplete: function(twn:FlxTween)
+					{
+						curItem.updateHitbox();
+					}
+			});
 		}
+		trace('isOptionsSelected: ' + isOptionsSelected)
+		trace('item: ' + item);
+		trace('curItem: ' + curItem);
 		//menuItems.members[curSelected].centerOffsets();
 		//menuItems.members[curSelected].screenCenter(X);
 
