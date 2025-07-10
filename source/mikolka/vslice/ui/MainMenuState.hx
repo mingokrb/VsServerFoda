@@ -100,7 +100,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.updateHitbox();
 		}
 		
-		var optionsButton:FlxSprite = new FlxSprite(456, profileBottomBG.y + 22);
+		var optionsButton:FlxSprite = new FlxSprite(456, profileBottomBG.getGraphicMidpoint().y);
 		optionsButton.antialiasing = false;
 		optionsButton.frames = Paths.getSparrowAtlas('mainmenu/buttons/menu_' + optionShit[5]);
 		optionsButton.animation.addByPrefix('idle', optionShit[5] + " basic", 0);
@@ -306,7 +306,7 @@ class MainMenuState extends MusicBeatState
 					}
 			});
 		} else {
-			FlxTween.tween(item, {y: profileBottomBG.y + 22}, 0.14, {
+			FlxTween.tween(item, {y: profileBottomBG.getGraphicMidpoint().y}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
 					{
@@ -341,7 +341,7 @@ class MainMenuState extends MusicBeatState
 					}
 			});
 		} else {
-			FlxTween.tween(curItem, {y: profileBottomBG.y + 4}, 0.14, {
+			FlxTween.tween(curItem, {y: profileBottomBG.getGraphicMidpoint().y - 18}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween)
 					{
