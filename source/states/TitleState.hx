@@ -336,7 +336,7 @@ class TitleState extends MusicBeatState
 		{
 			case 'RONALDO':
 				ronaldoMode = true;
-				initialized = false;
+				persistentUpdate = false;
 		}
 	}
 	
@@ -576,6 +576,21 @@ class TitleState extends MusicBeatState
 		if (!wega && !book)
 			if (controls.BACK) openfl.Lib.application.window.close();
 		#end
+
+		// abrir teclado virtual ao deslizar pra cima
+		#if TOUCH_CONTROLS_ALLOWED
+		if (skippedIntro) {
+			if (SwipeUtil.swipeAny && !FlxG.stage.window.textInputEnabled) {
+				if (SwipeUtil.swipeUp) {
+					FlxG.stage.window.textInputEnabled = true;
+				}
+			}
+
+			if (controls.BACK && FlxG.stage.window.textInputEnabled) {
+				FlxG.stage.window.textInputEnabled = false;
+			}
+		}
+		#end
 		
 		super.update(elapsed);
 	}
@@ -750,20 +765,6 @@ class TitleState extends MusicBeatState
 			skippedIntro = true;
 		}
 	}
-	
-	// abrir teclado virtual ao deslizar pra cima
-	#if TOUCH_CONTROLS_ALLOWED
-	if (skippedIntro)
-	{
-		if (SwipeUtil.swipeAny && !FlxG.stage.window.textInputEnabled)
-		{
-			if (SwipeUtil.swipeUp)
-				FlxG.stage.window.textInputEnabled = true;
-		}
-		if (controls.BACK && FlxG.stage.window.textInputEnabled)
-			FlxG.stage.window.textInputEnabled = false;
-	}
-	#end
 	
 	/**
 	 * After sitting on the title screen for a while, transition to the attract screen. ----- Dá pra fazer algo com isso com certeza
