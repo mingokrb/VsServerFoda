@@ -701,7 +701,7 @@ class TitleState extends MusicBeatState
 					// #end
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
-					addMoreText('Server Foda Team', -40);
+					createCoolText(['Server Foda Team'], -40);
 				case 3:
 					addMoreText('mingokrb', -40);
 				case 4:
@@ -787,22 +787,6 @@ class TitleState extends MusicBeatState
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			skippedIntro = true;
 		}
-	}
-	
-	function restartGame():Void // pro ronaldoMode não quebrar
-	{
-		//FlxG.cameras.remove();
-		initialized = false;
-    ScreenshotPlugin.instance.destroy();
-    ScreenshotPlugin.instance = null;
-		closedState = false;
-		if (Main.fpsVar != null)
-			Main.fpsVar.visible = ClientPrefs.data.showFPS;
-		if (Main.memoryCounter != null)
-			Main.memoryCounter.visible = ClientPrefs.data.showFPS;
-		FlxG.sound.pause();
-		FlxTween.globalManager.clear();
-		FlxG.resetGame();
 	}
 	
 	/**
