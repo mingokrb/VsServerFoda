@@ -179,7 +179,7 @@ class TitleState extends MusicBeatState
 
 		Conductor.bpm = musicBPM;
 		
-		logoBl = new FlxSprite(logoPosition.x, logoPosition.y);
+		logoBl = new FlxSprite(0, 0);
 		logoBl.frames = ronaldoMode ? Paths.getSparrowAtlas('logoBumpinR') : Paths.getSparrowAtlas('logoBumpin');
 		logoBl.antialiasing = ClientPrefs.data.antialiasing;
 		
@@ -202,7 +202,11 @@ class TitleState extends MusicBeatState
 		
 		var animFrames:Array<FlxFrame> = [];
 		titleText = new FlxSprite(enterPosition.x, enterPosition.y);
+		#if TOUCH_CONTROLS_ALLOWED
+		titleText.frames = Paths.getSparrowAtlas('titlePress');
+		#else
 		titleText.frames = Paths.getSparrowAtlas('titleEnter');
+		#end
 		@:privateAccess
 		{
 			titleText.animation.findByPrefix(animFrames, "ENTER IDLE");
@@ -220,11 +224,12 @@ class TitleState extends MusicBeatState
 			titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
 		}
 		titleText.animation.play('idle');
+		titleText.screenCenter(X);
 		titleText.updateHitbox();
 		
 		if (swagShader != null)
 		{
-			logoBl.shader = swagShader.shader;
+			//logoBl.shader = swagShader.shader;
 			titleText.shader = swagShader.shader;
 		}
 		
@@ -300,7 +305,6 @@ class TitleState extends MusicBeatState
 		// credGroup.add(credTextShit);
 	}
 	
-	var logoPosition:FlxPoint = FlxPoint.get(-150, -100);
 	var enterPosition:FlxPoint = FlxPoint.get(100, 576);
 	
 	var musicBPM:Float = 100;
@@ -678,7 +682,7 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 		
-		if (logoBl != null)
+		if (Bl != null)
 			logoBl.animation.play('bump', true);
 		
 		//if (cheatActive && this.curBeat % 2 == 0 && swagShader != null)
