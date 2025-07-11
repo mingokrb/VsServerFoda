@@ -458,13 +458,10 @@ class TitleState extends MusicBeatState
 				var keyPressed:FlxKey = FlxG.keys.firstJustPressed();
 				#end
 				var keyName:String = Std.string(keyPressed);
-				#if TOUCH_CONTROLS_ALLOWED
-				if (softKeyPressed != '') keyName = softKeyPressed;
-				#end
 				// Culpe o HaxeFlixel por isso
 				switch (keyName) {
 					case 'ONE':
-						if (FlxG.keys.pressed.SHIFT)
+						if (FlxG.keys.pressed.SHIFT #if TOUCH_CONTROLS_ALLOWED || softKeyPressed == '!' #end)
 							keyName = '!';
 						else 
 							keyName = '1';
