@@ -171,6 +171,12 @@ class TitleState extends MusicBeatState
 			}
 		}
 		
+		var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('titleBG'));
+		bg.antialiasing = ClientPrefs.data.antialiasing;
+		bg.screenCenter();
+		bg.updateHitbox();
+		add(bg);
+
 		Conductor.bpm = musicBPM;
 		
 		logoBl = new FlxSprite(logoPosition.x, logoPosition.y);
@@ -298,12 +304,6 @@ class TitleState extends MusicBeatState
 	var enterPosition:FlxPoint = FlxPoint.get(100, 576);
 	
 	var musicBPM:Float = 100;
-	
-	var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('titleBG'));
-	bg.antialiasing = ClientPrefs.data.antialiasing;
-	bg.screenCenter();
-	bg.updateHitbox();
-	add(bg);
 	
 	function easterEggData()
 	{
