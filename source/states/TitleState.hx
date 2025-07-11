@@ -337,8 +337,8 @@ class TitleState extends MusicBeatState
 	
 	function easterEggData()
 	{
-		if (FlxG.save.data.psychDevsEasterEgg == null) FlxG.save.data.psychDevsEasterEgg = ''; //Crash prevention
-		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
+		if (FlxG.save.data.easterEgg == null) FlxG.save.data.easterEgg = ''; //Crash prevention
+		var easterEgg:String = FlxG.save.data.easterEgg;
 		switch(easterEgg.toUpperCase())
 		{
 			case 'RONALDO':
@@ -530,10 +530,10 @@ class TitleState extends MusicBeatState
 							FlxG.stage.window.textInputEnabled = false;
 							#end
 							// trace('YOOO! ' + word);
-							// if (FlxG.save.data.psychDevsEasterEgg == word)
-							// 	FlxG.save.data.psychDevsEasterEgg = '';
+							// if (FlxG.save.data.easterEgg == word)
+							// 	FlxG.save.data.easterEgg = '';
 							// else
-							// 	FlxG.save.data.psychDevsEasterEgg = word;
+							// 	FlxG.save.data.easterEgg = word;
 							// FlxG.save.flush();
 							switch (word) {
 								case 'CORE':
@@ -565,10 +565,10 @@ class TitleState extends MusicBeatState
 									});									
 									wega = true;
 								case 'RONALDO':
-									if (FlxG.save.data.psychDevsEasterEgg == word) {
-										FlxG.save.data.psychDevsEasterEgg = '';
+									if (FlxG.save.data.easterEgg == word) {
+										FlxG.save.data.easterEgg = '';
 									} else {
-										FlxG.save.data.psychDevsEasterEgg = word;
+										FlxG.save.data.easterEgg = word;
 									}
 									FlxG.save.flush();
 
@@ -597,9 +597,8 @@ class TitleState extends MusicBeatState
 														FlxTransitionableState.skipNextTransIn = true;
 														FlxTransitionableState.skipNextTransOut = true;
 														MusicBeatState.switchState(new TitleState());
-														if (FlxG.save.data.psychDevsEasterEgg == word) {
+														if (FlxG.save.data.easterEgg == word)
 															initialized = false;
-														}
 													}
 												});
 											});
@@ -722,7 +721,7 @@ class TitleState extends MusicBeatState
 			switch (sickBeats)
 			{
 				case 1:
-					// FlxG.sound.music.stop();
+					FlxG.sound.music.stop();
 					if (ronaldoMode)
 						FlxG.sound.playMusic(Paths.music('freakyMenuSecret'), 0);
 					else
@@ -789,28 +788,29 @@ class TitleState extends MusicBeatState
 			// #if VIDEOS_ALLOWED
 			// 	FlxG.sound.music.onComplete = moveToAttract;
 			// #end
-			#if TITLE_SCREEN_EASTER_EGG
-				var easteregg:String = FlxG.save.data.psychDevsEasterEgg;
-				if (easteregg == null)
-					easteregg = '';
-				easteregg = easteregg.toUpperCase();
+			// #if TITLE_SCREEN_EASTER_EGG
+			// 	var easteregg:String = FlxG.save.data.easterEgg;
+			// 	if (easteregg == null)
+			// 		easteregg = '';
+			// 	easteregg = easteregg.toUpperCase();
 				
-				//var sound:FlxSound = null;
-				switch (easteregg)
-				{
-					case 'RONALDO':
-						if (FlxG.sound.music.volume == 0) {
-							FlxG.sound.playMusic(Paths.music('freakyMenuSecret'), 0);
-							FlxG.sound.music.fadeIn(4, 0, 0.7);
-						}
+			// 	//var sound:FlxSound = null;
+			// 	switch (easteregg)
+			// 	{
+			// 		case 'RONALDO':
+			// 			if (FlxG.sound.music.volume == 0) {
+			// 				FlxG.sound.playMusic(Paths.music('freakyMenuSecret'), 0);
+			// 				FlxG.sound.music.fadeIn(4, 0, 0.7);
+			// 			}
 					
-					default: // Go back to normal ugly ass boring GF -- Não tem GF aqui não doidão kkkkkkk
-						if (FlxG.sound.music.volume == 0) {
-							FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-							FlxG.sound.music.fadeIn(4, 0, 0.7);
-						}
-				}
-			#end // Default! Edit this one!!	*/
+			// 		default: // Go back to normal ugly ass boring GF -- Não tem GF aqui não doidão kkkkkkk
+			// 			if (FlxG.sound.music.volume == 0) {
+			// 				trace('RODOU AQUI - easteregg Switch');
+			// 				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+			// 				FlxG.sound.music.fadeIn(4, 0, 0.7);
+			// 			}
+			// 	}
+			// #end // Default! Edit this one!!	*/
 			remove(ngSpr);
 			remove(sfSpr);
 			remove(credGroup);
