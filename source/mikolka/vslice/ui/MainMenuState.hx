@@ -31,14 +31,16 @@ class MainMenuState extends MusicBeatState
 	var profileBottomBG:FlxSprite;
 	
 	var menuItems:FlxTypedGroup<FlxSprite>;
+	var menuItemsText:FlxTypedGroup<FlxSprite>;
 
-	var optionShit:Array<String> = [
-		'story_mode',
-		'freeplay',
-		'commands', // favela-dos-bots
-		'awards',
-		'credits',
-		'options' // separado do resto
+	var optionShit:Array<Array<String>> = [
+	// 'nome',				'nomeDisplay',			'emoji'
+		['story_mode',	'modo-história-',		'open-book'],
+		['freeplay',		'freeplay-',				'unlocked'],
+		['commands',		'favela-dos-bots-',	'robot'], // favela-dos-bots
+		['awards',			'conquistas-',			'trophy'],
+		['credits',			'créditos-',				'handshake'],
+		['options'] // separado do resto
 	];
 
 	var camFollow:FlxObject;
@@ -58,7 +60,6 @@ class MainMenuState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Nos Menus", null);
 		#end
-
 
 		persistentUpdate = persistentDraw = true;
 
@@ -85,26 +86,47 @@ class MainMenuState extends MusicBeatState
 		
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
+		menuItemsText = new FlxTypedGroup<FlxSprite>();
+		add(menuItemsText);
 
 		for (i in 0...5)
 		{
+			// base das opções
 			var menuItem:FlxSprite = new FlxSprite(132, (i * 59) + 200);
 			menuItem.antialiasing = false; //VsliceOptions.ANTIALIASING
-			menuItem.frames = Paths.getSparrowAtlas('mainmenu/buttons/menu_' + optionShit[i]);
-			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 0);
-			menuItem.animation.addByPrefix('selected', optionShit[i] + " chosen", 0);
-			menuItem.animation.addByPrefix('clicked', optionShit[i] + " click", 0);
+			menuItem.frames = Paths.getSparrowAtlas('mainmenu/buttons/menu_base');
+			menuItem.animation.addByPrefix('idle', "option basic", 0);
+			menuItem.animation.addByPrefix('selected', "option chosen", 0);
+			menuItem.animation.addByPrefix('clicked', "option click", 0);
 			menuItem.animation.play('idle');
 			menuItems.add(menuItem);
 			menuItem.scrollFactor.set();
 			menuItem.updateHitbox();
+			
+			// textos das opções
+			if (optionShit[i][2] != null) {
+				var menuItemText:FlxText = new FlxText(172, (i * 59) + 220, FlxG.width, optionShit[i][2], 16);
+				menuItemText.setFormat(Paths.font("ggsans/semibold.ttf"), 16, 0xFF9B9CA3, LEFT);
+				menuItemsText.add(menuItemText);
+				menuItemText.scrollFactor.set();
+				menuItemText.updateHitbox();
+			}
+			
+			// emojis das opções
+			if (optionShit[i][3] != null) {
+				var menuItemEmoji:FlxSprite = new FlxText(menuItemText.x + 60, menuItemText.y).loadGraphic(optionShit[i][3]);
+				//menuItemsText.add(menuItemEmoji);
+				menuItemEmoji.scrollFactor.set();
+				menuItemEmoji.updateHitbox();
+			}
 		}
 		
-		var optionsButton:FlxSprite = new FlxSprite(456, profileBottomBG.y + 22);
+		// botão de opções
+		var optionsButton:FlxSprite = new FlxSprite(460, profileBottomBG.y + 22);
 		optionsButton.antialiasing = false;
-		optionsButton.frames = Paths.getSparrowAtlas('mainmenu/buttons/menu_' + optionShit[5]);
-		optionsButton.animation.addByPrefix('idle', optionShit[5] + " basic", 0);
-		optionsButton.animation.addByPrefix('selected', optionShit[5] + " chosen", 0);
+		optionsButton.frames = Paths.getSparrowAtlas('mainmenu/buttons/menu_options');
+		optionsButton.animation.addByPrefix('idle', "options basic", 0);
+		optionsButton.animation.addByPrefix('selected', "options chosen", 0);
 		optionsButton.animation.play('idle');
 		menuItems.add(optionsButton);
 		optionsButton.scrollFactor.set();
@@ -294,25 +316,21 @@ class MainMenuState extends MusicBeatState
 	function changeItem(huh:Int = 0)
 	{
 		var curItem = menuItems.members[curSelected];
-		var item = curItem; // essa não é pra atualizar
+		var curItemText = menuItemsText.members[curSelected];
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 		item.animation.play('idle');
 		item.updateHitbox();
 		if (curSelected != menuItems.length - 1) {
-			FlxTween.tween(item, {x: 132}, 0.14, {
+			curItemText.color = 0xFF9B9CA3;
+			FlxTween.tween(curItemText, {x: 172}, 0.14, {ease: FlxEase.quadOut});
+			FlxTween.tween(curItem, {x: 132}, 0.14, {
 				ease: FlxEase.quadOut,
-				onComplete: function(twn:FlxTween)
-					{
-						item.updateHitbox();
-					}
+				onComplete: function(twn:FlxTween) { item.updateHitbox(); }
 			});
 		} else {
-			FlxTween.tween(item, {y: profileBottomBG.y + 22}, 0.14, {
+			FlxTween.tween(curItem, {y: profileBottomBG.y + 22}, 0.14, {
 				ease: FlxEase.quadOut,
-				onComplete: function(twn:FlxTween)
-					{
-						item.updateHitbox();
-					}
+				onComplete: function(twn:FlxTween) { item.updateHitbox(); }
 			});
 		}
 		//menuItems.members[curSelected].screenCenter(X);
@@ -331,23 +349,20 @@ class MainMenuState extends MusicBeatState
 			isOptionsSelected = false;
 
 		curItem = menuItems.members[curSelected];
+		curItemText = menuItemsText.members[curSelected];
 		curItem.animation.play('selected');
 		curItem.updateHitbox();
 		if (!isOptionsSelected) {
+			curItemText.color = FlxColor.WHITE;
+			FlxTween.tween(curItemText, {x: 190}, 0.14, {ease: FlxEase.quadOut});
 			FlxTween.tween(curItem, {x: 150}, 0.14, {
 				ease: FlxEase.quadOut,
-				onComplete: function(twn:FlxTween)
-					{
-						curItem.updateHitbox();
-					}
+				onComplete: function(twn:FlxTween) { curItem.updateHitbox(); }
 			});
 		} else {
 			FlxTween.tween(curItem, {y: profileBottomBG.y + 14}, 0.14, {
 				ease: FlxEase.quadOut,
-				onComplete: function(twn:FlxTween)
-					{
-						curItem.updateHitbox();
-					}
+				onComplete: function(twn:FlxTween) { curItem.updateHitbox(); }
 			});
 		}
 		//menuItems.members[curSelected].centerOffsets();
