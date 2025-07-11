@@ -397,8 +397,6 @@ class TitleState extends MusicBeatState
 					softKeyPressed = '!';
 			}
 			isSoftKeyPressed = true;
-			trace('keyCode: ' + keyCode);
-			trace('softKeyPressed: ' + softKeyPressed);
 		}
 		#end
 		
@@ -494,10 +492,9 @@ class TitleState extends MusicBeatState
 					easterEggKeysBuffer += keyName;
 					if (easterEggKeysBuffer.length >= 32)
 						easterEggKeysBuffer = easterEggKeysBuffer.substring(1);
-					// debug //
-					trace('Test! Allowed Key pressed!!! Buffer: ' + easterEggKeysBuffer);
-					trace('Acabou de apertar ' + keyName);
-					///////////
+					
+					//trace('Test! Allowed Key pressed!!! Buffer: ' + easterEggKeysBuffer);
+					//trace('Acabou de apertar ' + keyName);
 					
 					for (wordRaw in easterEggKeys)
 					{
@@ -682,7 +679,8 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 		
-		logoBl.animation.play('bump', true);
+		if (logoBl != null)
+			logoBl.animation.play('bump', true);
 		
 		//if (cheatActive && this.curBeat % 2 == 0 && swagShader != null)
 		//	swagShader.hue += 0.125;
