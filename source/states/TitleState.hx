@@ -396,6 +396,9 @@ class TitleState extends MusicBeatState
 			switch (keyCode) {
 				case 16:
 					softKeyPressed = '!';
+				case 49:
+					if (softKeyPressed = '!')
+						softKeyPressed = '!';
 			}
 			isSoftKeyPressed = true;
 			trace('keyCode: ' + keyCode);
