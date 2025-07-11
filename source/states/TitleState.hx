@@ -372,6 +372,7 @@ class TitleState extends MusicBeatState
 	#if TOUCH_CONTROLS_ALLOWED
 	var isSoftKeyPressed:Bool = false;
 	var keyCode:Int = 0;
+	var softKeyPressed:String = '';
 	#end
 	
 	override function update(elapsed:Float)
@@ -417,9 +418,15 @@ class TitleState extends MusicBeatState
 		// EASTER EGG
 		#if TOUCH_CONTROLS_ALLOWED
 		function onKeyDown(e:KeyboardEvent) {
+			softKeyPressed = '';
 			keyCode = e.keyCode;
+			switch (keyCode) {
+				case 16:
+					softKeyPressed = '!';
+			}
 			isSoftKeyPressed = true;
 			trace('keyCode: ' + keyCode);
+			trace('softKeyPressed: ' + softKeyPressed);
 		}
 		#end
 		
@@ -476,17 +483,19 @@ class TitleState extends MusicBeatState
 			{
 				#if TOUCH_CONTROLS_ALLOWED
 				var flxKey:FlxKey = cast keyCode;
-				trace('flxKey: ' + flxKey); // só pra saber
 				var keyPressed:FlxKey = isSoftKeyPressed ? flxKey : FlxG.keys.firstJustPressed();
 				isSoftKeyPressed = false;
 				#else
 				var keyPressed:FlxKey = FlxG.keys.firstJustPressed();
 				#end
 				var keyName:String = Std.string(keyPressed);
+				#if TOUCH_CONTROLS_ALLOWED
+				if (softKeyPressed != '') keyName = softKeyPressed;
+				#end
 				// Culpe o HaxeFlixel por isso
 				switch (keyName) {
 					case 'ONE':
-						if (FlxG.keys.pressed.SHIFT #if TOUCH_CONTROLS_ALLOWED || keyCode == 16 #end)
+						if (FlxG.keys.pressed.SHIFT)
 							keyName = '!';
 						else 
 							keyName = '1';

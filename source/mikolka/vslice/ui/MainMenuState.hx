@@ -25,7 +25,7 @@ class MainMenuState extends MusicBeatState
 	public static var vsfVersion:String = '0.1'; // mudar com o tempo!!!!!!!!!!!!!!
 	public static var pSliceVersion:String = '3.1.1'; 
 	public static var curSelected:Int = 0;
-	var allowMouse:Bool = false; //Turn this off to block mouse movement in menus
+	var allowMouse:Bool = false; // crashando o jogo no momento
 
 	var bottom:FlxTypedGroup<FlxSprite>;
 	var profileBottomBG:FlxSprite;
@@ -111,7 +111,7 @@ class MainMenuState extends MusicBeatState
 		optionsButton.updateHitbox();
 		
 		var psychVer:FlxText = new FlxText(0, FlxG.height - 18, FlxG.width, "P-Slice Engine v" + pSliceVersion, 12);
-		var vsfVer:FlxText = new FlxText(0, 14, FlxG.width, "Vs. Server Foda v" + vsfVersion, 24);
+		var vsfVer:FlxText = new FlxText(0, 12, FlxG.width, "Vs. Server Foda v" + vsfVersion, 24);
 		
 		psychVer.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		vsfVer.setFormat(Paths.font("ggsans/medium.ttf"), 24, 0xFFDFE0E2, CENTER); //, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);

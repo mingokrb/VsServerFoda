@@ -151,17 +151,10 @@ xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/
 		<assets path="assets/translations" rename="assets"   unless="web"/>
 	</section>
 
-	<section if="BASE_GAME_FILES">
-		<section if="web">
-			<assets path="assets/base_game/week_data"   rename="assets" include="*.png|*.ogg" embed="false"/>
-			<assets path="assets/base_game/week_data"   rename="assets" include="*.xml|*.json" embed="true"/>
-			<assets path="assets/base_game/characters"   rename="assets/shared/images/characters" include="*.xml|*.json" embed="true"/>
-			<assets path="assets/base_game/characters"   rename="assets/shared/images/characters" include="*.png" embed="false"/>
-			<assets path="assets/base_game/shared" rename="assets/shared" embed="true"/>
-		</section>
-		<assets path="assets/base_game/week_data" rename="assets"   unless="web"/>
-		<assets path="assets/base_game/characters" rename="assets/shared/images/characters"   unless="web"/>
-		<assets path="assets/base_game/shared" rename="assets/shared"   unless="web"/>
+	<!-- Usar assets comprimidos se no mobile -->
+	<assets path="assetsUncompressed" rename="assets" unless="mobile"/>
+	<section if="mobile">
+		<assets path="assetsCompressed" rename="assets"/>
 	</section>
 
 	<section if="MODS_ALLOWED">
