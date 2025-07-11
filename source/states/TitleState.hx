@@ -486,7 +486,7 @@ class TitleState extends MusicBeatState
 				// Culpe o HaxeFlixel por isso
 				switch (keyName) {
 					case 'ONE':
-						if (FlxG.keys.pressed.SHIFT)
+						if (FlxG.keys.pressed.SHIFT #if TOUCH_CONTROLS_ALLOWED || keyCode == 16 #end)
 							keyName = '!';
 						else 
 							keyName = '1';
@@ -617,7 +617,8 @@ class TitleState extends MusicBeatState
 								case '53488':
 									FlxG.sound.music.stop();
 									var uncannySpr:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('uncanny'));
-									uncannySpr.scale.set(FlxG.width, FlxG.height);
+									uncannySpr.antialiasing = true;
+									uncannySpr.screenCenter();
 									uncannySpr.updateHitbox();
 									add(uncannySpr);
 									book = true;
@@ -647,7 +648,7 @@ class TitleState extends MusicBeatState
 
 		// abrir teclado virtual ao deslizar pra cima (salve pro PsychUIInputText.hx)
 		#if TOUCH_CONTROLS_ALLOWED
-		if (skippedIntro && !transitioning) {
+		if (skippedIntro && !transitioning && !wega && !book) {
 			if (SwipeUtil.swipeAny && !FlxG.stage.window.textInputEnabled) {
 				if (SwipeUtil.swipeDown) {
 					FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
