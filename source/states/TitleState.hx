@@ -305,7 +305,7 @@ class TitleState extends MusicBeatState
 	var logoPosition:FlxPoint = FlxPoint.get(-150, -100);
 	var enterPosition:FlxPoint = FlxPoint.get(100, 576);
 	
-	var musicBPM:Float = 102;
+	var musicBPM:Float = 100;
 	
 	function loadJsonData()
 	{
