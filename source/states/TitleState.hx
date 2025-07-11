@@ -397,7 +397,7 @@ class TitleState extends MusicBeatState
 				case 16:
 					softKeyPressed = '!';
 				case 49:
-					if (softKeyPressed = '!')
+					if (softKeyPressed == '!')
 						softKeyPressed = '!';
 			}
 			isSoftKeyPressed = true;
@@ -685,8 +685,7 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 		
-		if (Bl != null)
-			logoBl.animation.play('bump', true);
+		logoBl.animation.play('bump', true);
 		
 		//if (cheatActive && this.curBeat % 2 == 0 && swagShader != null)
 		//	swagShader.hue += 0.125;
