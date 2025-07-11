@@ -24,15 +24,6 @@ import mikolka.vslice.AttractState;
 import flash.events.KeyboardEvent;
 #end
 
-typedef TitleData = {
-	var titlex:Float;
-	var titley:Float;
-	var startx:Float;
-	var starty:Float;
-	var backgroundSprite:String;
-	var bpm:Float;
-}
-
 class TitleState extends MusicBeatState
 {
 	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
@@ -180,7 +171,6 @@ class TitleState extends MusicBeatState
 			}
 		}
 		
-		loadJsonData();
 		Conductor.bpm = musicBPM;
 		
 		logoBl = new FlxSprite(logoPosition.x, logoPosition.y);
@@ -247,7 +237,7 @@ class TitleState extends MusicBeatState
 		credTextShit.visible = false;
 		
 		ngSpr = new FlxSprite(0, FlxG.height * 0.52);
-		sfSpr = new FlxSprite(0, FlxG.height * 0.52);
+		sfSpr = new FlxSprite(0, FlxG.height * 0.53);
 		
 		#if desktop
 		if (FlxG.random.bool(1))
@@ -304,39 +294,16 @@ class TitleState extends MusicBeatState
 		// credGroup.add(credTextShit);
 	}
 	
-	// JSON data
 	var logoPosition:FlxPoint = FlxPoint.get(-150, -100);
 	var enterPosition:FlxPoint = FlxPoint.get(100, 576);
 	
 	var musicBPM:Float = 100;
 	
-	function loadJsonData()
-	{
-		if(Paths.fileExists('data/title.json', TEXT))
-		{
-			var titleRaw:String = Paths.getTextFromFile('data/title.json');
-			if(titleRaw != null && titleRaw.length > 0)
-			{
-				try
-				{
-					var titleJSON:TitleData = tjson.TJSON.parse(titleRaw);
-					logoPosition.set(titleJSON.titlex, titleJSON.titley);
-					enterPosition.set(titleJSON.startx, titleJSON.starty);
-					musicBPM = titleJSON.bpm;
-					
-					var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('titleBG'));
-					bg.antialiasing = ClientPrefs.data.antialiasing;
-					add(bg);
-				}
-				catch(e:haxe.Exception)
-				{
-					trace('[WARN] Title JSON possivelmente quebrado, ignorando problema...\n${e.details()}');
-				}
-			}
-			else trace('[WARN] Nenhum Title JSON detectado, usando valores padrão.');
-		}
-		//else trace('[WARN] Nenhum Title JSON detectado, usando valores padrão.');
-	}
+	var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('titleBG'));
+	bg.antialiasing = ClientPrefs.data.antialiasing;
+	bg.screenCenter();
+	bg.updateHitbox();
+	add(bg);
 	
 	function easterEggData()
 	{
@@ -822,6 +789,22 @@ class TitleState extends MusicBeatState
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			skippedIntro = true;
 		}
+	}
+	
+	function restartGame():Void // pro ronaldoMode não quebrar
+	{
+		//FlxG.cameras.remove();
+		initialized = false;
+    ScreenshotPlugin.instance.destroy();
+    ScreenshotPlugin.instance = null;
+		closedState = false;
+		if (Main.fpsVar != null)
+			Main.fpsVar.visible = ClientPrefs.data.showFPS;
+		if (Main.memoryCounter != null)
+			Main.memoryCounter.visible = ClientPrefs.data.showFPS;
+		FlxG.sound.pause();
+		FlxTween.globalManager.clear();
+		FlxG.resetGame();
 	}
 	
 	/**
