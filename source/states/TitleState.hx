@@ -179,14 +179,14 @@ class TitleState extends MusicBeatState
 
 		Conductor.bpm = musicBPM;
 		
-		logoBl = new FlxSprite(0, 0);
-		logoBl.frames = ronaldoMode ? Paths.getSparrowAtlas('logoBumpinR') : Paths.getSparrowAtlas('logoBumpin');
+		logoBl = new FlxSprite(0, 0).loadGraphic(ronaldoMode ? 'logoBumpinR' : 'logoBumpin');
+		//logoBl.frames = ronaldoMode ? Paths.getSparrowAtlas('logoBumpinR') : Paths.getSparrowAtlas('logoBumpin');
 		logoBl.antialiasing = ClientPrefs.data.antialiasing;
 		
-		logoBl.animation.addByPrefix('bump', 'logo bumpin', 48, false);
-		logoBl.animation.play('bump');
+		//logoBl.animation.addByPrefix('bump', 'logo bumpin', 48, false);
+		//logoBl.animation.play('bump');
 		logoBl.screenCenter();
-		if (ronaldoMode) logoBl.y -= 50;
+		//if (ronaldoMode) logoBl.y -= 50;
 		logoBl.updateHitbox();
 		
 		// reutilizei mesmo... vai fazer o quê... hein...
@@ -671,6 +671,16 @@ class TitleState extends MusicBeatState
 		}
 	}
 	
+	// animação da logo versão tween
+	function tweenLogo()
+	{
+		FlxTween.tween(logoBl.scale, {x: 0.9, y: 0.9}, 0.04, {ease: FlxEase.cubeIn, onComplete: function(twn:FlxTween) {
+			FlxTween.tween(logoBl.scale, {x: 1.2, y: 1.2}, 0.01, {ease: FlxEase.cubeOut, onComplete: function(twn:FlxTween) {
+				FlxTween.tween(logoBl.scale, {x: 1, y: 1}, 0.3, {ease: FlxEase.cubeInOut});
+			}});
+		}});
+	}
+	
 	private var sickBeats:Int = 0; // Basically curBeat but won't be skipped if you hold the tab or resize the screen
 	
 	public static var closedState:Bool = false;
@@ -680,7 +690,8 @@ class TitleState extends MusicBeatState
 		super.beatHit();
 		
 		if (logoBl != null)
-			logoBl.animation.play('bump', true);
+			tweenLogo();
+			//logoBl.animation.play('bump', true);
 		
 		//if (cheatActive && this.curBeat % 2 == 0 && swagShader != null)
 		//	swagShader.hue += 0.125;
