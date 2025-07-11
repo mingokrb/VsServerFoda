@@ -103,21 +103,22 @@ class MainMenuState extends MusicBeatState
 			menuItem.scrollFactor.set();
 			menuItem.updateHitbox();
 			
-			// textos das opções
+			// textos e emojis das opções
+			var menuItemText:FlxText;
+			var menuItemEmoji:FlxSprite;
+			
 			if (optionShit[i][2] != null) {
-				var menuItemText:FlxText = new FlxText(172, (i * 59) + 220, FlxG.width, optionShit[i][2], 16);
+				menuItemText = new FlxText(172, (i * 59) + 220, FlxG.width, optionShit[i][2], 16);
 				menuItemText.setFormat(Paths.font("ggsans/semibold.ttf"), 16, 0xFF9B9CA3, LEFT);
 				menuItemsText.add(menuItemText);
 				menuItemText.scrollFactor.set();
 				menuItemText.updateHitbox();
-			}
-			
-			// emojis das opções
-			if (optionShit[i][3] != null) {
-				var menuItemEmoji:FlxSprite = new FlxText(menuItemText.x + 60, menuItemText.y).loadGraphic(optionShit[i][3]);
-				//menuItemsText.add(menuItemEmoji);
-				menuItemEmoji.scrollFactor.set();
-				menuItemEmoji.updateHitbox();
+				if (optionShit[i][3] != null) {
+					menuItemEmoji = new FlxText(menuItemText.x + 60, menuItemText.y).loadGraphic(optionShit[i][3]);
+					//menuItemsText.add(menuItemEmoji);
+					menuItemEmoji.scrollFactor.set();
+					menuItemEmoji.updateHitbox();
+				}
 			}
 		}
 		
@@ -244,7 +245,7 @@ class MainMenuState extends MusicBeatState
 					menuItems.members[curSelected].animation.play('clicked');
 				FlxFlicker.flicker(menuItems.members[curSelected], 1, 0.06, false, false, function(flick:FlxFlicker)
 				{
-					switch (optionShit[curSelected])
+					switch (optionShit[curSelected][1])
 					{
 						case 'story_mode':
 							MusicBeatState.switchState(new StoryMenuState());
@@ -316,19 +317,21 @@ class MainMenuState extends MusicBeatState
 	function changeItem(huh:Int = 0)
 	{
 		var curItem = menuItems.members[curSelected];
+		var item = curItem; // essa não é pra atualizar
 		var curItemText = menuItemsText.members[curSelected];
+		var itemText = curItemText; // nem essa
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 		item.animation.play('idle');
 		item.updateHitbox();
 		if (curSelected != menuItems.length - 1) {
-			curItemText.color = 0xFF9B9CA3;
-			FlxTween.tween(curItemText, {x: 172}, 0.14, {ease: FlxEase.quadOut});
-			FlxTween.tween(curItem, {x: 132}, 0.14, {
+			itemText.color = 0xFF9B9CA3;
+			FlxTween.tween(itemText, {x: 172}, 0.14, {ease: FlxEase.quadOut});
+			FlxTween.tween(item, {x: 132}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween) { item.updateHitbox(); }
 			});
 		} else {
-			FlxTween.tween(curItem, {y: profileBottomBG.y + 22}, 0.14, {
+			FlxTween.tween(item, {y: profileBottomBG.y + 22}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween) { item.updateHitbox(); }
 			});
