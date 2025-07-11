@@ -391,14 +391,10 @@ class TitleState extends MusicBeatState
 		// EASTER EGG
 		#if TOUCH_CONTROLS_ALLOWED
 		function onKeyDown(e:KeyboardEvent) {
-			softKeyPressed = '';
 			keyCode = e.keyCode;
 			switch (keyCode) {
 				case 16:
 					softKeyPressed = '!';
-				case 49:
-					if (softKeyPressed == '!')
-						softKeyPressed = '!';
 			}
 			isSoftKeyPressed = true;
 			trace('keyCode: ' + keyCode);
@@ -491,6 +487,7 @@ class TitleState extends MusicBeatState
 					case 'ZERO':
 						keyName = '0';
 				}
+				#if TOUCH_CONTROLS_ALLOWED softKeyPressed = ''; #end
 
 				if (allowedKeys.contains(keyName))
 				{
