@@ -328,7 +328,7 @@ class MainMenuState extends MusicBeatState
 		if (curSelected != menuItems.length - 1) {
 			curItemText.color = 0xFF9B9CA3;
 			FlxTween.tween(curItemText, {x: 190}, 0.14, {ease: FlxEase.quadOut});
-			FlxTween.tween(curItemsEmojis.members[curSelected], {x: curItemText.width + 20}, 0.14, {ease: FlxEase.quadOut});
+			FlxTween.tween(menuItemsEmojis.members[curSelected], {x: curItemText.width + 20}, 0.14, {ease: FlxEase.quadOut});
 			FlxTween.tween(item, {x: 132}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween) { item.updateHitbox(); }
@@ -361,8 +361,7 @@ class MainMenuState extends MusicBeatState
 		if (!isOptionsSelected) {
 			curItemText.color = FlxColor.WHITE;
 			FlxTween.tween(curItemText, {x: 208}, 0.14, {ease: FlxEase.quadOut});
-			FlxTween.tween(curItemText, {x: 208}, 0.14, {ease: FlxEase.quadOut});
-			FlxTween.tween(curItemsEmojis.members[curSelected], {x: curItemText.width + 38}, 0.14, {ease: FlxEase.quadOut});
+			FlxTween.tween(menuItemsEmojis.members[curSelected], {x: curItemText.width + 38}, 0.14, {ease: FlxEase.quadOut});
 			FlxTween.tween(curItem, {x: 150}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween) { curItem.updateHitbox(); }
