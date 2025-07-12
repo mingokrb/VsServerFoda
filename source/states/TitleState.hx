@@ -677,7 +677,7 @@ class TitleState extends MusicBeatState
 		// só os cálculo maluco
 		FlxTween.tween(logoBl.scale, {x: 0.9, y: 0.9}, 0.04, {ease: FlxEase.cubeIn, onComplete: function(twn:FlxTween) {
 			FlxTween.tween(logoBl.scale, {x: 1.133333, y: 1.133333}, 0.01, {ease: FlxEase.cubeOut, onComplete: function(twn:FlxTween) {
-				FlxTween.tween(logoBl.scale, {x: 0.9803, y: 0.9803}, 0.2, {ease: FlxEase.cubeInOut});
+				FlxTween.tween(logoBl.scale, {x: 0.9803, y: 0.9803}, 0.2, {ease: FlxEase.cubeOut});
 			}});
 		}});
 	}
@@ -690,7 +690,7 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 		
-		if (logoBl != null)
+		if (logoBl != null && skippedIntro)
 			tweenLogo();
 			//logoBl.animation.play('bump', true);
 		
