@@ -674,9 +674,10 @@ class TitleState extends MusicBeatState
 	// animação da logo versão tween
 	function tweenLogo()
 	{
+		// só os cálculo maluco
 		FlxTween.tween(logoBl.scale, {x: 0.9, y: 0.9}, 0.04, {ease: FlxEase.cubeIn, onComplete: function(twn:FlxTween) {
-			FlxTween.tween(logoBl.scale, {x: 1.2, y: 1.2}, 0.01, {ease: FlxEase.cubeOut, onComplete: function(twn:FlxTween) {
-				FlxTween.tween(logoBl.scale, {x: 1, y: 1}, 0.3, {ease: FlxEase.cubeInOut});
+			FlxTween.tween(logoBl.scale, {x: 1.133333, y: 1.133333}, 0.01, {ease: FlxEase.cubeOut, onComplete: function(twn:FlxTween) {
+				FlxTween.tween(logoBl.scale, {x: 0.9803, y: 0.9803}, 0.2, {ease: FlxEase.cubeInOut});
 			}});
 		}});
 	}
