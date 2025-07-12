@@ -179,7 +179,7 @@ class TitleState extends MusicBeatState
 
 		Conductor.bpm = musicBPM;
 		
-		logoBl = new FlxSprite(0, 0).loadGraphic(ronaldoMode ? 'logoR' : 'logo');
+		logoBl = new FlxSprite(0, 0).loadGraphic(Paths.image(ronaldoMode ? 'logoR' : 'logo'));
 		//logoBl.frames = ronaldoMode ? Paths.getSparrowAtlas('logoBumpinR') : Paths.getSparrowAtlas('logoBumpin');
 		logoBl.antialiasing = ClientPrefs.data.antialiasing;
 		
