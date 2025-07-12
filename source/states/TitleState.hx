@@ -607,7 +607,7 @@ class TitleState extends MusicBeatState
 			#end
 		}
 		
-		if (initialized && pressedEnter && !skippedIntro)
+		if (initialized && pressedEnter && (!skippedIntro && !ronaldoMode))
 			skipIntro();
 		
 		#if desktop
