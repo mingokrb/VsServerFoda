@@ -32,12 +32,13 @@ class MainMenuState extends MusicBeatState
 	
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	var menuItemsText:FlxTypedGroup<FlxSprite>;
+	var menuItemsEmojis:FlxTypedGroup<FlxSprite>;
 
 	var optionShit:Array<Array<String>> = [
 	// 'nome',				'nomeDisplay',			'emoji'
-		['story_mode',	'modo-história-',		'open-book'],
+		['story_mode',	'modo-história-',		'open_book'],
 		['freeplay',		'freeplay-',				'unlocked'],
-		['commands',		'favela-dos-bots-',	'robot'], // favela-dos-bots
+		['commands',		'favela-dos-bots-',	'robot'],
 		['awards',			'conquistas-',			'trophy'],
 		['credits',			'créditos-',				'handshake'],
 		['options'] // separado do resto
@@ -88,6 +89,8 @@ class MainMenuState extends MusicBeatState
 		add(menuItems);
 		menuItemsText = new FlxTypedGroup<FlxSprite>();
 		add(menuItemsText);
+		menuItemsEmojis = new FlxTypedGroup<FlxSprite>();
+		add(menuItemsEmojis);
 
 		for (i in 0...5)
 		{
@@ -108,14 +111,14 @@ class MainMenuState extends MusicBeatState
 			var menuItemEmoji:FlxSprite;
 			
 			if (optionShit[i][1] != null) {
-				menuItemText = new FlxText(190, (i * 59) + 220, FlxG.width, optionShit[i][1], 26);
-				menuItemText.setFormat(Paths.font("ggsans/semibold.ttf"), 26, 0xFF9B9CA3, LEFT);
+				menuItemText = new FlxText(190, (i * 59) + 212, FlxG.width, optionShit[i][1], 26);
+				menuItemText.setFormat(Paths.font("ggsans/medium.ttf"), 26, 0xFF9B9CA3, LEFT);
 				menuItemsText.add(menuItemText);
 				menuItemText.scrollFactor.set();
 				menuItemText.updateHitbox();
 				if (optionShit[i][2] != null) {
-					menuItemEmoji = new FlxSprite(menuItemText.x + 60, menuItemText.y).loadGraphic(optionShit[i][2]);
-					//menuItemsText.add(menuItemEmoji);
+					menuItemEmoji = new FlxSprite(menuItemText.width + 20, menuItemText.y).loadGraphic(optionShit[i][2]);
+					menuItemsEmojis.add(menuItemEmoji);
 					menuItemEmoji.scrollFactor.set();
 					menuItemEmoji.updateHitbox();
 				}
@@ -319,13 +322,13 @@ class MainMenuState extends MusicBeatState
 		var curItem = menuItems.members[curSelected];
 		var item = curItem; // essa não é pra atualizar
 		var curItemText = menuItemsText.members[curSelected];
-		var itemText = curItemText; // nem essa
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 		item.animation.play('idle');
 		item.updateHitbox();
 		if (curSelected != menuItems.length - 1) {
-			itemText.color = 0xFF9B9CA3;
-			FlxTween.tween(itemText, {x: 190}, 0.14, {ease: FlxEase.quadOut});
+			curItemText.color = 0xFF9B9CA3;
+			FlxTween.tween(curItemText, {x: 190}, 0.14, {ease: FlxEase.quadOut});
+			FlxTween.tween(curItemsEmojis.members[curSelected], {x: curItemText.width + 20}, 0.14, {ease: FlxEase.quadOut});
 			FlxTween.tween(item, {x: 132}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween) { item.updateHitbox(); }
@@ -358,6 +361,8 @@ class MainMenuState extends MusicBeatState
 		if (!isOptionsSelected) {
 			curItemText.color = FlxColor.WHITE;
 			FlxTween.tween(curItemText, {x: 208}, 0.14, {ease: FlxEase.quadOut});
+			FlxTween.tween(curItemText, {x: 208}, 0.14, {ease: FlxEase.quadOut});
+			FlxTween.tween(curItemsEmojis.members[curSelected], {x: curItemText.width + 38}, 0.14, {ease: FlxEase.quadOut});
 			FlxTween.tween(curItem, {x: 150}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween) { curItem.updateHitbox(); }
