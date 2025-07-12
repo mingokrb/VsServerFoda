@@ -107,14 +107,14 @@ class MainMenuState extends MusicBeatState
 			var menuItemText:FlxText;
 			var menuItemEmoji:FlxSprite;
 			
-			if (optionShit[i][2] != null) {
-				menuItemText = new FlxText(172, (i * 59) + 220, FlxG.width, optionShit[i][2], 16);
-				menuItemText.setFormat(Paths.font("ggsans/semibold.ttf"), 16, 0xFF9B9CA3, LEFT);
+			if (optionShit[i][1] != null) {
+				menuItemText = new FlxText(190, (i * 59) + 220, FlxG.width, optionShit[i][1], 26);
+				menuItemText.setFormat(Paths.font("ggsans/semibold.ttf"), 26, 0xFF9B9CA3, LEFT);
 				menuItemsText.add(menuItemText);
 				menuItemText.scrollFactor.set();
 				menuItemText.updateHitbox();
-				if (optionShit[i][3] != null) {
-					menuItemEmoji = new FlxText(menuItemText.x + 60, menuItemText.y).loadGraphic(optionShit[i][3]);
+				if (optionShit[i][2] != null) {
+					menuItemEmoji = new FlxSprite(menuItemText.x + 60, menuItemText.y).loadGraphic(optionShit[i][2]);
 					//menuItemsText.add(menuItemEmoji);
 					menuItemEmoji.scrollFactor.set();
 					menuItemEmoji.updateHitbox();
@@ -245,7 +245,7 @@ class MainMenuState extends MusicBeatState
 					menuItems.members[curSelected].animation.play('clicked');
 				FlxFlicker.flicker(menuItems.members[curSelected], 1, 0.06, false, false, function(flick:FlxFlicker)
 				{
-					switch (optionShit[curSelected][1])
+					switch (optionShit[curSelected][0])
 					{
 						case 'story_mode':
 							MusicBeatState.switchState(new StoryMenuState());
@@ -325,7 +325,7 @@ class MainMenuState extends MusicBeatState
 		item.updateHitbox();
 		if (curSelected != menuItems.length - 1) {
 			itemText.color = 0xFF9B9CA3;
-			FlxTween.tween(itemText, {x: 172}, 0.14, {ease: FlxEase.quadOut});
+			FlxTween.tween(itemText, {x: 190}, 0.14, {ease: FlxEase.quadOut});
 			FlxTween.tween(item, {x: 132}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween) { item.updateHitbox(); }
@@ -357,7 +357,7 @@ class MainMenuState extends MusicBeatState
 		curItem.updateHitbox();
 		if (!isOptionsSelected) {
 			curItemText.color = FlxColor.WHITE;
-			FlxTween.tween(curItemText, {x: 190}, 0.14, {ease: FlxEase.quadOut});
+			FlxTween.tween(curItemText, {x: 208}, 0.14, {ease: FlxEase.quadOut});
 			FlxTween.tween(curItem, {x: 150}, 0.14, {
 				ease: FlxEase.quadOut,
 				onComplete: function(twn:FlxTween) { curItem.updateHitbox(); }
