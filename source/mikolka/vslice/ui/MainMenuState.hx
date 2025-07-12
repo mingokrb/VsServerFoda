@@ -117,7 +117,7 @@ class MainMenuState extends MusicBeatState
 				menuItemText.scrollFactor.set();
 				menuItemText.updateHitbox();
 				if (optionShit[i][2] != null) {
-					menuItemEmoji = new FlxSprite(menuItemText.width + 20, menuItemText.y).loadGraphic(optionShit[i][2]);
+					menuItemEmoji = new FlxSprite(menuItemText.width + 20, menuItemText.y).loadGraphic(Paths.image('mainmenu/emojis/' + optionShit[i][2]));
 					menuItemsEmojis.add(menuItemEmoji);
 					menuItemEmoji.scrollFactor.set();
 					menuItemEmoji.updateHitbox();
